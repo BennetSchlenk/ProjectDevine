@@ -109,27 +109,27 @@ public class Grid : MonoBehaviour
             Gizmos.color = (n.Walkable) ? Color.white : Color.red;
             
             var pos = (transform.position + n.Position);
-            var offset = (0.5f * GridNodeSize) * 0.75f;
+            var offset = (0.5f * GridNodeSize) * 0.9f;
 
             var topLeft = pos;
             topLeft.x -= offset;
             topLeft.z += offset;
-            topLeft.y += 0.5f;
+            topLeft.y += 0.1f;
 
             var topRight = pos;
             topRight.x += offset;
             topRight.z += offset;
-            topRight.y += 0.5f;
+            topRight.y += 0.1f;
 
             var bottomLeft = pos;
             bottomLeft.x -= offset;
             bottomLeft.z -= offset;
-            bottomLeft.y += 0.5f;
+            bottomLeft.y += 0.1f;
 
             var bottomRight = pos;
             bottomRight.x += offset;
             bottomRight.z -= offset;
-            bottomRight.y += 0.5f;
+            bottomRight.y += 0.1f;
 
 
             Gizmos.DrawLine(topLeft, topRight);
