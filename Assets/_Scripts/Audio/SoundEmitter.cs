@@ -39,31 +39,6 @@ public class SoundEmitter : MonoBehaviour
 		}
 	}
 
-	//public void FadeMusicIn(AudioClip musicClip, AudioSourceConfigurationSO settings, float duration, float startTime = 0f)
-	//{
-	//	PlayAudioClip(musicClip, settings, true);
-	//	_audioSource.volume = 0f;
-
-	//	//Start the clip at the same time the previous one left, if length allows
-	//	//TODO: find a better way to sync fading songs
-	//	if (startTime <= _audioSource.clip.length)
-	//		_audioSource.time = startTime;
-
-	//	_audioSource.DOFade(settings.Volume, duration);
-	//}
-
-	//public float FadeMusicOut(float duration)
-	//{
-	//	_audioSource.DOFade(0f, duration).onComplete += OnFadeOutComplete;
-
-	//	return _audioSource.time;
-	//}
-
-	//private void OnFadeOutComplete()
-	//{
-	//	NotifyBeingDone();
-	//}
-
 	/// <summary>
 	/// Used to check which music track is being played.
 	/// </summary>
@@ -123,7 +98,7 @@ public class SoundEmitter : MonoBehaviour
 
 	private void NotifyBeingDone()
 	{
-		//OnSoundFinishedPlaying.Invoke(this); // The AudioManager will pick this up
+		OnSoundFinishedPlaying?.Invoke(this); // The AudioManager should pick this up
 	}
 }
 

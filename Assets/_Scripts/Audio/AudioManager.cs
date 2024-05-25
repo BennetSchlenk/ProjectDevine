@@ -7,17 +7,13 @@ using UnityEngine.Audio;
     
 public class AudioManager : MonoBehaviour
 {
-    //[SerializeField] AudioSourceConfigurationSO musicSourceConfig = default;
-    //[SerializeField] AudioSource musicAudioSource;
-
-    //[SerializeField] AudioSourceConfigurationSO SFXSourceConfig = default;
-    //[SerializeField] AudioSource SFXAudioSource;
 	[Header("SoundEmitter setup")]
 	[SerializeField] AudioSource soundEmitterPrefab;
 	[SerializeField] int prewarmSize = 10;
 
 	[Header("Music player setup")]
 	[SerializeField] SoundEmitter musicEmitter;
+	[SerializeField] List<AudioFileSO> musicFiles;
 
     [Header("Audio control")]
     [SerializeField] AudioMixer audioMixer = default;
@@ -34,6 +30,7 @@ public class AudioManager : MonoBehaviour
 	const string MUSIC_VOLUME_PARAM_NAME = "MusicVolume";
 	const string SFX_VOLUME_PARAM_NAME = "SFXVolume";
 
+	private int currentMusicFileIndex;
 	private AudioSourcePool soundEmitterPool;
 
     private void Awake()
@@ -50,6 +47,29 @@ public class AudioManager : MonoBehaviour
         soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
     }
 
+    private void OnEnable()
+    {
+		musicEmitter.OnSoundFinishedPlaying += HandleIfMusicFinishedPlaying;
+    }
+
+
+    private void OnDisable()
+    {
+        musicEmitter.OnSoundFinishedPlaying -= HandleIfMusicFinishedPlaying;
+    }
+
+	#region Music player
+
+	private void HandleIfMusicFinishedPlaying(SoundEmitter soundEmitter)
+    {
+        throw new NotImplementedException();
+    }
+
+	public void StartPlayingMusic()
+	{
+		currentMusicFileIndex = UnityEngine.Random.Range(0, musicFiles.Count - 1);
+		PlayMusicTrack(musicFiles[currentMusicFileIndex]);
+	}
 
     public void PlayMusicTrack(AudioFileSO audioFile)
     {
@@ -64,7 +84,9 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	public void PlaySFX(AudioFileSO audioFile)
+    #endregion
+
+    public void PlaySFX(AudioFileSO audioFile)
     {
 		var soundEmitter = soundEmitterPool.Request();
 		soundEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);
@@ -83,6 +105,9 @@ public class AudioManager : MonoBehaviour
 			SetGroupVolume(SFX_VOLUME_PARAM_NAME, sfxVolume);
 		}
 	}
+
+    #region Volume handling
+
     public void ChangeMasterVolume(float newVolume)
 	{
 		masterVolume = newVolume;
@@ -121,6 +146,8 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
+	#endregion
+
 	// Both MixerValueNormalized and NormalizedToMixerValue functions are used for easier transformations
 	/// when using UI sliders normalized format
 	private float MixerValueToNormalized(float mixerValue)
@@ -128,6 +155,7 @@ public class AudioManager : MonoBehaviour
 		// We're assuming the range [-80dB to 0dB] becomes [0 to 1]
 		return 1f + (mixerValue / 80f);
 	}
+
 	private float NormalizedToMixerValue(float normalizedValue)
 	{
 		// We're assuming the range [0 to 1] becomes [-80dB to 0dB]
