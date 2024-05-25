@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TowerStatsUpgrade
   m_EditorClassIdentifier: 
   range: 30
-  fireRate: 2
+  fireRate: 4
   fireDuration: 1
   fireCooldown: 1
   projectileSpeed: 10

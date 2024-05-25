@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TowerAttackHandler : MonoBehaviour
 {
-    private Transform enemiesContainerTransform;
+    public UnityEvent<Transform> OnTargetChange;
 
     [SerializeField] private AttackTargetType attackTargetType;
     [SerializeField] private GameObject projectile;
+    [SerializeField] private List<Transform> projectileSpawnPoints;
+
+    private Transform enemiesContainerTransform;
+    private int currentProjectileSpawnPointIndex = 0;
 
     private void Start()
     {
@@ -29,8 +34,11 @@ public class TowerAttackHandler : MonoBehaviour
                 IDamagable damagable = enemy.GetComponent<IDamagable>();
                 if (damagable != null)
                 {
+                    OnTargetChange.Invoke(enemy.transform);
+
                     // Spawn projectile. TODO: Pooling
-                    GameObject newProjectile = Instantiate(projectile, transform.position, Quaternion.identity);
+                    GameObject newProjectile = Instantiate(projectile, projectileSpawnPoints[currentProjectileSpawnPointIndex].position, Quaternion.identity);
+                    currentProjectileSpawnPointIndex = (currentProjectileSpawnPointIndex + 1) % projectileSpawnPoints.Count;
                     Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
                     List<GameObject> effects = new();
                     List<GameObject> hitEffects = new();
