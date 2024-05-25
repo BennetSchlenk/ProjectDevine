@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+
+    #region Unity Callbacks
+        
+    private void Awake()
+    {
+        #NOTRIM#
+    }
+
+    private void Start()
+    {
+        #NOTRIM#
+    }
+
+    #endregion
+
+}
