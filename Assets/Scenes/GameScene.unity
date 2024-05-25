@@ -662,9 +662,9 @@ MonoBehaviour:
   panDampening: 15
   zoomStepSize: 2
   zoomDampening: 7.5
-  zoomMinHeight: 10
+  zoomMinHeight: 13
   zoomMaxHeight: 40
-  ZoomSpeed: 4
+  ZoomSpeed: 3
   rotationMaxSpeed: 10
 --- !u!4 &1568816394
 Transform:

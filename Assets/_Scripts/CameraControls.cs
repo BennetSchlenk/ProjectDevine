@@ -12,7 +12,7 @@ public class CameraControls : MonoBehaviour
     
     //Horizontal
     [SerializeField]
-    private float panMaxSpeed = 5f;
+    private float panMaxSpeed = 15f;
     private float speed;
     [SerializeField]
     private float panAcceleration = 10f;
@@ -25,11 +25,11 @@ public class CameraControls : MonoBehaviour
     [SerializeField]
     private float zoomDampening = 7.5f;
     [SerializeField]
-    private float zoomMinHeight = 5f;
+    private float zoomMinHeight = 13f;
     [SerializeField]
-    private float zoomMaxHeight = 50f;
+    private float zoomMaxHeight = 40f;
     [SerializeField]
-    private float ZoomSpeed = 2f;
+    private float ZoomSpeed = 3f;
     
     //Rotation
     [SerializeField]
