@@ -15,7 +15,7 @@ public class TowerDataUpgradeSO : ScriptableObject, ITowerData
     [SerializeField] private float range;
     public float Range => range;
 
-    [Tooltip("Fire rate in shots per second")]
+    [Tooltip("Shots per second")]
     [SerializeField] private float fireRate;
     public float FireRate => fireRate;
 
