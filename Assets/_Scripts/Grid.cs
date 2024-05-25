@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -76,23 +77,11 @@ public class Grid : MonoBehaviour
 
     public GridNode NodeFromWorldPosition(Vector3 worldPos)
     {
-        float percentX = Mathf.Clamp01((worldPos.x + GridSize.x / 2) / GridSize.x);
-        float percentY = Mathf.Clamp01((worldPos.z + GridSize.y / 2) / GridSize.y);
+        float percentX = Mathf.InverseLerp(-GridSize.x, GridSize.x, worldPos.x);
+        float percentY = Mathf.InverseLerp(-GridSize.y, GridSize.y, worldPos.z);
 
-        double totalLengthX = gridNodesX * GridNodeSize;
-        double totalLengthY = gridNodesY * GridNodeSize;
-
-        // Position on the axis
-        double positionX = percentX * totalLengthX;
-        double positionY = percentY * totalLengthY;
-
-        // Index of the square (convert to integer to get grid coordinates)
-        int x = (int)(positionX / GridNodeSize);
-        int y = (int)(positionY / GridNodeSize);
-
-        // Ensure the index is within grid bounds
-        x = Mathf.Clamp(x, 0, gridNodesX - 1);
-        y = Mathf.Clamp(y, 0, gridNodesY - 1);
+        int x = Mathf.Clamp(Mathf.FloorToInt(percentX * gridNodesX), 0, gridNodesX - 1);
+        int y = Mathf.Clamp(Mathf.FloorToInt(percentY * gridNodesY), 0, gridNodesY - 1);
 
         return grid[x, y];
     }
@@ -100,7 +89,7 @@ public class Grid : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!ShowGizmos) return;
-        Gizmos.DrawWireCube(transform.position, new Vector3(GridSize.x * GridNodeSize, 1, GridSize.y * GridNodeSize));
+        Gizmos.DrawWireCube(transform.position, new Vector3(GridSize.x * GridNodeSize, 0.1f, GridSize.y * GridNodeSize));
 
 
         if (grid == null) return;
