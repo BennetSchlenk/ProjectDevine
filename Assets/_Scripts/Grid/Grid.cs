@@ -8,7 +8,7 @@ public class Grid : MonoBehaviour
 {
     public bool ShowGizmos;
 
-    private int2 GridSize;
+    public int2 GridSize;
 
     [Tooltip("uniform size of each grid node")]
     private GridNode[,] grid;
@@ -28,7 +28,7 @@ public class Grid : MonoBehaviour
     {
         levelDataGrid = GridConversionUtility.ListToGrid(LevelData.Grid, LevelData.GridX, LevelData.GridY);
         //levelDataObj = GridConversionUtility.ListToGrid(LevelData.GridObj, LevelData.GridX, LevelData.GridY);
-        GridNodeRadius = GobalData.GridNodeSize / 2;
+        GridNodeRadius = GlobalData.GridNodeSize / 2;
         GridSize = new int2(levelDataGrid.GetLength(0), levelDataGrid.GetLength(1));
         gridNodesX = GridSize.x;
         gridNodesY = GridSize.y;
@@ -46,8 +46,8 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < gridNodesY; y++)
             {
-                Vector3 nodePos = bottomLeft + Vector3.right * (x * GobalData.GridNodeSize + GridNodeRadius) +
-                                  Vector3.forward * (y * GobalData.GridNodeSize + GridNodeRadius);
+                Vector3 nodePos = bottomLeft + Vector3.right * (x * GlobalData.GridNodeSize + GridNodeRadius) +
+                                  Vector3.forward * (y * GlobalData.GridNodeSize + GridNodeRadius);
 
                 grid[x, y] = new GridNode(levelDataGrid[x, y].Walkable, levelDataGrid[x, y].Buildable,
                     PlaceableMeshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
@@ -88,7 +88,7 @@ public class Grid : MonoBehaviour
     {
         if (!ShowGizmos) return;
         Gizmos.DrawWireCube(transform.position,
-            new Vector3(GridSize.x * GobalData.GridNodeSize, 0.1f, GridSize.y * GobalData.GridNodeSize));
+            new Vector3(GridSize.x * GlobalData.GridNodeSize, 0.1f, GridSize.y * GlobalData.GridNodeSize));
 
 
         if (grid == null) return;
@@ -97,7 +97,7 @@ public class Grid : MonoBehaviour
             Gizmos.color = (n.Walkable) ? Color.white : Color.red;
 
             var pos = (transform.position + n.Position);
-            var offset = (0.5f * GobalData.GridNodeSize) * 0.9f;
+            var offset = (0.5f * GlobalData.GridNodeSize) * 0.9f;
 
             var topLeft = pos;
             topLeft.x -= offset;

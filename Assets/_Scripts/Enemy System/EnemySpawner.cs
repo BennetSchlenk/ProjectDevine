@@ -28,6 +28,8 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(this);
         }
+
+        parentObjectForEnemies = GameObject.Find("Enemies").transform;
     }
 
     private void Start()
