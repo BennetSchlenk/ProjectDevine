@@ -55,7 +55,9 @@ public class Grid : MonoBehaviour
                     levelDataGrid[x, y].Waypoint, nodePos, x, y);
 
                 var go = Instantiate(PlaceableMeshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
-
+                grid[x, y].MeshObj = go;
+                
+                
                 if (levelDataGrid[x, y].Spawn)
                 {
                     go.AddComponent<Waypoints>().WaypointsList = LevelData.Waypoints;

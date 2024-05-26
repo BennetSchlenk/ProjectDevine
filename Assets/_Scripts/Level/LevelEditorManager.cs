@@ -84,7 +84,7 @@ public class LevelEditorManager : MonoBehaviour
     private void SaveOnClick()
     {
         if (!validated) return;
-        string path = $"Assets/{levelNameInput.text}.asset";
+        string path = $"Assets/Data/Levels/{levelNameInput.text}.asset";
 
 #if UNITY_EDITOR
         var obj = ScriptableObject.CreateInstance<LevelDataSO>();
@@ -136,7 +136,7 @@ public class LevelEditorManager : MonoBehaviour
             waypoints = new List<Vector3>();
             List<GridNode> nodePath = new List<GridNode>();
             nodePath.Add(spawnNode);
-            waypoints.Add(spawnNode.Position);
+            waypoints.Add(new Vector3(spawnNode.Position.x,-0.5f,spawnNode.Position.z));
 
             while (!targetFound)
             {
@@ -150,7 +150,7 @@ public class LevelEditorManager : MonoBehaviour
                         nodePath.Add(neighbours[i]);
                         if (neighbours[i].Waypoint)
                         {
-                            waypoints.Add(neighbours[i].Position);
+                            waypoints.Add(new Vector3(neighbours[i].Position.x,-0.5f,neighbours[i].Position.z));
                         }
 
                         if (neighbours[i].EnemyTarget)
@@ -309,21 +309,31 @@ public class LevelEditorManager : MonoBehaviour
                 {
                     node.EnemyTarget = true;
                     node.Walkable = true;
+                    node.Buildable = false;
                     node.Waypoint = true;
                 }
                 else if (SelectedObj == PlaceableMeshes[5])
                 {
                     node.Spawn = true;
                     node.Walkable = true;
+                    node.Buildable = false;
                     node.Waypoint = true;
                 }
                 else if (SelectedObj != PlaceableMeshes[0])
                 {
                     node.Walkable = true;
+                    node.Buildable = false;
                     if (SelectedObj == PlaceableMeshes[4])
                     {
                         node.Waypoint = true;
                     }
+                }
+
+                if (SelectedObj == PlaceableMeshes[0])
+                {
+                    node.Walkable = false;
+                    node.Buildable = true;
+                    node.Waypoint = false;
                 }
             }
         }

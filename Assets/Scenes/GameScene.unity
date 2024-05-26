@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowGizmos: 1
-  LevelData: {fileID: 11400000, guid: b52271dc4039e874c8ecd36ec61eba0a, type: 2}
+  LevelData: {fileID: 11400000, guid: 333d106e43773d646b3c5469c633b296, type: 2}
   PlaceableMeshes:
   - {fileID: 919132149155446097, guid: 32c03b6abb63c2b40b6ea12aa4e37e7c, type: 3}
   - {fileID: 919132149155446097, guid: c4e0361504194774a8dc7214b66cdf46, type: 3}
