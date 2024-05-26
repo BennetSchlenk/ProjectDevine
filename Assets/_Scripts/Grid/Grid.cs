@@ -17,7 +17,7 @@ public class Grid : MonoBehaviour
     public List<GameObject> PlaceableMeshes;
 
     private GridNode[,] levelDataGrid;
-    private int[,] levelDataObj;
+    //private int[,] levelDataObj;
     private float GridNodeRadius;
     private int gridNodesX;
     private int gridNodesY;
@@ -26,8 +26,8 @@ public class Grid : MonoBehaviour
 
     private void Awake()
     {
-        levelDataGrid = GridConversionUtility.ListToGrid(LevelData.Grid,LevelData.GridX,LevelData.GridY);
-        levelDataObj = GridConversionUtility.ListToGrid(LevelData.GridObj,LevelData.GridX,LevelData.GridY);
+        levelDataGrid = GridConversionUtility.ListToGrid(LevelData.Grid, LevelData.GridX, LevelData.GridY);
+        //levelDataObj = GridConversionUtility.ListToGrid(LevelData.GridObj, LevelData.GridX, LevelData.GridY);
         GridNodeRadius = GobalData.GridNodeSize / 2;
         GridSize = new int2(levelDataGrid.GetLength(0), levelDataGrid.GetLength(1));
         gridNodesX = GridSize.x;
@@ -50,11 +50,12 @@ public class Grid : MonoBehaviour
                                   Vector3.forward * (y * GobalData.GridNodeSize + GridNodeRadius);
 
                 grid[x, y] = new GridNode(levelDataGrid[x, y].Walkable, levelDataGrid[x, y].Buildable,
-                    PlaceableMeshes[levelDataObj[x, y]], levelDataGrid[x, y].Spawn, levelDataGrid[x, y].EnemyTarget,
+                    PlaceableMeshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
+                    levelDataGrid[x, y].EnemyTarget,
                     levelDataGrid[x, y].Waypoint, nodePos, x, y);
 
-                var go = Instantiate(PlaceableMeshes[levelDataObj[x, y]], nodePos, Quaternion.identity, this.transform);
-                
+                var go = Instantiate(PlaceableMeshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
+
                 if (levelDataGrid[x, y].Spawn)
                 {
                     go.AddComponent<Waypoints>().WaypointsList = LevelData.Waypoints;

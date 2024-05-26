@@ -3013,6 +3013,7 @@ MonoBehaviour:
   validateButton: {fileID: 66846468}
   saveButton: {fileID: 1689823766}
   SelectedObj: {fileID: 0}
+  SelectedObjIndex: 0
   gridGen: {fileID: 593958010}
   xInput: {fileID: 706076734}
   zInput: {fileID: 911347709}

@@ -14,13 +14,17 @@ public class GridNode
     public Vector3 Position;
     public int GridX;
     public int GridY;
+    public int MeshIndex;
+    public int MeshYRotation;
     public GameObject MeshObj;
 
-    public GridNode(bool walkable, bool buildable,GameObject meshObj,bool spawn, bool enemyTarget,bool waypoint,Vector3 localPosition, int gridX, int gridY)
+    public GridNode(bool walkable, bool buildable,GameObject meshObj, int meshIndex,int meshYRotation,bool spawn, bool enemyTarget,bool waypoint,Vector3 localPosition, int gridX, int gridY)
     {
         Walkable = walkable;
         Buildable = buildable;
         MeshObj = meshObj;
+        MeshIndex = meshIndex;
+        MeshYRotation = meshYRotation;
         Spawn = spawn;
         EnemyTarget = enemyTarget;
         Waypoint = waypoint;

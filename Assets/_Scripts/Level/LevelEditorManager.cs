@@ -24,7 +24,8 @@ public class LevelEditorManager : MonoBehaviour
     private bool gridGenerated;
     private GameObject previewObj;
     private bool validated;
-    private int[,] gridObj;
+    private GameObject[,] gridObj;
+    private int[,] gridObjIndex;
     private List<Vector3> waypoints;
 
 
@@ -32,6 +33,7 @@ public class LevelEditorManager : MonoBehaviour
     public Button validateButton;
     public Button saveButton;
     public GameObject SelectedObj;
+    public int SelectedObjIndex;
     public GridGenerator gridGen;
     public TMP_InputField xInput;
     public TMP_InputField zInput;
@@ -88,7 +90,7 @@ public class LevelEditorManager : MonoBehaviour
         var obj = ScriptableObject.CreateInstance<LevelDataSO>();
 
         obj.Grid = GridConversionUtility.GridToList(gridGen.grid);
-        obj.GridObj = GridConversionUtility.GridToList(gridObj);
+        obj.GridObj = GridConversionUtility.GridToList(gridObjIndex);
         obj.GridX = gridGen.grid.GetLength(0);
         obj.GridY = gridGen.grid.GetLength(1);
         obj.Waypoints = waypoints;
@@ -106,15 +108,15 @@ public class LevelEditorManager : MonoBehaviour
         int targets = 0;
         int spawns = 0;
         GridNode spawnNode = null;
-        gridObj = new int[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
+        gridObj = new GameObject[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
+        gridObjIndex = new int[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
 
         for (int x = 0; x < gridGen.grid.GetLength(0); x++)
         {
             for (int y = 0; y < gridGen.grid.GetLength(1); y++)
             {
-                var lol = MeshObjToInt(gridGen.grid[x, y].MeshObj);
-                Debug.Log("MHHH: " + lol);
-                gridObj[x, y] = lol;
+                gridObj[x, y] = gridGen.grid[x, y].MeshObj;
+                gridObjIndex[x, y] = gridGen.grid[x, y].MeshIndex;
                 if (gridGen.grid[x, y].Spawn)
                 {
                     spawns++;
@@ -211,7 +213,7 @@ public class LevelEditorManager : MonoBehaviour
             return 6;
         }
 
-        return 75;
+        return 2000;
     }
 
     public List<GridNode> GetNeighbours(GridNode node)
@@ -295,9 +297,12 @@ public class LevelEditorManager : MonoBehaviour
             {
                 Destroy(node.MeshObj);
                 node.MeshObj = null;
+                node.MeshIndex = 2000;
                 var go = Instantiate(SelectedObj, node.Position, Quaternion.identity, gridGen.transform);
                 go.transform.rotation = Quaternion.Euler(0f, GetYRotationFromBuildDir(), 0f);
+                node.MeshYRotation = (int)GetYRotationFromBuildDir();
                 node.MeshObj = go;
+                node.MeshIndex = SelectedObjIndex;
                 ResetBuildDirection();
                 validated = false;
                 if (SelectedObj == PlaceableMeshes[6])
@@ -351,6 +356,7 @@ public class LevelEditorManager : MonoBehaviour
     private void SetSelectedMesh(GameObject obj)
     {
         SelectedObj = obj;
+        SelectedObjIndex = MeshObjToInt(obj);
 
         if (previewObj != null)
         {

@@ -9,8 +9,7 @@ public class GridGenerator : MonoBehaviour
     public GameObject DefaultNodeObj;
 
     private int2 GridSize;
-    [HideInInspector]
-    public GridNode[,] grid;
+    [HideInInspector] public GridNode[,] grid;
 
     private float GridNodeRadius;
     private int gridNodesX;
@@ -41,7 +40,7 @@ public class GridGenerator : MonoBehaviour
 
                 bool walkable = false;
                 var go = Instantiate(DefaultNodeObj, nodePos, quaternion.identity, this.transform);
-                grid[x, y] = new GridNode(walkable, true, go, false, false,false, nodePos, x, y);
+                grid[x, y] = new GridNode(walkable, true, go, 0, 0,false ,false, false, nodePos, x, y);
             }
         }
     }

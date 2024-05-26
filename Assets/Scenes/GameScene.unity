@@ -153,6 +153,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowGizmos: 1
   LevelData: {fileID: 11400000, guid: b52271dc4039e874c8ecd36ec61eba0a, type: 2}
+  PlaceableMeshes:
+  - {fileID: 919132149155446097, guid: 32c03b6abb63c2b40b6ea12aa4e37e7c, type: 3}
+  - {fileID: 919132149155446097, guid: c4e0361504194774a8dc7214b66cdf46, type: 3}
+  - {fileID: 919132149155446097, guid: 5c10834e7f3c5a2418ebf0e3e658baa6, type: 3}
+  - {fileID: 919132149155446097, guid: 847c6a8b9ed6c98418413a51bea526d8, type: 3}
+  - {fileID: 919132149155446097, guid: 6fc120f2b2d7f5144bbe85ab5081bcce, type: 3}
+  - {fileID: 919132149155446097, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
+  - {fileID: 919132149155446097, guid: 3f87a95cf5b32c64cbd76c0c9466191a, type: 3}
 --- !u!4 &119989944
 Transform:
   m_ObjectHideFlags: 0
@@ -391,7 +399,7 @@ PrefabInstance:
     - target: {fileID: 2272249159736516353, guid: 731d8ada9fb3b9b4d8ca674ae7a1fe4b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -42.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2272249159736516353, guid: 731d8ada9fb3b9b4d8ca674ae7a1fe4b,
         type: 3}
@@ -401,7 +409,7 @@ PrefabInstance:
     - target: {fileID: 2272249159736516353, guid: 731d8ada9fb3b9b4d8ca674ae7a1fe4b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -43.63
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2272249159736516353, guid: 731d8ada9fb3b9b4d8ca674ae7a1fe4b,
         type: 3}
