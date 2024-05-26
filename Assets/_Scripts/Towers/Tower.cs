@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class Tower : MonoBehaviour, IPlaceable, ISelectable
 {
     [Header("Initial Data")]
     [SerializeField] private TowerDataUpgradeSO baseTowerData;
@@ -11,8 +11,10 @@ public class Tower : MonoBehaviour
     public TowerInfoSO TowerInfo;
     [HideInInspector] public TowerData TowerData;
     public List<DamageData> DamageDataList = new(); // List of damage data for each damage type
+    [SerializeField]
+    private GameObject rangeGameObject;
 
-    private bool isWorking = true;
+    private bool isWorking = false;
     private bool isFiring = false;
     private float fireCooldown = 0f;
     private TowerAttackHandler attackHandler;
@@ -33,6 +35,8 @@ public class Tower : MonoBehaviour
         attackHandler = GetComponent<TowerAttackHandler>();
         if (attackHandler == null)
             Debug.LogError("Attack handler is not set on the tower.");
+
+        
     }
 
     private void Update()
@@ -50,6 +54,38 @@ public class Tower : MonoBehaviour
 
         Gizmos.color = debugColor;
         Gizmos.DrawSphere(transform.position, TowerData.Range);
+    }
+
+    #endregion
+
+    #region IPlaceable Implementation
+
+    public void OnPlacing()
+    {
+        UpdateRange();
+        Select();
+    }
+
+    public void OnPlaced()
+    {
+        Debug.Log("Tower placed!", gameObject);
+        isWorking = true;
+        Debug.Log("Tower is working: " + isWorking, gameObject);
+        Deselect();
+    }
+
+    #endregion
+
+    #region ISelectable Implementation
+
+    public void Select()
+    {
+        rangeGameObject.SetActive(true);
+    }
+
+    public void Deselect()
+    {
+        rangeGameObject.SetActive(false);
     }
 
     #endregion
@@ -103,5 +139,10 @@ public class Tower : MonoBehaviour
     protected void AttackEnemy()
     {
         attackHandler.Attack(TowerData, DamageDataList);
+    }
+
+    private void UpdateRange()
+    {
+        rangeGameObject.transform.localScale = new Vector3(TowerData.Range + baseTowerData.Range, 0.01f, TowerData.Range + baseTowerData.Range);
     }
 }

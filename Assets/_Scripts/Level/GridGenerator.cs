@@ -19,7 +19,7 @@ public class GridGenerator : MonoBehaviour
 
     private void Awake()
     {
-        GridNodeRadius = GobalData.GridNodeSize / 2;
+        GridNodeRadius = GlobalData.GridNodeSize / 2;
     }
 
     public void CreateGrid(int xSize, int ySize)
@@ -35,8 +35,8 @@ public class GridGenerator : MonoBehaviour
         {
             for (int y = 0; y < gridNodesY; y++)
             {
-                Vector3 nodePos = bottomLeft + Vector3.right * (x * GobalData.GridNodeSize + GridNodeRadius) +
-                                  Vector3.forward * (y * GobalData.GridNodeSize + GridNodeRadius);
+                Vector3 nodePos = bottomLeft + Vector3.right * (x * GlobalData.GridNodeSize + GridNodeRadius) +
+                                  Vector3.forward * (y * GlobalData.GridNodeSize + GridNodeRadius);
 
                 bool walkable = false;
                 var go = Instantiate(DefaultNodeObj, nodePos, quaternion.identity, this.transform);
@@ -67,7 +67,7 @@ public class GridGenerator : MonoBehaviour
     {
         if (!ShowGizmos) return;
         Gizmos.DrawWireCube(transform.position,
-            new Vector3(GridSize.x * GobalData.GridNodeSize, 0.1f, GridSize.y * GobalData.GridNodeSize));
+            new Vector3(GridSize.x * GlobalData.GridNodeSize, 0.1f, GridSize.y * GlobalData.GridNodeSize));
 
 
         if (grid == null) return;
@@ -76,7 +76,7 @@ public class GridGenerator : MonoBehaviour
             Gizmos.color = (n.Walkable) ? Color.white : Color.red;
 
             var pos = (transform.position + n.Position);
-            var offset = (0.5f * GobalData.GridNodeSize) * 0.9f;
+            var offset = (0.5f * GlobalData.GridNodeSize) * 0.9f;
 
             var topLeft = pos;
             topLeft.x -= offset;
