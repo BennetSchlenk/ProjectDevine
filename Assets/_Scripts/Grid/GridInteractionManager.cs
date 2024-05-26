@@ -32,6 +32,7 @@ public class GridInteractionManager : MonoBehaviour
         if (plane.Raycast(ray, out float distance))
         {
             var hitPoint = ray.GetPoint(distance);
+            //Node can be null if clicked outside of grid area
             var nodeHit = grid.NodeFromWorldPosition(hitPoint);
             Debug.Log("NODE: " + nodeHit.GridX + " / " + nodeHit.GridY + "  was clicked!");
         }

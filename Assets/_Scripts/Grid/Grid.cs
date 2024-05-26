@@ -7,14 +7,17 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     public bool ShowGizmos;
-    
-    public LayerMask unwalkableMask;
-    [Tooltip("Amout of nodes on the x and z axis")]
-    public int2 GridSize;
+
+    private int2 GridSize;
+
     [Tooltip("uniform size of each grid node")]
-    public float GridNodeSize;
     private GridNode[,] grid;
 
+    public LevelDataSO LevelData;
+    public List<GameObject> PlaceableMeshes;
+
+    private GridNode[,] levelDataGrid;
+    //private int[,] levelDataObj;
     private float GridNodeRadius;
     private int gridNodesX;
     private int gridNodesY;
@@ -23,7 +26,10 @@ public class Grid : MonoBehaviour
 
     private void Awake()
     {
-        GridNodeRadius = GridNodeSize / 2;
+        levelDataGrid = GridConversionUtility.ListToGrid(LevelData.Grid, LevelData.GridX, LevelData.GridY);
+        //levelDataObj = GridConversionUtility.ListToGrid(LevelData.GridObj, LevelData.GridX, LevelData.GridY);
+        GridNodeRadius = GobalData.GridNodeSize / 2;
+        GridSize = new int2(levelDataGrid.GetLength(0), levelDataGrid.GetLength(1));
         gridNodesX = GridSize.x;
         gridNodesY = GridSize.y;
         Debug.Log("X: " + gridNodesX + " Y: " + gridNodesY);
@@ -40,43 +46,35 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < gridNodesY; y++)
             {
-                Vector3 nodePos = bottomLeft + Vector3.right * (x * GridNodeSize + GridNodeRadius) +
-                                       Vector3.forward * (y * GridNodeSize + GridNodeRadius);
+                Vector3 nodePos = bottomLeft + Vector3.right * (x * GobalData.GridNodeSize + GridNodeRadius) +
+                                  Vector3.forward * (y * GobalData.GridNodeSize + GridNodeRadius);
+
+                grid[x, y] = new GridNode(levelDataGrid[x, y].Walkable, levelDataGrid[x, y].Buildable,
+                    PlaceableMeshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
+                    levelDataGrid[x, y].EnemyTarget,
+                    levelDataGrid[x, y].Waypoint, nodePos, x, y);
+
+                var go = Instantiate(PlaceableMeshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
+                grid[x, y].MeshObj = go;
                 
-                bool walkable =
-                    !(Physics.CheckSphere(nodePos, GridNodeRadius,
-                        unwalkableMask));
-
-                grid[x, y] = new GridNode(walkable, true,nodePos, x, y);
-            }
-        }
-    }
-
-    public List<GridNode> GetNeighbours(GridNode node)
-    {
-        List<GridNode> neighbours = new List<GridNode>();
-
-        for (int x = -1; x <= 1; x++)
-        {
-            for (int y = -1; y <= 1; y++)
-            {
-                if (x == 0 && y == 0) continue;
-
-                int checkX = node.GridX + x;
-                int checkY = node.GridY + y;
-
-                if (checkX >= 0 && checkX < gridNodesX && checkY >= 0 && checkY < gridNodesY)
+                
+                if (levelDataGrid[x, y].Spawn)
                 {
-                    neighbours.Add(grid[checkX, checkY]);
+                    go.AddComponent<Waypoints>().WaypointsList = LevelData.Waypoints;
                 }
             }
         }
-
-        return neighbours;
     }
+
 
     public GridNode NodeFromWorldPosition(Vector3 worldPos)
     {
+        // Check if worldPos is outside the grid boundaries
+        if (worldPos.x < -GridSize.x || worldPos.x > GridSize.x || worldPos.z < -GridSize.y || worldPos.z > GridSize.y)
+        {
+            return null;
+        }
+
         float percentX = Mathf.InverseLerp(-GridSize.x, GridSize.x, worldPos.x);
         float percentY = Mathf.InverseLerp(-GridSize.y, GridSize.y, worldPos.z);
 
@@ -89,16 +87,17 @@ public class Grid : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!ShowGizmos) return;
-        Gizmos.DrawWireCube(transform.position, new Vector3(GridSize.x * GridNodeSize, 0.1f, GridSize.y * GridNodeSize));
+        Gizmos.DrawWireCube(transform.position,
+            new Vector3(GridSize.x * GobalData.GridNodeSize, 0.1f, GridSize.y * GobalData.GridNodeSize));
 
 
         if (grid == null) return;
         foreach (GridNode n in grid)
         {
             Gizmos.color = (n.Walkable) ? Color.white : Color.red;
-            
+
             var pos = (transform.position + n.Position);
-            var offset = (0.5f * GridNodeSize) * 0.9f;
+            var offset = (0.5f * GobalData.GridNodeSize) * 0.9f;
 
             var topLeft = pos;
             topLeft.x -= offset;
