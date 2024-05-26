@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542da6e904c65fb459cf8b70cb57f7bb, type: 3}
   m_Name: TowerStatsUpgrade
   m_EditorClassIdentifier: 
-  range: 3
-  fireRate: 2
+  range: 30
+  fireRate: 4
   fireDuration: 1
-  fireCooldown: 5
-  projectileSpeed: 0
+  fireCooldown: 1
+  projectileSpeed: 10

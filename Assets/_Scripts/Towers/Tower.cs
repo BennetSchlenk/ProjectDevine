@@ -10,7 +10,7 @@ public class Tower : MonoBehaviour
     [Header("Runtime Data")]
     public TowerInfoSO TowerInfo;
     [HideInInspector] public TowerData TowerData;
-    [HideInInspector] public List<DamageData> DamageDataList = new(); // List of damage data for each damage type
+    public List<DamageData> DamageDataList = new(); // List of damage data for each damage type
 
     private bool isWorking = true;
     private bool isFiring = false;
