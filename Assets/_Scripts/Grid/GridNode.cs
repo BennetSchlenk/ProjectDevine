@@ -17,6 +17,7 @@ public class GridNode
     public int MeshIndex;
     public int MeshYRotation;
     public GameObject MeshObj;
+    public GameObject TowerObj;
 
     public GridNode(bool walkable, bool buildable,GameObject meshObj, int meshIndex,int meshYRotation,bool spawn, bool enemyTarget,bool waypoint,Vector3 localPosition, int gridX, int gridY)
     {
