@@ -12,32 +12,20 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxSpawnCount = 20;
 
     [SerializeField, Space] private Transform parentObjectForEnemies;
-
-
-    public static EnemySpawner Instance;
-
-    private Waypoints waypoints;
+    
+    private WaypointsContainer _waypointsContainer;
     
     #region Unity Callbacks
         
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-
         parentObjectForEnemies = GameObject.Find("Enemies").transform;
     }
 
     private void Start()
     {
         // get waypoints from spawner
-        waypoints = GetComponent<Waypoints>();
+        _waypointsContainer = GetComponent<WaypointsContainer>();
 
         StartCoroutine(SpawnLoop());
     }
@@ -49,7 +37,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < maxSpawnCount; i++)
         {            
             yield return new WaitForSeconds(timeBetweenSpawns);
-            SpawnEnemy(enemyPrefab, waypoints.WaypointsList);
+            SpawnEnemy(enemyPrefab, _waypointsContainer.WaypointsList);
         }
 
     }
@@ -68,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
                     Instantiate(
                         gameObject,
                         spawnPosition,
-                        Quaternion.identity, // Spawn the enemy facing the player
+                        _waypointsContainer.transform.rotation, // Spawn the enemy facing the player
                         parentTransform);
 
             enemyGameObject.GetComponent<Enemy>().Init(waypoints);

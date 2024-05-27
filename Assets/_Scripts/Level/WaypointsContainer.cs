@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Waypoints : MonoBehaviour
+public class WaypointsContainer : MonoBehaviour
 {
     public List<Vector3> WaypointsList;
 }
