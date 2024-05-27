@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -78,6 +79,7 @@ public class LevelEditorManager : MonoBehaviour
     {
         ChangeBuildingDirection();
         DisplayPreviewObj();
+        RemovePreviewAndSelectedObj();
         PlaceNodeMeshObj();
     }
 
@@ -256,6 +258,14 @@ public class LevelEditorManager : MonoBehaviour
         }
     }
 
+    private void RemovePreviewAndSelectedObj()
+    {
+        if (!Mouse.current.rightButton.wasPressedThisFrame) return;
+        SelectedObj = null;
+        Destroy(previewObj);
+        previewObj = null;
+    }
+
     private float GetYRotationFromBuildDir()
     {
         switch (buildDir)
@@ -290,7 +300,7 @@ public class LevelEditorManager : MonoBehaviour
     private void PlaceNodeMeshObj()
     {
         if (!Mouse.current.leftButton.wasPressedThisFrame || !gridGenerated) return;
-        if (GetRaycastHitPos(out var hitPos))
+        if (GetRaycastHitPos(out var hitPos) && !EventSystem.current.IsPointerOverGameObject())
         {
             var node = gridGen.NodeFromWorldPosition(hitPos);
             if (node != null && node.MeshObj != SelectedObj && SelectedObj != null)
@@ -303,7 +313,6 @@ public class LevelEditorManager : MonoBehaviour
                 node.MeshYRotation = (int)GetYRotationFromBuildDir();
                 node.MeshObj = go;
                 node.MeshIndex = SelectedObjIndex;
-                ResetBuildDirection();
                 validated = false;
                 if (SelectedObj == PlaceableMeshes[6])
                 {
@@ -367,6 +376,7 @@ public class LevelEditorManager : MonoBehaviour
     {
         SelectedObj = obj;
         SelectedObjIndex = MeshObjToInt(obj);
+        ResetBuildDirection();
 
         if (previewObj != null)
         {
