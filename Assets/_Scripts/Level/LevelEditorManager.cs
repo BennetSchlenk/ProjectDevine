@@ -44,7 +44,7 @@ public class LevelEditorManager : MonoBehaviour
     public GameObject MeshSelectionUIPanel;
     public GameObject ValidateSaveUIPanel;
     public GameObject ButtonPrefab;
-    public List<GameObject> PlaceableMeshes;
+    public LevelThemeSO ThemeMeshes;
 
 
     private void Awake()
@@ -63,16 +63,16 @@ public class LevelEditorManager : MonoBehaviour
         validateButton.onClick.AddListener(ValidateOnClick);
         saveButton.onClick.AddListener(SaveOnClick);
 
-        for (int i = 0; i < PlaceableMeshes.Count; i++)
+        for (int i = 0; i < ThemeMeshes.Meshes.Count; i++)
         {
             var go = Instantiate(ButtonPrefab, MeshSelectionUIPanel.transform);
             Button button = go.GetComponent<Button>();
             Image image = go.GetComponent<Image>();
-            var tex = AssetPreview.GetAssetPreview(PlaceableMeshes[i]);
+            var tex = AssetPreview.GetAssetPreview(ThemeMeshes.Meshes[i]);
             Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, 100f, 100f), new Vector2(0.5f, 0.5f), 100.0f);
             image.sprite = sprite;
             var i1 = i;
-            button.onClick.AddListener(() => SetSelectedMesh(PlaceableMeshes[i1]));
+            button.onClick.AddListener(() => SetSelectedMesh(ThemeMeshes.Meshes[i1]));
         }
     }
 
@@ -190,49 +190,49 @@ public class LevelEditorManager : MonoBehaviour
 
     private int MeshObjToInt(GameObject obj)
     {
-        if (obj == PlaceableMeshes[0])
+        if (obj == ThemeMeshes.Meshes[0])
         {
             return 0;
         }
 
-        if (obj == PlaceableMeshes[1])
+        if (obj == ThemeMeshes.Meshes[1])
         {
             return 1;
         }
 
-        if (obj == PlaceableMeshes[2])
+        if (obj == ThemeMeshes.Meshes[2])
         {
             return 2;
         }
 
-        if (obj == PlaceableMeshes[3])
+        if (obj == ThemeMeshes.Meshes[3])
         {
             return 3;
         }
 
-        if (obj == PlaceableMeshes[4])
+        if (obj == ThemeMeshes.Meshes[4])
         {
             return 4;
         }
 
-        if (obj == PlaceableMeshes[5])
+        if (obj == ThemeMeshes.Meshes[5])
         {
             return 5;
         }
 
-        if (obj == PlaceableMeshes[6])
+        if (obj == ThemeMeshes.Meshes[6])
         {
             return 6;
         }
-        if (obj == PlaceableMeshes[7])
+        if (obj == ThemeMeshes.Meshes[7])
         {
             return 7;
         }
-        if (obj == PlaceableMeshes[8])
+        if (obj == ThemeMeshes.Meshes[8])
         {
             return 8;
         }
-        if (obj == PlaceableMeshes[9])
+        if (obj == ThemeMeshes.Meshes[9])
         {
             return 9;
         }
@@ -336,31 +336,31 @@ public class LevelEditorManager : MonoBehaviour
                 node.MeshObj = go;
                 node.MeshIndex = SelectedObjIndex;
                 validated = false;
-                if (SelectedObj == PlaceableMeshes[6] || SelectedObj == PlaceableMeshes[7] || SelectedObj == PlaceableMeshes[8] ||SelectedObj == PlaceableMeshes[9])
+                if (SelectedObj == ThemeMeshes.Meshes[6] || SelectedObj == ThemeMeshes.Meshes[7] || SelectedObj == ThemeMeshes.Meshes[8] ||SelectedObj == ThemeMeshes.Meshes[9])
                 {
                     node.EnemyTarget = true;
                     node.Walkable = true;
                     node.Buildable = false;
                     node.Waypoint = true;
                 }
-                else if (SelectedObj == PlaceableMeshes[5])
+                else if (SelectedObj == ThemeMeshes.Meshes[5])
                 {
                     node.Spawn = true;
                     node.Walkable = true;
                     node.Buildable = false;
                     node.Waypoint = true;
                 }
-                else if (SelectedObj != PlaceableMeshes[0])
+                else if (SelectedObj != ThemeMeshes.Meshes[0])
                 {
                     node.Walkable = true;
                     node.Buildable = false;
-                    if (SelectedObj == PlaceableMeshes[4])
+                    if (SelectedObj == ThemeMeshes.Meshes[4])
                     {
                         node.Waypoint = true;
                     }
                 }
 
-                if (SelectedObj == PlaceableMeshes[0])
+                if (SelectedObj == ThemeMeshes.Meshes[0])
                 {
                     node.Walkable = false;
                     node.Buildable = true;

@@ -3023,17 +3023,7 @@ MonoBehaviour:
   ValidateSaveUIPanel: {fileID: 39022873}
   ButtonPrefab: {fileID: 5314383854378629337, guid: ea7483c4eaa23954ab33c78a7c322d66,
     type: 3}
-  PlaceableMeshes:
-  - {fileID: 8192726932342792941, guid: e860a72e9762d4b4384c09dcbc25e2f9, type: 3}
-  - {fileID: 2866153099947980839, guid: 93796ed8bcd488041b00a0c5fcdf73e3, type: 3}
-  - {fileID: 5224081656237918216, guid: a8d8cfa03cbd9c84db67d82cbc41a1bf, type: 3}
-  - {fileID: 1241931208944906638, guid: 896be203215d55b41a6033ef5bece677, type: 3}
-  - {fileID: 7837925074778960705, guid: a94ae32382343da43bb8ae6e76b6f9b9, type: 3}
-  - {fileID: 5494861198712156196, guid: fab7182b20e6c4a43bf9aa2d2ad73aec, type: 3}
-  - {fileID: 4801589219472748104, guid: 73d9f4f8ee3fdc346a614e15e0154b90, type: 3}
-  - {fileID: 4542963361780432370, guid: c829b3431bfc4c540a6c78b8ebaa9ca4, type: 3}
-  - {fileID: 7039226456081720509, guid: b1fef40ddc515e240bad293f34a08191, type: 3}
-  - {fileID: 106821657139901925, guid: fc9be678436af30469b885c5ce87e676, type: 3}
+  ThemeMeshes: {fileID: 11400000, guid: 37672f462fd5b3241a22065fb64eefa9, type: 2}
 --- !u!1 &1493266511
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "New Level", menuName = "Project Divine/Level")]
+
 public class LevelDataSO : ScriptableObject
 {
     public string LevelName;

@@ -16,7 +16,7 @@ public class Grid : MonoBehaviour
     private GridNode[,] grid;
 
     public LevelDataSO LevelData;
-    public List<GameObject> PlaceableMeshes;
+    public LevelThemeSO ThemeMeshes;
 
     private GridNode[,] levelDataGrid;
     //private int[,] levelDataObj;
@@ -52,11 +52,11 @@ public class Grid : MonoBehaviour
                                   Vector3.forward * (y * GlobalData.GridNodeSize + GridNodeRadius);
 
                 grid[x, y] = new GridNode(levelDataGrid[x, y].Walkable, levelDataGrid[x, y].Buildable,
-                    PlaceableMeshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
+                    ThemeMeshes.Meshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
                     levelDataGrid[x, y].EnemyTarget,
                     levelDataGrid[x, y].Waypoint, nodePos, x, y);
 
-                var go = Instantiate(PlaceableMeshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
+                var go = Instantiate(ThemeMeshes.Meshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
                 grid[x, y].MeshObj = go;
                 
                 
