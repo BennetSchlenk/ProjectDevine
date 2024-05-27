@@ -164,6 +164,9 @@ MonoBehaviour:
   - {fileID: 7837925074778960705, guid: a94ae32382343da43bb8ae6e76b6f9b9, type: 3}
   - {fileID: 5494861198712156196, guid: fab7182b20e6c4a43bf9aa2d2ad73aec, type: 3}
   - {fileID: 4801589219472748104, guid: 73d9f4f8ee3fdc346a614e15e0154b90, type: 3}
+  - {fileID: 4542963361780432370, guid: c829b3431bfc4c540a6c78b8ebaa9ca4, type: 3}
+  - {fileID: 7039226456081720509, guid: b1fef40ddc515e240bad293f34a08191, type: 3}
+  - {fileID: 106821657139901925, guid: fc9be678436af30469b885c5ce87e676, type: 3}
 --- !u!4 &119989944
 Transform:
   m_ObjectHideFlags: 0

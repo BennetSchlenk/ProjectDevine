@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Level", menuName = "Project Divine/Level")]
 public class LevelDataSO : ScriptableObject
@@ -11,5 +12,5 @@ public class LevelDataSO : ScriptableObject
     public List<GridNode> Grid;
     public int GridX;
     public int GridY;
-    public List<Vector3> Waypoints;
+    public List<WaypointData> LevelWaypoints;
 }

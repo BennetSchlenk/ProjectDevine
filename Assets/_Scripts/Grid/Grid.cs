@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class Grid : MonoBehaviour
 {
     public bool ShowGizmos;
 
+    [HideInInspector]
     public int2 GridSize;
 
     [Tooltip("uniform size of each grid node")]
@@ -60,7 +62,7 @@ public class Grid : MonoBehaviour
                 
                 if (levelDataGrid[x, y].Spawn)
                 {
-                    go.AddComponent<Waypoints>().WaypointsList = LevelData.Waypoints;
+                    go.AddComponent<WaypointsContainer>().WaypointsList = LevelData.LevelWaypoints.First(w => (w.NodePos.x == x && w.NodePos.y == y)).Waypoints;
                 }
             }
         }

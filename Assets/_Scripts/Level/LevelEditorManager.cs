@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Mathematics;
 using UnityEditor;
@@ -27,7 +28,7 @@ public class LevelEditorManager : MonoBehaviour
     private bool validated;
     private GameObject[,] gridObj;
     private int[,] gridObjIndex;
-    private List<Vector3> waypoints;
+    private List<WaypointData> levelWaypoints;
 
 
     public Button generateButton;
@@ -48,7 +49,7 @@ public class LevelEditorManager : MonoBehaviour
 
     private void Awake()
     {
-        waypoints = new List<Vector3>();
+        levelWaypoints = new List<WaypointData>();
         buildDir = RotationDirections.Up;
         SelectedObj = null;
         gridGenerated = false;
@@ -95,7 +96,7 @@ public class LevelEditorManager : MonoBehaviour
         obj.GridObj = GridConversionUtility.GridToList(gridObjIndex);
         obj.GridX = gridGen.grid.GetLength(0);
         obj.GridY = gridGen.grid.GetLength(1);
-        obj.Waypoints = waypoints;
+        obj.LevelWaypoints = levelWaypoints;
         obj.LevelName = levelNameInput.text;
 
         UnityEditor.AssetDatabase.CreateAsset(obj, path);
@@ -106,10 +107,10 @@ public class LevelEditorManager : MonoBehaviour
 
     private void ValidateOnClick()
     {
-        waypoints.Clear();
+        levelWaypoints.Clear();
         int targets = 0;
         int spawns = 0;
-        GridNode spawnNode = null;
+        List<GridNode> spawnNodes = new List<GridNode>();
         gridObj = new GameObject[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
         gridObjIndex = new int[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
 
@@ -122,7 +123,7 @@ public class LevelEditorManager : MonoBehaviour
                 if (gridGen.grid[x, y].Spawn)
                 {
                     spawns++;
-                    spawnNode = gridGen.grid[x, y];
+                    spawnNodes.Add(gridGen.grid[x, y]);
                 }
                 else if (gridGen.grid[x, y].EnemyTarget)
                 {
@@ -131,50 +132,59 @@ public class LevelEditorManager : MonoBehaviour
             }
         }
 
-        if (targets == 1 && spawns == 1)
+        if (targets == 1 && spawns >= 1)
         {
-            bool targetFound = false;
-            GridNode last = spawnNode;
-            waypoints = new List<Vector3>();
+            List<Vector3> waypoints = new List<Vector3>();
             List<GridNode> nodePath = new List<GridNode>();
-            nodePath.Add(spawnNode);
-            waypoints.Add(new Vector3(spawnNode.Position.x,-0.5f,spawnNode.Position.z));
-
-            while (!targetFound)
+            for (int n = 0; n < spawnNodes.Count; n++)
             {
-                var neighbours = GetNeighbours(last);
+                bool targetFound = false;
+                GridNode last = spawnNodes[n];
+                waypoints.Clear();
+                nodePath.Clear();
+                nodePath.Add(spawnNodes[n]);
+                waypoints.Add(new Vector3(spawnNodes[n].Position.x, -0.5f, spawnNodes[n].Position.z));
 
-                for (int i = 0; i < neighbours.Count; i++)
+                while (!targetFound)
                 {
-                    if (neighbours[i].Walkable && !nodePath.Contains(neighbours[i]))
+                    var neighbours = GetNeighbours(last);
+
+                    for (int i = 0; i < neighbours.Count; i++)
                     {
-                        last = neighbours[i];
-                        nodePath.Add(neighbours[i]);
-                        if (neighbours[i].Waypoint)
+                        if (neighbours[i].Walkable && !nodePath.Contains(neighbours[i]))
                         {
-                            waypoints.Add(new Vector3(neighbours[i].Position.x,-0.5f,neighbours[i].Position.z));
-                        }
+                            last = neighbours[i];
+                            nodePath.Add(neighbours[i]);
+                            if (neighbours[i].Waypoint)
+                            {
+                                waypoints.Add(new Vector3(neighbours[i].Position.x, -0.5f, neighbours[i].Position.z));
+                            }
 
-                        if (neighbours[i].EnemyTarget)
-                        {
-                            targetFound = true;
-                        }
+                            if (neighbours[i].EnemyTarget)
+                            {
+                                targetFound = true;
+                            }
 
-                        break;
+                            break;
+                        }
                     }
                 }
+                levelWaypoints.Add(new WaypointData()
+                {
+                    NodePos = new int2(nodePath[0].GridX,nodePath[0].GridY),
+                    Waypoints = waypoints.ToList()
+                });
+                if (spawnNodes[n].MeshObj.TryGetComponent<WaypointsContainer>(out var waypointsComponent))
+                {
+                    waypointsComponent.WaypointsList = waypoints;
+                }
+                else
+                {
+                    spawnNodes[n].MeshObj.AddComponent<WaypointsContainer>().WaypointsList = waypoints;
+                }
             }
-
             validated = true;
             validateButton.GetComponent<Image>().color = Color.green;
-            if (spawnNode.MeshObj.TryGetComponent<Waypoints>(out var waypointsComponent))
-            {
-                waypointsComponent.WaypointsList = waypoints;
-            }
-            else
-            {
-                spawnNode.MeshObj.AddComponent<Waypoints>().WaypointsList = waypoints;
-            }
         }
     }
 
@@ -213,6 +223,18 @@ public class LevelEditorManager : MonoBehaviour
         if (obj == PlaceableMeshes[6])
         {
             return 6;
+        }
+        if (obj == PlaceableMeshes[7])
+        {
+            return 7;
+        }
+        if (obj == PlaceableMeshes[8])
+        {
+            return 8;
+        }
+        if (obj == PlaceableMeshes[9])
+        {
+            return 9;
         }
 
         return 2000;
@@ -314,7 +336,7 @@ public class LevelEditorManager : MonoBehaviour
                 node.MeshObj = go;
                 node.MeshIndex = SelectedObjIndex;
                 validated = false;
-                if (SelectedObj == PlaceableMeshes[6])
+                if (SelectedObj == PlaceableMeshes[6] || SelectedObj == PlaceableMeshes[7] || SelectedObj == PlaceableMeshes[8] ||SelectedObj == PlaceableMeshes[9])
                 {
                     node.EnemyTarget = true;
                     node.Walkable = true;
