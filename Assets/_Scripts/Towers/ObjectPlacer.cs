@@ -33,7 +33,7 @@ public class ObjectPlacer : MonoBehaviour
         }
 
         if (grid  == null)
-            Debug.LogError("Grid is not assigned to ObjectPlacer!");
+            grid = GameObject.FindObjectOfType<Grid>();
 
         var gridTowersTr = grid.transform.Find("Towers");
         if (gridTowersTr != null)
