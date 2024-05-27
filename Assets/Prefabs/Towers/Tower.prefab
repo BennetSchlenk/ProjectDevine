@@ -446,7 +446,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  attackTargetType: 2
+  attackTargetType: 0
   projectile: {fileID: 5590571820964772190, guid: 69f6173e0d235f94d965acbb71e8874e,
     type: 3}
   projectileSpawnPoints:

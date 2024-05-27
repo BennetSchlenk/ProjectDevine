@@ -143,6 +143,6 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     private void UpdateRange()
     {
-        rangeGameObject.transform.localScale = new Vector3(TowerData.Range + baseTowerData.Range, 0.01f, TowerData.Range + baseTowerData.Range);
+        rangeGameObject.transform.localScale = new Vector3((TowerData.Range + baseTowerData.Range) * 2, 0.01f, (TowerData.Range + baseTowerData.Range) * 2);
     }
 }
