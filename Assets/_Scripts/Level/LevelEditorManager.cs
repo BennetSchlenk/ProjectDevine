@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -26,7 +28,7 @@ public class LevelEditorManager : MonoBehaviour
     private bool validated;
     private GameObject[,] gridObj;
     private int[,] gridObjIndex;
-    private List<Vector3> waypoints;
+    private List<WaypointData> levelWaypoints;
 
 
     public Button generateButton;
@@ -42,12 +44,12 @@ public class LevelEditorManager : MonoBehaviour
     public GameObject MeshSelectionUIPanel;
     public GameObject ValidateSaveUIPanel;
     public GameObject ButtonPrefab;
-    public List<GameObject> PlaceableMeshes;
+    public LevelThemeSO ThemeMeshes;
 
 
     private void Awake()
     {
-        waypoints = new List<Vector3>();
+        levelWaypoints = new List<WaypointData>();
         buildDir = RotationDirections.Up;
         SelectedObj = null;
         gridGenerated = false;
@@ -61,16 +63,16 @@ public class LevelEditorManager : MonoBehaviour
         validateButton.onClick.AddListener(ValidateOnClick);
         saveButton.onClick.AddListener(SaveOnClick);
 
-        for (int i = 0; i < PlaceableMeshes.Count; i++)
+        for (int i = 0; i < ThemeMeshes.Meshes.Count; i++)
         {
             var go = Instantiate(ButtonPrefab, MeshSelectionUIPanel.transform);
             Button button = go.GetComponent<Button>();
             Image image = go.GetComponent<Image>();
-            var tex = AssetPreview.GetAssetPreview(PlaceableMeshes[i]);
+            var tex = AssetPreview.GetAssetPreview(ThemeMeshes.Meshes[i]);
             Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, 100f, 100f), new Vector2(0.5f, 0.5f), 100.0f);
             image.sprite = sprite;
             var i1 = i;
-            button.onClick.AddListener(() => SetSelectedMesh(PlaceableMeshes[i1]));
+            button.onClick.AddListener(() => SetSelectedMesh(ThemeMeshes.Meshes[i1]));
         }
     }
 
@@ -78,6 +80,7 @@ public class LevelEditorManager : MonoBehaviour
     {
         ChangeBuildingDirection();
         DisplayPreviewObj();
+        RemovePreviewAndSelectedObj();
         PlaceNodeMeshObj();
     }
 
@@ -93,7 +96,7 @@ public class LevelEditorManager : MonoBehaviour
         obj.GridObj = GridConversionUtility.GridToList(gridObjIndex);
         obj.GridX = gridGen.grid.GetLength(0);
         obj.GridY = gridGen.grid.GetLength(1);
-        obj.Waypoints = waypoints;
+        obj.LevelWaypoints = levelWaypoints;
         obj.LevelName = levelNameInput.text;
 
         UnityEditor.AssetDatabase.CreateAsset(obj, path);
@@ -104,10 +107,10 @@ public class LevelEditorManager : MonoBehaviour
 
     private void ValidateOnClick()
     {
-        waypoints.Clear();
+        levelWaypoints.Clear();
         int targets = 0;
         int spawns = 0;
-        GridNode spawnNode = null;
+        List<GridNode> spawnNodes = new List<GridNode>();
         gridObj = new GameObject[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
         gridObjIndex = new int[gridGen.grid.GetLength(0), gridGen.grid.GetLength(1)];
 
@@ -120,7 +123,7 @@ public class LevelEditorManager : MonoBehaviour
                 if (gridGen.grid[x, y].Spawn)
                 {
                     spawns++;
-                    spawnNode = gridGen.grid[x, y];
+                    spawnNodes.Add(gridGen.grid[x, y]);
                 }
                 else if (gridGen.grid[x, y].EnemyTarget)
                 {
@@ -129,88 +132,109 @@ public class LevelEditorManager : MonoBehaviour
             }
         }
 
-        if (targets == 1 && spawns == 1)
+        if (targets == 1 && spawns >= 1)
         {
-            bool targetFound = false;
-            GridNode last = spawnNode;
-            waypoints = new List<Vector3>();
+            List<Vector3> waypoints = new List<Vector3>();
             List<GridNode> nodePath = new List<GridNode>();
-            nodePath.Add(spawnNode);
-            waypoints.Add(new Vector3(spawnNode.Position.x,-0.5f,spawnNode.Position.z));
-
-            while (!targetFound)
+            for (int n = 0; n < spawnNodes.Count; n++)
             {
-                var neighbours = GetNeighbours(last);
+                bool targetFound = false;
+                GridNode last = spawnNodes[n];
+                waypoints.Clear();
+                nodePath.Clear();
+                nodePath.Add(spawnNodes[n]);
+                waypoints.Add(new Vector3(spawnNodes[n].Position.x, -0.5f, spawnNodes[n].Position.z));
 
-                for (int i = 0; i < neighbours.Count; i++)
+                while (!targetFound)
                 {
-                    if (neighbours[i].Walkable && !nodePath.Contains(neighbours[i]))
+                    var neighbours = GetNeighbours(last);
+
+                    for (int i = 0; i < neighbours.Count; i++)
                     {
-                        last = neighbours[i];
-                        nodePath.Add(neighbours[i]);
-                        if (neighbours[i].Waypoint)
+                        if (neighbours[i].Walkable && !nodePath.Contains(neighbours[i]))
                         {
-                            waypoints.Add(new Vector3(neighbours[i].Position.x,-0.5f,neighbours[i].Position.z));
-                        }
+                            last = neighbours[i];
+                            nodePath.Add(neighbours[i]);
+                            if (neighbours[i].Waypoint)
+                            {
+                                waypoints.Add(new Vector3(neighbours[i].Position.x, -0.5f, neighbours[i].Position.z));
+                            }
 
-                        if (neighbours[i].EnemyTarget)
-                        {
-                            targetFound = true;
-                        }
+                            if (neighbours[i].EnemyTarget)
+                            {
+                                targetFound = true;
+                            }
 
-                        break;
+                            break;
+                        }
                     }
                 }
+                levelWaypoints.Add(new WaypointData()
+                {
+                    NodePos = new int2(nodePath[0].GridX,nodePath[0].GridY),
+                    Waypoints = waypoints.ToList()
+                });
+                if (spawnNodes[n].MeshObj.TryGetComponent<WaypointsContainer>(out var waypointsComponent))
+                {
+                    waypointsComponent.WaypointsList = waypoints;
+                }
+                else
+                {
+                    spawnNodes[n].MeshObj.AddComponent<WaypointsContainer>().WaypointsList = waypoints;
+                }
             }
-
             validated = true;
             validateButton.GetComponent<Image>().color = Color.green;
-            if (spawnNode.MeshObj.TryGetComponent<Waypoints>(out var waypointsComponent))
-            {
-                waypointsComponent.WaypointsList = waypoints;
-            }
-            else
-            {
-                spawnNode.MeshObj.AddComponent<Waypoints>().WaypointsList = waypoints;
-            }
         }
     }
 
     private int MeshObjToInt(GameObject obj)
     {
-        if (obj == PlaceableMeshes[0])
+        if (obj == ThemeMeshes.Meshes[0])
         {
             return 0;
         }
 
-        if (obj == PlaceableMeshes[1])
+        if (obj == ThemeMeshes.Meshes[1])
         {
             return 1;
         }
 
-        if (obj == PlaceableMeshes[2])
+        if (obj == ThemeMeshes.Meshes[2])
         {
             return 2;
         }
 
-        if (obj == PlaceableMeshes[3])
+        if (obj == ThemeMeshes.Meshes[3])
         {
             return 3;
         }
 
-        if (obj == PlaceableMeshes[4])
+        if (obj == ThemeMeshes.Meshes[4])
         {
             return 4;
         }
 
-        if (obj == PlaceableMeshes[5])
+        if (obj == ThemeMeshes.Meshes[5])
         {
             return 5;
         }
 
-        if (obj == PlaceableMeshes[6])
+        if (obj == ThemeMeshes.Meshes[6])
         {
             return 6;
+        }
+        if (obj == ThemeMeshes.Meshes[7])
+        {
+            return 7;
+        }
+        if (obj == ThemeMeshes.Meshes[8])
+        {
+            return 8;
+        }
+        if (obj == ThemeMeshes.Meshes[9])
+        {
+            return 9;
         }
 
         return 2000;
@@ -256,6 +280,14 @@ public class LevelEditorManager : MonoBehaviour
         }
     }
 
+    private void RemovePreviewAndSelectedObj()
+    {
+        if (!Mouse.current.rightButton.wasPressedThisFrame) return;
+        SelectedObj = null;
+        Destroy(previewObj);
+        previewObj = null;
+    }
+
     private float GetYRotationFromBuildDir()
     {
         switch (buildDir)
@@ -290,7 +322,7 @@ public class LevelEditorManager : MonoBehaviour
     private void PlaceNodeMeshObj()
     {
         if (!Mouse.current.leftButton.wasPressedThisFrame || !gridGenerated) return;
-        if (GetRaycastHitPos(out var hitPos))
+        if (GetRaycastHitPos(out var hitPos) && !EventSystem.current.IsPointerOverGameObject())
         {
             var node = gridGen.NodeFromWorldPosition(hitPos);
             if (node != null && node.MeshObj != SelectedObj && SelectedObj != null)
@@ -303,33 +335,32 @@ public class LevelEditorManager : MonoBehaviour
                 node.MeshYRotation = (int)GetYRotationFromBuildDir();
                 node.MeshObj = go;
                 node.MeshIndex = SelectedObjIndex;
-                ResetBuildDirection();
                 validated = false;
-                if (SelectedObj == PlaceableMeshes[6])
+                if (SelectedObj == ThemeMeshes.Meshes[6] || SelectedObj == ThemeMeshes.Meshes[7] || SelectedObj == ThemeMeshes.Meshes[8] ||SelectedObj == ThemeMeshes.Meshes[9])
                 {
                     node.EnemyTarget = true;
                     node.Walkable = true;
                     node.Buildable = false;
                     node.Waypoint = true;
                 }
-                else if (SelectedObj == PlaceableMeshes[5])
+                else if (SelectedObj == ThemeMeshes.Meshes[5])
                 {
                     node.Spawn = true;
                     node.Walkable = true;
                     node.Buildable = false;
                     node.Waypoint = true;
                 }
-                else if (SelectedObj != PlaceableMeshes[0])
+                else if (SelectedObj != ThemeMeshes.Meshes[0])
                 {
                     node.Walkable = true;
                     node.Buildable = false;
-                    if (SelectedObj == PlaceableMeshes[4])
+                    if (SelectedObj == ThemeMeshes.Meshes[4])
                     {
                         node.Waypoint = true;
                     }
                 }
 
-                if (SelectedObj == PlaceableMeshes[0])
+                if (SelectedObj == ThemeMeshes.Meshes[0])
                 {
                     node.Walkable = false;
                     node.Buildable = true;
@@ -367,6 +398,7 @@ public class LevelEditorManager : MonoBehaviour
     {
         SelectedObj = obj;
         SelectedObjIndex = MeshObjToInt(obj);
+        ResetBuildDirection();
 
         if (previewObj != null)
         {
