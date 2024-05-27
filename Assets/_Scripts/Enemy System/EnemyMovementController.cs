@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EnemyMovementController : MonoBehaviour
 {
+    
+    [SerializeField] private float reachWaypointTolerance = .3f;
 
     public bool IsMoving {  get; private set; }
+    public Vector3 CurrentTargetPosition { get { return waypoints[currentWayPointIndex]; } }
 
     // cached vars
     private Enemy enemy;
+    private List<Vector3> waypoints = new();
+
+    private int currentWayPointIndex = 0;
+    
 
     #region Unity Callbacks
-        
+
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
@@ -21,42 +29,54 @@ public class EnemyMovementController : MonoBehaviour
 
     private void Update()
     {
-        
+        if (IsMoving)
+        {
+            MoveEnemy();
+        }
     }
 
     #endregion
 
-    public void StartRandomMovement()
+    public void StartMoving(List<Vector3> waypoints)
     {
-        // Generate random direction vector
-        Vector2 randomDirection = Random.insideUnitCircle.normalized;
-
-        // Generate random distance between 5 and 15 units
-        float randomDistance = Random.Range(5f, 15f);
-
-        // Calculate target position based on direction and distance
-        Vector3 targetPosition = gameObject.transform.position + new Vector3(randomDirection.x, 0f, randomDirection.y) * randomDistance;
-
-        // Move the object towards the target position with fixed speed
-        StartCoroutine(MoveToTarget(targetPosition, enemy.Stats.MovementSpeed));
+        this.waypoints = waypoints;
+        Assert.IsTrue(waypoints.Count > 0);
+        ChangeToNextWaypoint(); // go directly to next as first item is the spawn point
+        IsMoving = true;
     }
 
-    IEnumerator MoveToTarget(Vector3 target, float speed)
+    private void MoveEnemy()
     {
-        while (Vector2.Distance(transform.position, target) > 0.1f)
+
+        Vector3 destinationDirection = CurrentTargetPosition - transform.position;
+        destinationDirection.y = 0f;
+
+        float destinationDistance = destinationDirection.magnitude;
+
+        if (destinationDistance >= reachWaypointTolerance)
         {
-            // Calculate movement direction
-            Vector2 direction = target - transform.position;
-
-            // Normalize the direction to get a unit vector (avoid faster diagonal movement)
-            direction.Normalize();
-
-            // Move towards the target at fixed speed
-            transform.Translate(direction * speed * Time.deltaTime);
-
-            yield return null;
+            Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemy.Stats.RotationSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * enemy.Stats.MovementSpeed * Time.deltaTime);
         }
+        else
+        {
+            ChangeToNextWaypoint();
+        }
+
     }
 
-
+    private void ChangeToNextWaypoint()
+    {
+        if (currentWayPointIndex + 1 < waypoints.Count)
+        {
+            currentWayPointIndex++;
+        }
+        else
+        {
+            Debug.LogWarning($"We should not see this: we run out of waypoints and [{enemy.gameObject.name}] is still alive and not destroyed by the core");
+            IsMoving = false;
+        }
+        
+    }
 }

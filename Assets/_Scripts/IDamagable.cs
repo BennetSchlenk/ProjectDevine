@@ -9,5 +9,10 @@ public interface IDamagable
     /// <param name="incomingDamage">incoming Damage</param>
     /// <returns> amount of damage dealt</returns>
     float TakeDamage(float incomingDamage);
-
+    
+    /// <summary>
+    /// This will kill the damage received instantly and returns their damage taken (all remaining health)
+    /// </summary>
+    /// <returns></returns>
+    float InstantKill();
 }
