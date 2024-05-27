@@ -79,7 +79,7 @@ public class ObjectPlacer : MonoBehaviour
             {
                 if (node == null)
                 {
-                    lastSelected.Deselect();
+                    lastSelected?.Deselect();
                 }
                 else
                 {

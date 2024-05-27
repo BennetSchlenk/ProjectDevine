@@ -8,6 +8,7 @@ public class EnemyStatsSO : ScriptableObject
     [SerializeField] private float initialLife;
     [SerializeField] private float initialArmor;
     [SerializeField] private float movementSpeed;
+    //[SerializeField] private float rotationSpeed;
     [SerializeField] private float rewardPointsForPlayer;
     [SerializeField] private float coreDamage;
 
@@ -15,6 +16,7 @@ public class EnemyStatsSO : ScriptableObject
     public float InitialLife => initialLife;
     public float InitialArmor => initialArmor;
     public float MovementSpeed => movementSpeed;
+    public float RotationSpeed => movementSpeed * 100f;
     public float RewardPointsForPlayer => rewardPointsForPlayer;
     public float CoreDamage => coreDamage;
 

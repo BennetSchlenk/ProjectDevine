@@ -101,6 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1274669514275036209, guid: 247a6efcd78209643a4bec97e093061d,
     type: 3}
-  timeBetweenSpawns: 2
-  maxSpawnCount: 20
+  timeBetweenSpawns: 1.5
+  maxSpawnCount: 30
   parentObjectForEnemies: {fileID: 4318194143665294682}

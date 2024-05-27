@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour, IDamagable
     public EnemyStatsSO Stats { get {  return stats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
+    
+
     #region Unity Callbacks
 
     private void Awake()
@@ -28,11 +30,17 @@ public class Enemy : MonoBehaviour, IDamagable
 
     #endregion
 
-    public void Init()
-    {
-        MovementController.StartRandomMovement();
+    public void Init(List<Vector3> waypoints)
+    {        
+        MovementController.StartMoving(waypoints);
     }
-    
+
+    public float InstantKill()
+    {
+        DestroySelf();
+        return Health;
+    }
+
     public float TakeDamage(float incomingAmount)
     {
         float damageTaken;
@@ -54,6 +62,15 @@ public class Enemy : MonoBehaviour, IDamagable
         return damageTaken;
     }
 
+    /// <summary>
+    /// Returns the damage dealt to the Core
+    /// </summary>
+    /// <returns>the damage dealt to the Core</returns>
+    public void ReachedCore(Core core)
+    {
+        core.TakeDamage(stats.CoreDamage);
+        InstantKill();
+    }
 
     private void DestroySelf()
     {
