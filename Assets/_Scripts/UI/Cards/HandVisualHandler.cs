@@ -19,6 +19,9 @@ public class HandVisualHandler : MonoBehaviour
     [Tooltip("Time that it takes for a card to move to discarded deck.")]
     [SerializeField] private float discardTime;
 
+    [Tooltip("Transform to take the Y position of cards that are hovered.")]
+    [SerializeField] private Transform hoverPositionTransform;
+
 
     private HandController handController;
     private BezierCurve _bezierCurve;
@@ -87,7 +90,11 @@ public class HandVisualHandler : MonoBehaviour
                 Vector3 cardFinalPosition = _bezierCurve.GetBezierPoint((float)i / (children.Count-1));
                 Quaternion cardFinalRotation = _bezierCurve.GetCardOrientation((float)i / (children.Count-1));
 
-                children[i].GetComponent<CardMovement>().MoveToPosition(cardFinalPosition, cardFinalRotation, reorderTime);
+                CardMovement cardMovement = children[i].GetComponent<CardMovement>();
+
+                cardMovement.MoveToPosition(cardFinalPosition, cardFinalRotation, reorderTime);
+                children[i].SetSiblingIndex(i);
+                cardMovement.SetHoveredPositionTransform(hoverPositionTransform);
             }
         }
         

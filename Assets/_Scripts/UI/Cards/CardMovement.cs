@@ -28,6 +28,7 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector3 targetPosition;
     private Vector3 targetRotation;
     private int currentSiblingIndex;
+    private Transform hoverPositionTransform;
 
     private void Awake()
     {
@@ -81,6 +82,11 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         _isMoving = true;
     }
 
+    public void SetHoveredPositionTransform(Transform gameObjectTransform)
+    {
+        hoverPositionTransform = gameObjectTransform;
+    }
+
     public bool CanBeUsed()
     {
         return true;
@@ -119,7 +125,11 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         Debug.Log("OnPointerEnter");
         targetScale = mouseOverLocalScale;
-        targetPosition = _targetPosition + positionOffset;
+
+        // Take the global Y position from hoverPositionTransform
+        var hoverPositionTransformY = hoverPositionTransform.position.y;
+
+        targetPosition = new Vector3(_targetPosition.x, hoverPositionTransformY, _targetPosition.z);
         targetRotation = new Vector3(_targetRotation.x, _targetRotation.y, 0f);
         // Get the current sibling index
         currentSiblingIndex = transform.GetSiblingIndex();
