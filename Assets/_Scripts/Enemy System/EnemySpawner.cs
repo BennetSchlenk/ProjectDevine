@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
     public static EnemySpawner Instance;
 
+    private Waypoints waypoints;
     
     #region Unity Callbacks
         
@@ -34,6 +36,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        // get waypoints from spawner
+        waypoints = GetComponent<Waypoints>();
+
         StartCoroutine(SpawnLoop());
     }
 
@@ -44,15 +49,18 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < maxSpawnCount; i++)
         {            
             yield return new WaitForSeconds(timeBetweenSpawns);
-            SpawnEnemy(enemyPrefab, gameObject.transform.position);
+            SpawnEnemy(enemyPrefab, waypoints.WaypointsList);
         }
 
     }
 
-    public void SpawnEnemy(GameObject gameObject, Vector3 spawnPosition)
+    public void SpawnEnemy(GameObject gameObject, List<Vector3> waypoints)
     {
         // check if we have set parent trasform
         Transform parentTransform = parentObjectForEnemies != null ? parentObjectForEnemies : transform;
+
+        Assert.IsTrue(waypoints.Count > 0);
+        Vector3 spawnPosition = waypoints[0];
 
         if (gameObject != null)
         {
@@ -63,7 +71,7 @@ public class EnemySpawner : MonoBehaviour
                         Quaternion.identity, // Spawn the enemy facing the player
                         parentTransform);
 
-            enemyGameObject.GetComponent<Enemy>().Init();
+            enemyGameObject.GetComponent<Enemy>().Init(waypoints);
         }
     }
 

@@ -566,6 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298552a4d42187846a46b9db6306f91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyObjectIfNotPlaced: 1
   testInitialObject: {fileID: 4465158043754759250, guid: 1d09363cb561bae45a80fe50eb4aa7b9,
     type: 3}
   grid: {fileID: 119989943}
