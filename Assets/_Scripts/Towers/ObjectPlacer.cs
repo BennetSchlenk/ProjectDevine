@@ -64,7 +64,7 @@ public class ObjectPlacer : MonoBehaviour
                     instantiatedObject.transform.position = node.Position;
 
                 // Try to place object in node
-                if (Mouse.current.leftButton.wasPressedThisFrame && node != null)
+                if (GetWasPlaceButtonTriggered() && node != null)
                     TryPlaceInNode(node);
 
                 // Stop placing if right mouse button is pressed
@@ -75,7 +75,7 @@ public class ObjectPlacer : MonoBehaviour
         else
         {
             // If not placing, select the current ISelectable object from the node
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            if (GetWasPlaceButtonTriggered())
             {
                 if (node == null)
                 {
@@ -85,7 +85,7 @@ public class ObjectPlacer : MonoBehaviour
                 {
                     if (node.TowerObj == null)
                     {
-                        lastSelected.Deselect();
+                        lastSelected?.Deselect();
                     }
                     else
                     {
@@ -101,7 +101,12 @@ public class ObjectPlacer : MonoBehaviour
                     }
                 }
             }
-        }   
+        }
+    }
+
+    private bool GetWasPlaceButtonTriggered()
+    {
+        return Mouse.current.leftButton.wasReleasedThisFrame;
     }
 
     #endregion
@@ -112,13 +117,18 @@ public class ObjectPlacer : MonoBehaviour
        StartPlacing();
     }
 
-    public void SetObjectToPlace(GameObject objectToPlace)
+    private void SetObjectToPlace(GameObject objectToPlace)
     {
+        if (this.objectToPlace != null && objectToPlace != null)
+            StopPlacing(true);
+
         this.objectToPlace = objectToPlace;
     }
 
-    public void StartPlacing()
+    public void StartPlacing(GameObject obj = null)
     {
+        if (obj != null) SetObjectToPlace(obj);
+
         isPlacing = true;
         instantiatedObject = Instantiate(objectToPlace);
         instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
@@ -141,9 +151,14 @@ public class ObjectPlacer : MonoBehaviour
 
     private void TryPlaceInNode(GridNode node)
     {
+        if (node == null) return;
+
+        Debug.Log("Trying to place object in node: " + node.GridX + " / " + node.GridY);
+
         if (node.Buildable)
         {
             // Place object
+            Debug.Log("Placing object in node: " + node.GridX + " / " + node.GridY);
             instantiatedObject.transform.position = node.Position;
             instantiatedObjectPlaceable.OnPlaced();
             node.Buildable = false;

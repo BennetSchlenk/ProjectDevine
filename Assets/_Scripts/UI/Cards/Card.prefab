@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ef9a85a5ac3d54884aaf560a912c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Prefab: {fileID: 4465158043754759250, guid: 1d09363cb561bae45a80fe50eb4aa7b9, type: 3}
 --- !u!114 &5765715733842261421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,5 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1159d34b0c1b1f64e97e28f6cd418b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleAnimationSpeed: 10
+  positionOffset: {x: 0, y: 0, z: 0}
   mouseOverLocalScale: {x: 0, y: 0, z: 0}
   arrowControlPoints: []

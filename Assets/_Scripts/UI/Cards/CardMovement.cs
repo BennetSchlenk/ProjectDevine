@@ -6,8 +6,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
+public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public event Action<CardMovement> OnCardDragged = delegate { };
+    public event Action<CardMovement> OnCardDropped = delegate { };
+    public event Action<CardMovement> OnCardRemove = delegate { };
+
     [SerializeField] private float scaleAnimationSpeed = 10f;
     [SerializeField] private Vector3 positionOffset;
 
@@ -29,6 +33,8 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector3 targetRotation;
     private int currentSiblingIndex;
     private Transform hoverPositionTransform;
+
+    #region Unity Callbacks
 
     private void Awake()
     {
@@ -65,6 +71,18 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
         
     }
+
+    private void OnDisable()
+    {
+        OnCardRemove(this);
+    }
+
+    private void OnDestroy()
+    {
+        OnCardRemove(this);
+    }
+
+    #endregion
 
     public void MoveToPosition(Vector3 position, Quaternion rotation, float time)
     {
@@ -156,8 +174,28 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * scaleAnimationSpeed);
     }
 
-    public void OnPointerMove(PointerEventData eventData)
+
+
+    public void OnPointerUp(PointerEventData eventData)
     {
-        //transform.localScale = mouseOverLocalScale;
+        Debug.Log("OnPointerUp: " + gameObject.name);
+        
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        OnCardDragged(this);
+        Debug.Log("OnBeginDrag: " + gameObject.name);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        OnCardDropped(this);
+        Debug.Log("OnEndDrag: " + gameObject.name);
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        Debug.Log("OnDrag: " + gameObject.name);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(HandVisualHandler))]
 public class HandController : MonoBehaviour
 {
     public event Action OnHandUpdate = delegate { };
@@ -10,20 +11,29 @@ public class HandController : MonoBehaviour
     [SerializeField] private BezierCurve bezierCurve;
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardsContainer;
+    [SerializeField] private ObjectPlacer objectPlacer;
+
     public Transform CardsContainer => cardsContainer;
 
     private List<BezierChildMovement> cards = new();
+    private HandVisualHandler handVisualHandler;
 
     #region Unity Callbacks
         
     private void Awake()
     {
-        
+        handVisualHandler = GetComponent<HandVisualHandler>();
+        handVisualHandler.OnCardDraggedAction += UseCard;
     }
 
     private void Start()
     {
         //Refresh();
+    }
+
+    private void OnDestroy()
+    {
+        handVisualHandler.OnCardDraggedAction -= UseCard;
     }
 
     #endregion
@@ -51,5 +61,19 @@ public class HandController : MonoBehaviour
         }
 
 
+    }
+
+
+    private void UseCard(CardMovement cardMovement)
+    {
+        Card card = cardMovement.GetComponent<Card>();
+        if (card == null) return;
+
+        if (card.Prefab != null)
+            objectPlacer.StartPlacing(card.Prefab);
+
+
+        //card.Use();
+        //Refresh();
     }
 }

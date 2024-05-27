@@ -7,6 +7,10 @@ using UnityEngine.XR;
 [RequireComponent(typeof(Hand))]
 public class HandVisualHandler : MonoBehaviour
 {
+    public event Action<CardMovement> OnCardDraggedAction = delegate { };
+    public event Action<CardMovement> OnCardDroppedAction = delegate { };
+    public event Action<CardMovement> OnCardRemoveAction = delegate { };
+
 
     [Header("Transition Settings (seconds)")]
 
@@ -27,6 +31,9 @@ public class HandVisualHandler : MonoBehaviour
     private BezierCurve _bezierCurve;
     private Transform cardsContainer;
 
+    // Drag & Drop
+    private bool isDragging = false;
+    private CardMovement draggingCard;
 
 
 
@@ -95,6 +102,9 @@ public class HandVisualHandler : MonoBehaviour
                 cardMovement.MoveToPosition(cardFinalPosition, cardFinalRotation, reorderTime);
                 children[i].SetSiblingIndex(i);
                 cardMovement.SetHoveredPositionTransform(hoverPositionTransform);
+                cardMovement.OnCardDragged += OnCardDragged;
+                cardMovement.OnCardDropped += OnCardDropped;
+                cardMovement.OnCardRemove += OnCardRemove;
             }
         }
         
@@ -116,4 +126,30 @@ public class HandVisualHandler : MonoBehaviour
         Debug.Log("OnHandUpdate()");
         OrderCardsInWorld();
     }
+
+    private void OnCardRemove(CardMovement cardMovement)
+    {
+        cardMovement.OnCardDragged -= OnCardDragged;
+        cardMovement.OnCardDropped -= OnCardDropped;
+        cardMovement.OnCardRemove -= OnCardRemove;
+        OnCardRemoveAction(cardMovement);
+    }
+
+    #region Drag & Drop
+
+    private void OnCardDragged(CardMovement cardMovement)
+    {
+        isDragging = true;
+        draggingCard = cardMovement;
+        Debug.Log("Dragging card: " + cardMovement.gameObject.name);
+        OnCardDraggedAction(cardMovement);
+    }
+
+    private void OnCardDropped(CardMovement cardMovement)
+    {
+        Debug.Log("Dropped card in: " + cardMovement.gameObject.name);
+        OnCardDroppedAction(cardMovement);
+    }
+
+    #endregion
 }
