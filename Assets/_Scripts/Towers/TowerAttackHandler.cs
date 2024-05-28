@@ -25,7 +25,9 @@ public class TowerAttackHandler : MonoBehaviour
     {
         var enemy = GetAttackTargetWithinRange(attackTargetType, towerData.Range);
         if (enemy == null)
-            Debug.Log("No enemy found to attack.");
+        {
+            //Debug.Log("No enemy found to attack.");
+        }
         else
         {
             if (IsEnemyInRange(enemy, towerData.Range))
@@ -188,7 +190,7 @@ public class TowerAttackHandler : MonoBehaviour
         foreach (DamageData damageData in damageDataList)
         {
             damagable.TakeDamage(damageData.Damage);
-            Debug.LogFormat("Dealing {0} damage to {1} ", damageData.Damage, damagable);
+            //Debug.LogFormat("Dealing {0} damage to {1} ", damageData.Damage, damagable);
         }
     }
 }
