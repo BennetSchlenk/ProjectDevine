@@ -1,36 +1,56 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Audio;
 
-    
+
+public enum VolumeType
+{
+    Master,
+    Music,
+    Effect
+}
+
+[System.Serializable]
+public class VolumeTypeItem
+{
+    public VolumeType volumeType;
+    public string mixerExposedParamName;
+}
+
 public class AudioManager : MonoBehaviour
 {
 	[Header("SoundEmitter setup")]
-	[SerializeField] AudioSource soundEmitterPrefab;
-	[SerializeField] int prewarmSize = 10;
+	[SerializeField] private AudioSource soundEmitterPrefab;
+	[SerializeField] private int prewarmSize = 10;
 
 	[Header("Music player setup")]
-	[SerializeField] SoundEmitter musicEmitter;
-	[SerializeField] List<AudioFileSO> musicFiles;
+	[SerializeField] private SoundEmitter musicEmitter;
+	[SerializeField] private List<AudioFileSO> musicFiles;
 
-    [Header("Audio control")]
-    [SerializeField] AudioMixer audioMixer = default;
-    [Range(0f, 1f)]
-    [SerializeField] float masterVolume = .8f;
-    [Range(0f, 1f)]
-    [SerializeField] float musicVolume = .8f;
-    [Range(0f, 1f)]
-    [SerializeField] float sfxVolume = .8f;
+	[Header("Audio control")]
+	[Tooltip("We're assuming the range [-mixerToSlider to 0dB] becomes [0 to 1]")]
+	[SerializeField] private float mixerToSlider = 80f;
+    [SerializeField] private AudioMixer audioMixer = default;
+	[SerializeField] private AudioVolumeUIManager volumeUIManager;
+    [SerializeField] private List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
 
     public static AudioManager Instance;
 
-    const string MASTER_VOLUME_PARAM_NAME = "MasterVolume";
-	const string MUSIC_VOLUME_PARAM_NAME = "MusicVolume";
-	const string SFX_VOLUME_PARAM_NAME = "SFXVolume";
+	public AudioMixer AudioMixer => audioMixer;
+	public bool IsMasterEnabled { get; private set; } = true;
+	public bool IsMusicEnabled { get; private set; } = true;
+    public bool IsEffectEnabled { get; private set; } = true;
 
-	private int currentMusicFileIndex;
+
+    //   const string MASTER_VOLUME_PARAM_NAME = "MasterVolume";
+    //const string MUSIC_VOLUME_PARAM_NAME = "MusicVolume";
+    //const string SFX_VOLUME_PARAM_NAME = "SFXVolume";
+
+    private int currentMusicFileIndex;
 	private AudioSourcePool soundEmitterPool;
 
     private void Awake()
@@ -45,6 +65,14 @@ public class AudioManager : MonoBehaviour
         }
 
         soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
+    }
+
+    private void Start()
+    {
+        if (volumeUIManager != null)
+        {
+			volumeUIManager.InitVolumeControllers();
+        }
     }
 
     private void OnEnable()
@@ -62,7 +90,12 @@ public class AudioManager : MonoBehaviour
 
 	private void HandleIfMusicFinishedPlaying(SoundEmitter soundEmitter)
     {
-        throw new NotImplementedException();
+		if (musicFiles.Count > 1)
+		{
+            currentMusicFileIndex = GetRandomIndexDifferentFromPrevious(currentMusicFileIndex, musicFiles.Count);
+
+            PlayMusicTrack(musicFiles[currentMusicFileIndex]);
+        }
     }
 
 	public void StartPlayingMusic()
@@ -71,9 +104,25 @@ public class AudioManager : MonoBehaviour
 		PlayMusicTrack(musicFiles[currentMusicFileIndex]);
 	}
 
+	private int GetRandomIndexDifferentFromPrevious(int prevInt, int max)
+	{
+		Assert.IsTrue(prevInt < 0 || prevInt >= max || max >= 1);
+
+		// Create the list using range
+		List<int> intList = new List<int>(Enumerable.Range(0, max));
+
+        // Remove element at the specified index
+        intList.RemoveAt(prevInt);
+
+		return intList[UnityEngine.Random.Range(0, max - 1)];
+    }
+
     public void PlayMusicTrack(AudioFileSO audioFile)
     {
-		musicEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);
+        if (IsMusicEnabled)
+        {
+			musicEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);
+        }
     }
 
 	public void StopMusicTrack()
@@ -88,43 +137,21 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(AudioFileSO audioFile)
     {
-		var soundEmitter = soundEmitterPool.Request();
-		soundEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);
+        if (IsEffectEnabled)
+        {
+			var soundEmitter = soundEmitterPool.Request();
+			soundEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);            
+        }
 	}
-
-    /// <summary>
-    /// This is only used in the Editor, to debug volumes.
-    /// It is called when any of the variables is changed, and will directly change the value of the volumes on the AudioMixer.
-    /// </summary>
-    void OnValidate()
-	{
-		if (Application.isPlaying)
-		{
-			SetGroupVolume(MASTER_VOLUME_PARAM_NAME, masterVolume);
-			SetGroupVolume(MUSIC_VOLUME_PARAM_NAME, musicVolume);
-			SetGroupVolume(SFX_VOLUME_PARAM_NAME, sfxVolume);
-		}
-	}
+	    
 
     #region Volume handling
 
-    public void ChangeMasterVolume(float newVolume)
+	public void ChangeVolume(VolumeType volumeType, float newVolume)
 	{
-		masterVolume = newVolume;
-		SetGroupVolume(MASTER_VOLUME_PARAM_NAME, masterVolume);
+		SetGroupVolume(GetVolumeTypeMixerName(volumeType), newVolume);
 	}
 
-    public void ChangeMusicVolume(float newVolume)
-	{
-		musicVolume = newVolume;
-		SetGroupVolume(MUSIC_VOLUME_PARAM_NAME, musicVolume);
-	}
-
-    public void ChangeSFXVolume(float newVolume)
-	{
-		sfxVolume = newVolume;
-		SetGroupVolume(SFX_VOLUME_PARAM_NAME, sfxVolume);
-	}
 
 	public void SetGroupVolume(string parameterName, float normalizedVolume)
 	{
@@ -153,14 +180,58 @@ public class AudioManager : MonoBehaviour
 	private float MixerValueToNormalized(float mixerValue)
 	{
 		// We're assuming the range [-80dB to 0dB] becomes [0 to 1]
-		return 1f + (mixerValue / 80f);
+		return 1f + (mixerValue / mixerToSlider);
 	}
 
 	private float NormalizedToMixerValue(float normalizedValue)
 	{
 		// We're assuming the range [0 to 1] becomes [-80dB to 0dB]
 		// This doesn't allow values over 0dB
-		return (normalizedValue - 1f) * 80f;
+		return (normalizedValue - 1f) * mixerToSlider;
+	}
+
+
+    public string GetVolumeTypeMixerName(VolumeType vt)
+    {
+        VolumeTypeItem desiredVolumeTypeItem = volumeExposedParamNames.Find(x => x.volumeType == vt);
+        if (desiredVolumeTypeItem != null)
+        {
+            return desiredVolumeTypeItem.mixerExposedParamName;
+        }
+        else
+        {
+            Debug.LogWarning($"The {desiredVolumeTypeItem.volumeType} volumeExposedParamNames entry was not found!");
+            return "NotFound";
+        }
+    }
+
+	public void ToggleVolumeOnOff(VolumeType volumeType, bool isOn)
+	{
+		switch (volumeType)
+		{
+			case VolumeType.Master:                
+                IsMasterEnabled = isOn; 
+				break;
+
+            case VolumeType.Music:
+				IsMusicEnabled = isOn;
+				if (isOn)
+				{
+					StartPlayingMusic();
+				} 
+				else 
+				{ 
+					StopMusicTrack(); 
+				}
+				break;
+
+			case VolumeType.Effect:
+				IsEffectEnabled = isOn;
+                break;
+
+			default:
+				break;
+		}
 	}
 
 }

@@ -85,7 +85,7 @@ public class ObjectPlacer : MonoBehaviour
                 {
                     if (node.TowerObj == null)
                     {
-                        lastSelected.Deselect();
+                        lastSelected?.Deselect();
                     }
                     else
                     {
