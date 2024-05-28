@@ -795,18 +795,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2007993602}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1529597928 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1135858307742548960, guid: e302a7894af6afa49b0a98658cf70503,
-    type: 3}
-  m_PrefabInstance: {fileID: 2007993602}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 298552a4d42187846a46b9db6306f91f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1678882651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,11 +1040,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cards Panel
       objectReference: {fileID: 0}
-    - target: {fileID: 7712495633374023732, guid: e302a7894af6afa49b0a98658cf70503,
+    - target: {fileID: 7630207189570118306, guid: e302a7894af6afa49b0a98658cf70503,
         type: 3}
-      propertyPath: objectPlacer
-      value: 
-      objectReference: {fileID: 1529597928}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7800300427963525399, guid: e302a7894af6afa49b0a98658cf70503,
         type: 3}
       propertyPath: m_Pivot.x

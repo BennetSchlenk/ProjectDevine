@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public event Action<CardMovement> OnCardClicked = delegate { };
     public event Action<CardMovement> OnCardDragged = delegate { };
     public event Action<CardMovement> OnCardDropped = delegate { };
     public event Action<CardMovement> OnCardRemove = delegate { };
@@ -38,7 +39,8 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void Awake()
     {
-
+        button = GetComponent<Button>();
+        button.onClick.AddListener(OnClick);
     }
 
     // Start is called before the first frame update
@@ -80,6 +82,7 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private void OnDestroy()
     {
         OnCardRemove(this);
+        button.onClick.RemoveListener(OnClick);
     }
 
     #endregion
@@ -141,7 +144,6 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("OnPointerEnter");
         targetScale = mouseOverLocalScale;
 
         // Take the global Y position from hoverPositionTransform
@@ -178,24 +180,29 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("OnPointerUp: " + gameObject.name);
+        //Debug.Log("OnPointerUp: " + gameObject.name);
         
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         OnCardDragged(this);
-        Debug.Log("OnBeginDrag: " + gameObject.name);
+        //Debug.Log("OnBeginDrag: " + gameObject.name);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         OnCardDropped(this);
-        Debug.Log("OnEndDrag: " + gameObject.name);
+        //Debug.Log("OnEndDrag: " + gameObject.name);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("OnDrag: " + gameObject.name);
+        //Debug.Log("OnDrag: " + gameObject.name);
+    }
+
+    private void OnClick()
+    {
+        OnCardClicked(this);
     }
 }

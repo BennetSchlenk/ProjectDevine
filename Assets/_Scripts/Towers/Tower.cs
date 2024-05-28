@@ -68,9 +68,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     public void OnPlaced()
     {
-        Debug.Log("Tower placed!", gameObject);
         isWorking = true;
-        Debug.Log("Tower is working: " + isWorking, gameObject);
         Deselect();
     }
 

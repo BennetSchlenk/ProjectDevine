@@ -7,6 +7,7 @@ using UnityEngine.XR;
 [RequireComponent(typeof(Hand))]
 public class HandVisualHandler : MonoBehaviour
 {
+    public event Action<CardMovement> OnCardClickedAction = delegate { };
     public event Action<CardMovement> OnCardDraggedAction = delegate { };
     public event Action<CardMovement> OnCardDroppedAction = delegate { };
     public event Action<CardMovement> OnCardRemoveAction = delegate { };
@@ -57,14 +58,19 @@ public class HandVisualHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void OnDestroy()
     {
         handController.OnHandUpdate -= OnHandUpdate;
+
+        OnCardDraggedAction = null;
+        OnCardDroppedAction = null;
+        OnCardRemoveAction = null;
     }
 
+    [ContextMenu("Order Cards in World")]
     public void OrderCardsInWorld()
     {
 
@@ -72,7 +78,7 @@ public class HandVisualHandler : MonoBehaviour
 
         if (children == null) return;
 
-        // If children.COunt is 0, then there is no need to reorder
+        // If children.Count is 0, then there is no need to reorder
         if (children.Count == 0) return;
         // If children.Count is 1, then there is no need to reorder
         if (children.Count == 1)
@@ -100,12 +106,19 @@ public class HandVisualHandler : MonoBehaviour
                 CardMovement cardMovement = children[i].GetComponent<CardMovement>();
 
                 cardMovement.MoveToPosition(cardFinalPosition, cardFinalRotation, reorderTime);
-                children[i].SetSiblingIndex(i);
-                cardMovement.SetHoveredPositionTransform(hoverPositionTransform);
-                cardMovement.OnCardDragged += OnCardDragged;
-                cardMovement.OnCardDropped += OnCardDropped;
-                cardMovement.OnCardRemove += OnCardRemove;
+                
             }
+        }
+
+        for (int i = 0; i < children.Count; i++)
+        {
+            CardMovement cardMovement = children[i].GetComponent<CardMovement>();
+            cardMovement.SetHoveredPositionTransform(hoverPositionTransform);
+            children[i].SetSiblingIndex(i);
+            cardMovement.OnCardDragged += OnCardDragged;
+            cardMovement.OnCardDropped += OnCardDropped;
+            cardMovement.OnCardRemove += OnCardRemove;
+            cardMovement.OnCardClicked += OnCardClicked;
         }
         
     }
@@ -132,8 +145,16 @@ public class HandVisualHandler : MonoBehaviour
         cardMovement.OnCardDragged -= OnCardDragged;
         cardMovement.OnCardDropped -= OnCardDropped;
         cardMovement.OnCardRemove -= OnCardRemove;
+        cardMovement.OnCardClicked -= OnCardClicked;
         OnCardRemoveAction(cardMovement);
     }
+
+    private void OnCardClicked(CardMovement cardMovement)
+    {
+        Debug.Log("Clicked card: " + cardMovement.gameObject.name);
+        OnCardClickedAction(cardMovement);
+    }
+
 
     #region Drag & Drop
 
@@ -141,7 +162,7 @@ public class HandVisualHandler : MonoBehaviour
     {
         isDragging = true;
         draggingCard = cardMovement;
-        Debug.Log("Dragging card: " + cardMovement.gameObject.name);
+        //Debug.Log("Dragging card: " + cardMovement.gameObject.name);
         OnCardDraggedAction(cardMovement);
     }
 
@@ -152,4 +173,6 @@ public class HandVisualHandler : MonoBehaviour
     }
 
     #endregion
+
+    
 }

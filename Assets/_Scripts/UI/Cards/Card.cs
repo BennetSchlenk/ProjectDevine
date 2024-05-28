@@ -6,6 +6,8 @@ public class Card : MonoBehaviour
 {
     public GameObject Prefab;
 
+    [SerializeField] private GameObject highlightFrame;
+
     #region Unity Callbacks
         
     private void Awake()
@@ -20,4 +22,9 @@ public class Card : MonoBehaviour
 
     #endregion
 
+
+    public void Highlight(bool toggle)
+    {
+        highlightFrame.SetActive(toggle);
+    }
 }
