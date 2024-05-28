@@ -5,13 +5,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class AudioVolumeUIManager : MonoBehaviour
-{
-    //[SerializeField] AudioMixer mixer;
-    //[SerializeField] List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
+{ 
 
-    AudioManager audioManager;
-    List<AudioVolumeSliderController> volumeControllers;
-
+    private AudioManager audioManager;
+    private List<AudioVolumeSliderController> volumeControllers;
 
     #region Unity Callbacks
 
@@ -28,7 +25,7 @@ public class AudioVolumeUIManager : MonoBehaviour
     {
         volumeControllers = GetComponentsInChildren<AudioVolumeSliderController>().ToList();
         audioManager = AudioManager.Instance;
-        volumeControllers.ForEach(x => x.Init(this));
+        volumeControllers.ForEach(x => x.Init(this, audioManager));
     }
 
 

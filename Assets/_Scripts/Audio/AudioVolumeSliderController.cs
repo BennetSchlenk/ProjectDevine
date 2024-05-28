@@ -18,7 +18,6 @@ public class AudioVolumeSliderController : MonoBehaviour
     private bool disableToggleEvent = false;
     private string volumeParameter;
     private AudioManager audioManager;
-    private AudioMixer mixer;
     private AudioVolumeUIManager volumeManager;
 
 
@@ -28,18 +27,18 @@ public class AudioVolumeSliderController : MonoBehaviour
     {
         //save sound levels
         PlayerPrefs.SetFloat(volumeParameter, slider.value);
+        PlayerPrefs.SetInt(volumeParameter + "Toggle", toggle.isOn ? 1 : 0);
     }
+
+    
 
     #endregion
 
-    public void Init(AudioVolumeUIManager volumeManager)
+    public void Init(AudioVolumeUIManager volumeManager, AudioManager audioManager)
     {
         this.volumeManager = volumeManager;
+        this.audioManager = audioManager;
 
-        audioManager = AudioManager.Instance;
-        Assert.IsTrue(audioManager);
-
-        mixer = audioManager.AudioMixer;
         volumeParameter = audioManager.GetVolumeTypeMixerName(type);
 
         slider.onValueChanged.AddListener(HandleSliderValueChanged);
@@ -47,11 +46,13 @@ public class AudioVolumeSliderController : MonoBehaviour
 
         // load and set volume
         float initVolumeValue = PlayerPrefs.GetFloat(volumeParameter, defaultValue);
+        bool initToggleValue = PlayerPrefs.GetInt(volumeParameter + "Toggle", 1) == 1;
 
         //mixer.SetFloat(volumeParameter, Mathf.Log10(initVolumeValue) * multiplier);
         audioManager.ChangeVolume(type, initVolumeValue);
 
-        toggle.isOn = initVolumeValue > slider.minValue;
+        //toggle.isOn = initVolumeValue > slider.minValue;
+        toggle.isOn = initToggleValue;
         slider.value = initVolumeValue;
     }
 

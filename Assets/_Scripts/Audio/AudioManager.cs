@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
 
 	[Header("Audio control")]
 	[Tooltip("We're assuming the range [-mixerToSlider to 0dB] becomes [0 to 1]")]
-	[SerializeField] private float mixerToSlider = 80f;
+	[SerializeField] private float mixerMultiplier = 20f;
     [SerializeField] private AudioMixer audioMixer = default;
 	[SerializeField] private AudioVolumeUIManager volumeUIManager;
     [SerializeField] private List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
@@ -72,7 +72,11 @@ public class AudioManager : MonoBehaviour
         if (volumeUIManager != null)
         {
 			volumeUIManager.InitVolumeControllers();
-        }
+		}
+		else
+		{
+			Debug.LogWarning("Add Volume UI Manager link!");
+		}
     }
 
     private void OnEnable()
@@ -104,19 +108,6 @@ public class AudioManager : MonoBehaviour
 		PlayMusicTrack(musicFiles[currentMusicFileIndex]);
 	}
 
-	private int GetRandomIndexDifferentFromPrevious(int prevInt, int max)
-	{
-		Assert.IsTrue(prevInt < 0 || prevInt >= max || max >= 1);
-
-		// Create the list using range
-		List<int> intList = new List<int>(Enumerable.Range(0, max));
-
-        // Remove element at the specified index
-        intList.RemoveAt(prevInt);
-
-		return intList[UnityEngine.Random.Range(0, max - 1)];
-    }
-
     public void PlayMusicTrack(AudioFileSO audioFile)
     {
         if (IsMusicEnabled)
@@ -133,6 +124,19 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
+    private int GetRandomIndexDifferentFromPrevious(int prevInt, int max)
+    {
+        Assert.IsTrue(prevInt < 0 || prevInt >= max || max >= 1);
+
+        // Create the list using range
+        List<int> intList = new List<int>(Enumerable.Range(0, max));
+
+        // Remove element at the specified index
+        intList.RemoveAt(prevInt);
+
+        return intList[UnityEngine.Random.Range(0, max - 1)];
+    }
+
     #endregion
 
     public void PlaySFX(AudioFileSO audioFile)
@@ -143,11 +147,11 @@ public class AudioManager : MonoBehaviour
 			soundEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);            
         }
 	}
-	    
+
 
     #region Volume handling
 
-	public void ChangeVolume(VolumeType volumeType, float newVolume)
+    public void ChangeVolume(VolumeType volumeType, float newVolume)
 	{
 		SetGroupVolume(GetVolumeTypeMixerName(volumeType), newVolume);
 	}
@@ -178,16 +182,13 @@ public class AudioManager : MonoBehaviour
 	// Both MixerValueNormalized and NormalizedToMixerValue functions are used for easier transformations
 	/// when using UI sliders normalized format
 	private float MixerValueToNormalized(float mixerValue)
-	{
-		// We're assuming the range [-80dB to 0dB] becomes [0 to 1]
-		return 1f + (mixerValue / mixerToSlider);
+	{		
+		return Mathf.Log10(mixerValue * mixerMultiplier);
 	}
 
 	private float NormalizedToMixerValue(float normalizedValue)
 	{
-		// We're assuming the range [0 to 1] becomes [-80dB to 0dB]
-		// This doesn't allow values over 0dB
-		return (normalizedValue - 1f) * mixerToSlider;
+		return Mathf.Log10(normalizedValue) * mixerMultiplier;
 	}
 
 
