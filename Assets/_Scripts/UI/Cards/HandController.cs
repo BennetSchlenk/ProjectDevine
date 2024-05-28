@@ -18,6 +18,7 @@ public class HandController : MonoBehaviour
 
     private List<BezierChildMovement> cards = new();
     private HandVisualHandler handVisualHandler;
+    private Card lastCardSelected;
 
     #region Unity Callbacks
         
@@ -77,7 +78,7 @@ public class HandController : MonoBehaviour
         Card card = cardMovement.GetComponent<Card>();
         if (card == null) return;
 
-        card.Highlight(true);
+        SelectCard(card, true);
 
         if (card.Prefab != null)
         {
@@ -101,7 +102,7 @@ public class HandController : MonoBehaviour
     private void OnCardNotUsed(Card card)
     {
         Debug.Log("-------------Card not used");
-        card.Highlight(false);
+        SelectCard(card, false);
     }
 
     private void OnCardRemoved(CardMovement cardMovement)
@@ -115,5 +116,15 @@ public class HandController : MonoBehaviour
         handVisualHandler.OrderCardsInWorld();
     }
 
+    private void SelectCard(Card card, bool highlight)
+    {
+        if (lastCardSelected != null)
+            lastCardSelected.Highlight(false);
+
+        lastCardSelected = card;
+
+        if (highlight)
+            card.Highlight(true);
+    }
 
 }
