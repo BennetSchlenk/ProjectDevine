@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ObjectPlacer : MonoBehaviour
@@ -17,6 +19,12 @@ public class ObjectPlacer : MonoBehaviour
     private float gridCellSize;
     private Transform towersContainerTransform;
     private ISelectable lastSelected;
+    private bool placementCalledFromClick; // Used to differentiate between click and drag placement
+    
+    // Parameters passed from the card to the object placer
+    private Action onPlacingSuccess;
+    private Action onPlacingFail;
+    private bool lastIsClick;
 
     #region Unity Callbacks
         
@@ -33,7 +41,7 @@ public class ObjectPlacer : MonoBehaviour
         }
 
         if (grid  == null)
-            Debug.LogError("Grid is not assigned to ObjectPlacer!");
+            grid = GameObject.FindObjectOfType<Grid>();
 
         var gridTowersTr = grid.transform.Find("Towers");
         if (gridTowersTr != null)
@@ -64,18 +72,21 @@ public class ObjectPlacer : MonoBehaviour
                     instantiatedObject.transform.position = node.Position;
 
                 // Try to place object in node
-                if (Mouse.current.leftButton.wasPressedThisFrame && node != null)
+                if (GetWasPlaceButtonTriggered() && node != null)
                     TryPlaceInNode(node);
 
                 // Stop placing if right mouse button is pressed
                 if (Mouse.current.rightButton.wasPressedThisFrame)
+                {
                     StopPlacing(true);
+                    onPlacingFail?.Invoke();
+                }
             }
         }
         else
         {
             // If not placing, select the current ISelectable object from the node
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            if (GetWasPlaceButtonTriggered())
             {
                 if (node == null)
                 {
@@ -85,7 +96,7 @@ public class ObjectPlacer : MonoBehaviour
                 {
                     if (node.TowerObj == null)
                     {
-                        lastSelected.Deselect();
+                        lastSelected?.Deselect();
                     }
                     else
                     {
@@ -101,7 +112,17 @@ public class ObjectPlacer : MonoBehaviour
                     }
                 }
             }
-        }   
+        }
+    }
+
+    private bool GetWasPlaceButtonTriggered()
+    {
+        if (placementCalledFromClick)
+        {
+                return Mouse.current.leftButton.wasPressedThisFrame && !EventSystem.current.IsPointerOverGameObject();
+        }
+        else
+            return placementCalledFromClick ? Mouse.current.leftButton.wasPressedThisFrame : Mouse.current.leftButton.wasReleasedThisFrame;
     }
 
     #endregion
@@ -112,13 +133,36 @@ public class ObjectPlacer : MonoBehaviour
        StartPlacing();
     }
 
-    public void SetObjectToPlace(GameObject objectToPlace)
+    /// <summary>
+    /// Set up the object to place and the actions to be called when placing is successful or fails.
+    /// Example: Call this method from a card click to set the object to place and the actions to be called when placing is successful or fails.
+    /// </summary>
+    /// <param name="objectToPlace">Prefab to instantiate</param>
+    /// <param name="onSuccess"></param>
+    /// <param name="onFail"></param>
+    /// <param name="isClick">If the player clicked a card (true) or dragged (false) to call this method</param>
+    public void SetUpPlacing(GameObject objectToPlace, Action onSuccess, Action onFail, bool isClick)
     {
+        SetObjectToPlace(objectToPlace);
+        onPlacingSuccess = onSuccess;
+        onPlacingFail = onFail;
+        lastIsClick = isClick;
+        StartPlacing(objectToPlace, isClick);
+    }
+
+    private void SetObjectToPlace(GameObject objectToPlace)
+    {
+        if (this.objectToPlace != null && objectToPlace != null)
+            StopPlacing(true);
+
         this.objectToPlace = objectToPlace;
     }
 
-    public void StartPlacing()
+    public void StartPlacing(GameObject obj = null, bool isClick = false)
     {
+        if (obj != null) SetObjectToPlace(obj);
+
+        placementCalledFromClick = isClick;
         isPlacing = true;
         instantiatedObject = Instantiate(objectToPlace);
         instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
@@ -139,23 +183,37 @@ public class ObjectPlacer : MonoBehaviour
             instantiatedObjectPlaceable = null;
     }
 
-    private void TryPlaceInNode(GridNode node)
+    private bool TryPlaceInNode(GridNode node)
     {
+        if (node == null)
+        {
+            onPlacingFail?.Invoke();
+            return false;
+        }
+
+        Debug.Log("Trying to place object in node: " + node.GridX + " / " + node.GridY);
+
         if (node.Buildable)
         {
             // Place object
+            Debug.Log("Placing object in node: " + node.GridX + " / " + node.GridY);
             instantiatedObject.transform.position = node.Position;
             instantiatedObjectPlaceable.OnPlaced();
             node.Buildable = false;
             node.TowerObj = instantiatedObject;
             instantiatedObject.transform.SetParent(towersContainerTransform);
             StopPlacing();
+            onPlacingSuccess?.Invoke();
+            return true;
         }
         else
         {
             Debug.Log("Node is not buildable!");
             if (destroyObjectIfNotPlaced)
                 StopPlacing(true);
+
+            onPlacingFail?.Invoke();
+            return false;
         }
     }
 
