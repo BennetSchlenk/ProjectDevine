@@ -7,6 +7,7 @@ public class Core : MonoBehaviour, IDamagable
 {
     [SerializeField] float initialHealth = 500f;
     [SerializeField] GameObject hitEffect;
+    private AudioManager audioManager;
 
     public float Health { get; set; }
 
@@ -19,6 +20,7 @@ public class Core : MonoBehaviour, IDamagable
 
     private void Start()
     {
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         Health = initialHealth;
     }
 
@@ -42,7 +44,7 @@ public class Core : MonoBehaviour, IDamagable
         {
             // Handle the damage taken, animations, effects, etc
             Debug.Log($"<color=#E60000>The Core took {damageTaken} damage</color>");
-
+            audioManager.PlayerLooseHPSound(this.transform.position);
             if (hitEffect != null )
             {
                 Instantiate(hitEffect, transform.position, Quaternion.identity);

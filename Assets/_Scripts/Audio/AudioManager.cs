@@ -38,15 +38,15 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioVolumeUIManager volumeUIManager;
     [SerializeField] private List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
 
-    public static AudioManager Instance;
-
+    [SerializeField] private AudioClip looseHPClip;
+    
 	public AudioMixer AudioMixer => audioMixer;
 	public bool IsMasterEnabled { get; private set; } = true;
 	public bool IsMusicEnabled { get; private set; } = true;
     public bool IsEffectEnabled { get; private set; } = true;
 
 
-    //   const string MASTER_VOLUME_PARAM_NAME = "MasterVolume";
+    //const string MASTER_VOLUME_PARAM_NAME = "MasterVolume";
     //const string MUSIC_VOLUME_PARAM_NAME = "MusicVolume";
     //const string SFX_VOLUME_PARAM_NAME = "SFXVolume";
 
@@ -55,20 +55,12 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-
         soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
     }
 
     private void Start()
     {
+	    ServiceLocator.Instance.RegisterService(this);
         if (volumeUIManager != null)
         {
 			volumeUIManager.InitVolumeControllers();
@@ -147,8 +139,22 @@ public class AudioManager : MonoBehaviour
 			soundEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);            
         }
 	}
+    
+    public void PlaySFXOnShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position)
+    {
+	    if (IsEffectEnabled)
+	    {
+		    var soundEmitter = soundEmitterPool.Request();
+		    soundEmitter.PlayClipOnShotAtPosition(clip,volume, pitch, position);            
+	    }
+    }
+    #region Play Clip Functions
 
-
+    public void PlayerLooseHPSound(Vector3 position)
+    {
+	    PlaySFXOnShotAtPosition(looseHPClip, 1f, 1f, position);
+    }
+    #endregion
     #region Volume handling
 
     public void ChangeVolume(VolumeType volumeType, float newVolume)
