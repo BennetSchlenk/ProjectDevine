@@ -24,7 +24,7 @@ public class AudioVolumeUIManager : MonoBehaviour
     public void InitVolumeControllers()
     {
         volumeControllers = GetComponentsInChildren<AudioVolumeSliderController>().ToList();
-        audioManager = AudioManager.Instance;
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();;
         volumeControllers.ForEach(x => x.Init(this, audioManager));
     }
 
