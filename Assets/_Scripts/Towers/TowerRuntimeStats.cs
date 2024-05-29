@@ -4,13 +4,15 @@ using System.ComponentModel;
 using UnityEngine;
 
 [System.Serializable]
-public class TowerData: ITowerData
+public class TowerRuntimeStats: ITowerData
 {
     public TowerDataUpgradeSO BaseStats;
     
 
     #region Tower runtime stats
 
+    private int level;
+    private int tier;
     private float range;
     private float fireRate;
     private float fireDuration;
@@ -21,7 +23,8 @@ public class TowerData: ITowerData
 
     #region Tower stats getters
 
-    // In order to get the damage data, we should ask for a specific type of damage.
+    public int Level => level;
+    public int Tier { get => tier; set => tier = value;}
     public float Range => BaseStats ? BaseStats.Range + range : range;
     public float FireRate => BaseStats ? BaseStats.FireRate + fireRate : fireRate;
     public float FireDuration => BaseStats ? BaseStats.FireDuration + fireDuration : fireDuration;
@@ -30,9 +33,10 @@ public class TowerData: ITowerData
 
     #endregion
 
-    public TowerData(TowerDataUpgradeSO baseStats)
+    public TowerRuntimeStats(TowerDataUpgradeSO baseStats, int _tier)
     {
         BaseStats = baseStats;
+        Tier = _tier;
     }
 
     public void ApplyUpgrade(TowerDataUpgradeSO upgrade)
