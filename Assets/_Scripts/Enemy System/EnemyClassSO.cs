@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyStats", menuName = "Project Divine/Enemies/EnemyStatsSO")]
-public class EnemyStatsSO : ScriptableObject
+[CreateAssetMenu(fileName = "EnemyClass", menuName = "Project Divine/Enemies/EnemyClassSO")]
+public class EnemyClassSO : ScriptableObject
 {
+    [Header("Base stats")]
     [SerializeField] private float initialLife;
     [SerializeField] private float initialArmor;
     [SerializeField] private float movementSpeed;
     //[SerializeField] private float rotationSpeed;
-    [SerializeField] private float rewardPointsForPlayer;
+    [SerializeField] private float pointsForPlayerIfKilled;
     [SerializeField] private float coreDamage;
 
     // Getters
@@ -17,7 +18,7 @@ public class EnemyStatsSO : ScriptableObject
     public float InitialArmor => initialArmor;
     public float MovementSpeed => movementSpeed;
     public float RotationSpeed => movementSpeed * 100f;
-    public float RewardPointsForPlayer => rewardPointsForPlayer;
+    public float PointsForPlayerIfKilled => pointsForPlayerIfKilled;
     public float CoreDamage => coreDamage;
 
 }

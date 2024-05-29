@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,19 +8,21 @@ using UnityEngine.Playables;
 public class Enemy : MonoBehaviour, IDamagable
 {
     [Header("Basic configs")]    
-    [SerializeField] private EnemyStatsSO stats;
+    [SerializeField] private EnemyClassSO classAndStats;
 
     public float Health { get; set; }
-    public EnemyStatsSO Stats { get {  return stats; } }
+    public EnemyClassSO Stats { get {  return classAndStats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
-    
+    public List<DamageData> damageOverTimeList = new();
+
+    private Coroutine dealDamageOverTimeCR;
 
     #region Unity Callbacks
 
     private void Awake()
     {
-        Health = stats.InitialLife;
+        Health = classAndStats.InitialLife;
         MovementController = GetComponent<EnemyMovementController>();
     }
 
@@ -41,13 +44,29 @@ public class Enemy : MonoBehaviour, IDamagable
         return Health;
     }
 
-    public float TakeDamage(float incomingAmount)
+    public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
+    {
+        List<(IDamagable, DamageData)> test; 
+
+        foreach (DamageData damageData in damageDataList)
+        {
+            if (damageData.Damage > 0)
+            {
+
+            }
+        }
+
+       
+        
+    }
+
+    private float TakeHealthDamage(float amount)
     {
         float damageTaken;
 
-        Health = Mathf.Clamp(Health - incomingAmount, 0f, Health);
+        Health = Mathf.Clamp(Health - amount, 0f, Health);
 
-        damageTaken = Health - (Health - incomingAmount);
+        damageTaken = Health - (Health - amount);
 
         if (damageTaken > 0f)
         {
@@ -59,6 +78,7 @@ public class Enemy : MonoBehaviour, IDamagable
                 DestroySelf();
             }
         }
+
         return damageTaken;
     }
 
@@ -68,7 +88,7 @@ public class Enemy : MonoBehaviour, IDamagable
     /// <returns>the damage dealt to the Core</returns>
     public void ReachedCore(Core core)
     {
-        core.TakeDamage(stats.CoreDamage);
+        core.TakeDamage(classAndStats.CoreDamage);
         InstantKill();
     }
 
