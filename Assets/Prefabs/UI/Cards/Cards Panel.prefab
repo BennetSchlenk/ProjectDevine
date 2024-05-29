@@ -125,6 +125,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2d4615a583bff45b2172923fee6ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   tstQuat: {x: 0, y: 0, z: 0, w: 0}
   testCard: {fileID: 3088727256875557239}
   alwaysSameRotation: 0
@@ -370,9 +376,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyObjectIfNotPlaced: 1
-  testInitialObject: {fileID: 4465158043754759250, guid: 1d09363cb561bae45a80fe50eb4aa7b9,
-    type: 3}
+  testInitialCardData: {fileID: 0}
   grid: {fileID: 0}
+  towerRootPrefab: {fileID: 4465158043754759250, guid: c69c61873ded5a34f9d49b321d692c91,
+    type: 3}
 --- !u!1 &8702295509115603253
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +628,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1872371029216806434, guid: f59e0d1e857dba54f95193f551b3859e,
+        type: 3}
+      propertyPath: cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5,
+        type: 2}
     - target: {fileID: 3182757064400170771, guid: f59e0d1e857dba54f95193f551b3859e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1079,7 +1092,7 @@ PrefabInstance:
     - target: {fileID: 1851272777834502174, guid: f59e0d1e857dba54f95193f551b3859e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1851272777834502174, guid: f59e0d1e857dba54f95193f551b3859e,
         type: 3}
@@ -1286,6 +1299,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1872371029216806434, guid: f59e0d1e857dba54f95193f551b3859e,
+        type: 3}
+      propertyPath: cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5893a6f94b58aa845a00f335e4ecc844,
+        type: 2}
     - target: {fileID: 3182757064400170771, guid: f59e0d1e857dba54f95193f551b3859e,
         type: 3}
       propertyPath: m_Pivot.x

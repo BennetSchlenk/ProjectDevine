@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TowerAttackHandler : MonoBehaviour
+public class TowerAttackHandler : MonoBehaviour, IXPGainer
 {
     public UnityEvent<Transform> OnTargetChange;
 
     [SerializeField] private AttackTargetType attackTargetType;
     [SerializeField] private GameObject projectile;
-    [SerializeField] private List<Transform> projectileSpawnPoints;
+    [SerializeField] private List<ProjectileSpawnPoint> projectileSpawnPoints;
 
     private Transform enemiesContainerTransform;
     private int currentProjectileSpawnPointIndex = 0;
+    private List<FaceTarget> targets = new();
 
     private void Start()
     {
         enemiesContainerTransform = GameObject.Find("Enemies").transform;
         if (enemiesContainerTransform == null)
             Debug.LogError("Enemies container not found.");
+
+        StoreAllFaceTargetInChildren();
+        StoreAllProjectileSpawnPoints();
     }
 
-    public void Attack(TowerData towerData, List<DamageData> damageDataList)
+    public void Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList)
     {
+        Debug.Log("Attacking with tower data: " + towerData);
+
         var enemy = GetAttackTargetWithinRange(attackTargetType, towerData.Range);
         if (enemy == null)
         {
@@ -37,22 +43,30 @@ public class TowerAttackHandler : MonoBehaviour
                 if (damagable != null)
                 {
                     OnTargetChange.Invoke(enemy.transform);
+                    foreach (FaceTarget target in targets)
+                        target.SetTarget(enemy.transform);
 
-                    // Spawn projectile. TODO: Pooling
-                    GameObject newProjectile = Instantiate(projectile, projectileSpawnPoints[currentProjectileSpawnPointIndex].position, Quaternion.identity);
-                    currentProjectileSpawnPointIndex = (currentProjectileSpawnPointIndex + 1) % projectileSpawnPoints.Count;
-                    Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
-                    List<GameObject> effects = new();
-                    List<GameObject> hitEffects = new();
-                    foreach (DamageData damageData in damageDataList)
+                    if (projectileSpawnPoints != null && projectileSpawnPoints.Count > 0)
                     {
-                        effects.Add(damageData.DamageType.TrailEffect);
-                        hitEffects.Add(damageData.DamageType.HitEffect);
-                    }
+                        // Spawn projectile. TODO: Pooling
+                        GameObject newProjectile = Instantiate(projectile, projectileSpawnPoints[currentProjectileSpawnPointIndex].transform.position, Quaternion.identity);
+                        currentProjectileSpawnPointIndex = (currentProjectileSpawnPointIndex + 1) % projectileSpawnPoints.Count;
+                        Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
+                        List<GameObject> effects = new();
+                        List<GameObject> hitEffects = new();
+                        foreach (DamageData damageData in damageDataList)
+                        {
+                            effects.Add(damageData.DamageType.TrailEffect);
+                            hitEffects.Add(damageData.DamageType.HitEffect);
+                        }
 
-                    projectileComponent.MoveTowardsTarget(enemy.transform, towerData.ProjectileSpeed, effects, hitEffects, () => {
-                        DealDamage(damagable, damageDataList);
-                    });
+                        projectileComponent.MoveTowardsTarget(enemy.transform, towerData.ProjectileSpeed, effects, hitEffects, () => {
+                            DealDamage(damagable, damageDataList);
+                        });
+                    } else
+                    {
+                        Debug.LogWarning("Projectile spawn points not set.");
+                    }
 
 
                     
@@ -61,6 +75,28 @@ public class TowerAttackHandler : MonoBehaviour
             else
                 Debug.Log("Enemy is out of range.");
         }
+    }
+    public void StoreAllFaceTargetInChildren()
+    {
+        //Debug.Log("Storing all face targets in children.");
+        targets.Clear();
+        foreach (FaceTarget faceTarget in GetComponentsInChildren<FaceTarget>())
+            targets.Add(faceTarget);
+
+        //Debug.Log("Targets stored: " + targets.Count);
+    }
+
+    public void StoreAllProjectileSpawnPoints()
+    {
+        Debug.Log("Storing all projectile spawn points in children.");
+        projectileSpawnPoints.Clear();
+        foreach (ProjectileSpawnPoint projectileSpawnPoint in GetComponentsInChildren<ProjectileSpawnPoint>())
+            projectileSpawnPoints.Add(projectileSpawnPoint);
+
+        // Sort the projectile spawn points based on their priority, less is first
+        projectileSpawnPoints.Sort((a, b) => a.GetComponent<ProjectileSpawnPoint>().Priority.CompareTo(b.GetComponent<ProjectileSpawnPoint>().Priority));
+
+        Debug.Log("Projectile spawn points stored: " + projectileSpawnPoints.Count);
     }
 
     private GameObject GetAttackTargetWithinRange(AttackTargetType attackTargetType, float range)
@@ -187,13 +223,17 @@ public class TowerAttackHandler : MonoBehaviour
 
     private void DealDamage(IDamagable damagable, List<DamageData> damageDataList)
     {
-        foreach (DamageData damageData in damageDataList)
-        {
-            damagable.TakeDamage(damageData.Damage);
-            //Debug.LogFormat("Dealing {0} damage to {1} ", damageData.Damage, damagable);
-        }
+        damagable.TakeDamage(damageDataList, this);
     }
+
+    public void OnXPGain(float xp)
+    {
+        Debug.Log("XP Gained: " + xp);
+    }
+
 }
+
+
 
 
 
