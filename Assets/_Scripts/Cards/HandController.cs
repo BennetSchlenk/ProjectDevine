@@ -80,10 +80,10 @@ public class HandController : MonoBehaviour
 
         SelectCard(card, true);
 
-        if (card.Prefab != null)
+        if (card.TowerPrefab != null)
         {
             //objectPlacer.StartPlacing(card.Prefab, isClick);
-            objectPlacer.SetUpPlacing(card.Prefab, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
+            objectPlacer.UseCard(card.CardData, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
         }
 
 
@@ -107,7 +107,9 @@ public class HandController : MonoBehaviour
 
     private void OnCardRemoved(CardMovement cardMovement)
     {
-        StartCoroutine(OrderCardsAfterDelay(0.1f));
+        if (!gameObject.activeInHierarchy) return; // Remove the editor error when leaving play mode
+
+        StartCoroutine(OrderCardsAfterDelay(0f));
     }
 
     private IEnumerator OrderCardsAfterDelay(float delay)

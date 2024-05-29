@@ -168,7 +168,7 @@ public class HandVisualHandler : MonoBehaviour
 
     private void OnCardDropped(CardMovement cardMovement)
     {
-        Debug.Log("Dropped card in: " + cardMovement.gameObject.name);
+        Debug.Log("Dropped card: " + cardMovement.gameObject.name, cardMovement.gameObject);
         OnCardDroppedAction(cardMovement);
     }
 
