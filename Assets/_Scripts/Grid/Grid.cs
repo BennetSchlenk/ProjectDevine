@@ -8,15 +8,15 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
     public bool ShowGizmos;
-
+    
     [HideInInspector]
     public int2 GridSize;
 
     [Tooltip("uniform size of each grid node")]
     private GridNode[,] grid;
 
-    public LevelDataSO LevelData;
-    public LevelThemeSO ThemeMeshes;
+    private LevelDataSO LevelData;
+    private LevelThemeSO LevelMeshes;
 
     private GridNode[,] levelDataGrid;
     //private int[,] levelDataObj;
@@ -28,18 +28,22 @@ public class Grid : MonoBehaviour
 
     private void Awake()
     {
-        levelDataGrid = GridConversionUtility.ListToGrid(LevelData.Grid, LevelData.GridX, LevelData.GridY);
-        //levelDataObj = GridConversionUtility.ListToGrid(LevelData.GridObj, LevelData.GridX, LevelData.GridY);
         GridNodeRadius = GlobalData.GridNodeSize / 2;
+    }
+
+    public void SetLevelData(LevelDataSO levelDataSO, LevelThemeSO levelThemesSO)
+    {
+        LevelData = levelDataSO;
+        LevelMeshes = levelThemesSO;
+    }
+
+    public void CreateGrid()
+    {
+        levelDataGrid = GridConversionUtility.ListToGrid(LevelData.Grid, LevelData.GridX, LevelData.GridY);
         GridSize = new int2(levelDataGrid.GetLength(0), levelDataGrid.GetLength(1));
         gridNodesX = GridSize.x;
         gridNodesY = GridSize.y;
-        Debug.Log("X: " + gridNodesX + " Y: " + gridNodesY);
-        CreateGrid();
-    }
-
-    private void CreateGrid()
-    {
+        
         grid = new GridNode[gridNodesX, gridNodesY];
         Vector3 bottomLeft =
             transform.position - Vector3.right * GridSize.x - Vector3.forward * GridSize.y;
@@ -52,11 +56,11 @@ public class Grid : MonoBehaviour
                                   Vector3.forward * (y * GlobalData.GridNodeSize + GridNodeRadius);
 
                 grid[x, y] = new GridNode(levelDataGrid[x, y].Walkable, levelDataGrid[x, y].Buildable,
-                    ThemeMeshes.Meshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
+                    LevelMeshes.Meshes[levelDataGrid[x, y].MeshIndex], levelDataGrid[x, y].MeshIndex, levelDataGrid[x, y].MeshYRotation,levelDataGrid[x, y].Spawn,
                     levelDataGrid[x, y].EnemyTarget,
                     levelDataGrid[x, y].Waypoint, nodePos, x, y);
 
-                var go = Instantiate(ThemeMeshes.Meshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
+                var go = Instantiate(LevelMeshes.Meshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
                 grid[x, y].MeshObj = go;
                 
                 
