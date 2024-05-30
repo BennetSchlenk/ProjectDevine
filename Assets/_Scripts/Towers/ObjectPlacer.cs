@@ -104,6 +104,29 @@ public class ObjectPlacer : MonoBehaviour
                             }
                             break;
                         case CardType.Modifier:
+                            if (node.TowerObj != null)
+                            {
+                                // Get tower
+                                var tower = node.TowerObj.GetComponent<Tower>();
+
+                                // Apply modifier to tower if possible
+                                bool isApplied = tower.ApplyModifier(cardToUse);
+
+                                if (isApplied)
+                                {
+                                    StopPlacing(true);
+                                    onPlacingSuccess?.Invoke();
+                                }
+                                else
+                                {
+                                    onPlacingFail?.Invoke();
+                                }
+                            }
+                            else
+                            {
+                                // Can't apply modifier to an empty node
+                                onPlacingFail?.Invoke();
+                            }
                             break;
                     }
 
@@ -214,7 +237,7 @@ public class ObjectPlacer : MonoBehaviour
                 GameObject model = Instantiate(cardToUse.TowerPrefab);
                 
                 Tower tower = instantiatedObject.GetComponentInChildren<Tower>();
-                tower.SetUp(model, cardData);
+                tower.SetUp(model, cardData, cardData.TowerTier);
 
                 // Call OnPlacing after SetUp so the tower model is already set up and the range is updated
                 instantiatedObjectPlaceable.OnPlacing();

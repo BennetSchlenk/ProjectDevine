@@ -81,7 +81,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
 
     public void OnXPGain(float xp)
     {
-        Debug.Log("XP Gained: " + xp);
+        //Debug.Log("XP Gained: " + xp);
         // TODO: Implement
     }
 

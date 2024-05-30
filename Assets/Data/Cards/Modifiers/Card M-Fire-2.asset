@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Card M-Fire-2
   m_EditorClassIdentifier: 
   Id: 1
-  Name: Normal Modifier
+  Name: Fire Modifier 2
   Description: 
   Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   Type: 1
   TowerTier: 1
   TowerInfo: {fileID: 0}
   TowerBaseStats: {fileID: 0}
+  NextTierData: {fileID: 0}
   DamageData:
     DamageType: {fileID: 11400000, guid: 17f64c1bbd0a54c428d48141586b3135, type: 2}
     damage: 10
