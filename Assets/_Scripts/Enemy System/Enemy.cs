@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour, IDamagable
     /// <returns>the damage dealt to the Core</returns>
     public void ReachedCore(Core core)
     {
-        core.TakeDamage(stats.CoreDamage);
+        core.DamageCore(stats.CoreDamage);
         InstantKill();
     }
 
