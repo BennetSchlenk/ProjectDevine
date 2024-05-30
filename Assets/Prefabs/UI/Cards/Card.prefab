@@ -515,8 +515,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleAnimationSpeed: 10
-  positionOffset: {x: 0, y: 0, z: 0}
-  mouseOverLocalScale: {x: 0, y: 0, z: 0}
+  positionOffset: {x: 0, y: 60, z: 0}
+  mouseOverLocalScale: {x: 1.5, y: 1.5, z: 1.5}
   arrowControlPoints: []
 --- !u!1 &8277886152108183448
 GameObject:
