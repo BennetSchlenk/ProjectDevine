@@ -16,9 +16,13 @@ public class HandController : MonoBehaviour
 
     public Transform CardsContainer => cardsContainer;
 
-    private List<BezierChildMovement> cards = new();
+    private List<Transform> cards = new();
     private HandVisualHandler handVisualHandler;
     private Card lastCardSelected;
+    private int maxCards = 10;
+
+    [Header("Debug")]
+    [SerializeField] private CardDataSO cardDataDebug;
 
     #region Unity Callbacks
         
@@ -37,7 +41,43 @@ public class HandController : MonoBehaviour
         handVisualHandler.OnCardRemoveAction -= OnCardRemoved;
     }
 
+
+    // TODO: Remove Start and GiveCardsPeriodically
+    private void Start()
+    {
+        StartCoroutine(GiveCardsPeriodically(1f));
+    }
+
+    private IEnumerator GiveCardsPeriodically(float delay)
+    {
+        while (true)
+        {
+            GiveCardDebug();
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
     #endregion
+
+    [ContextMenu("Give Card Debug")]
+    public void GiveCardDebug() => GiveCard(cardDataDebug);
+
+    public void GiveCard(CardDataSO cardData)
+    {
+        if (cardData == null || cards.Count >= maxCards) return;
+
+        // Instantiate and set up the card
+        GameObject card = Instantiate(cardPrefab, cardsContainer);
+        card.GetComponent<Card>().SetUp(cardData);
+
+        OnCardAdded(card);
+    }
+
+    private void RefreshHand()
+    {
+        cards = handVisualHandler.GetWorldCards();
+        OnHandUpdate?.Invoke();
+    }
 
     /// <summary>
     /// Use a card when it is clicked.
@@ -61,10 +101,16 @@ public class HandController : MonoBehaviour
             objectPlacer.UseCard(card.CardData, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
     }
 
+    private void OnCardAdded(GameObject cardGO)
+    {
+        RefreshHand();
+    }
+
     private void OnCardUsed(Card card)
     {
-        Destroy(card.gameObject);
+        DestroyImmediate(card.gameObject);
         handVisualHandler.OrderCards();
+        RefreshHand();
     }
 
     private void OnCardNotUsed(Card card) => SelectCard(card, false);

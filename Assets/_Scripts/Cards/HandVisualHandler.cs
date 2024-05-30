@@ -73,8 +73,9 @@ public class HandVisualHandler : MonoBehaviour
     [ContextMenu("Order Cards")]
     public void OrderCards()
     {
+        
         List<Transform> children = GetWorldCards();
-
+        Debug.Log("Ordering cards: " + children.Count);
         if (children == null || children.Count == 0) return;
 
         // If children.Count is 1, set the card in the middle of the curve
@@ -110,6 +111,20 @@ public class HandVisualHandler : MonoBehaviour
         SetCardProperties(children);
     }
 
+    /// <summary>
+    /// Retrieve the cards in the hand based on the children of the cards container.
+    /// </summary>
+    /// <returns>List of cards Transforms</returns>
+    public List<Transform> GetWorldCards()
+    {
+        List<Transform> children = new List<Transform>();
+
+        foreach (Transform t in cardsContainer)
+            children.Add(t);
+
+        return children;
+    }
+
     private void SetCardProperties(List<Transform> children)
     {
         for (int i = 0; i < children.Count; i++)
@@ -124,19 +139,7 @@ public class HandVisualHandler : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Retrieve the cards in the hand based on the children of the cards container.
-    /// </summary>
-    /// <returns>List of cards Transforms</returns>
-    private List<Transform> GetWorldCards()
-    {
-        List<Transform> children = new List<Transform>();
-
-        foreach (Transform t in cardsContainer)
-            children.Add(t);
-
-        return children;
-    }
+    
 
     private void OnHandUpdate() => OrderCards();
     private void OnCardClicked(CardMovement cardMovement) => OnCardClickedAction(cardMovement);

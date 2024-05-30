@@ -347,6 +347,7 @@ MonoBehaviour:
     type: 3}
   cardsContainer: {fileID: 80955080680307822}
   objectPlacer: {fileID: 1135858307742548960}
+  cardDataDebug: {fileID: 11400000, guid: 5893a6f94b58aa845a00f335e4ecc844, type: 2}
 --- !u!114 &1277682260722400042
 MonoBehaviour:
   m_ObjectHideFlags: 0
