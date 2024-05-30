@@ -56,6 +56,6 @@ public class PlayerDataManager : MonoBehaviour
     
     private void TriggerGameOver()
     {
-        Debug.Log("<color=#00FF00><b>---=== GAME OVER, YOU ARE DONE :D ===---</b></color>");
+        //Debug.Log("<color=#00FF00><b>---=== GAME OVER, YOU ARE DONE :D ===---</b></color>");
     }
 }

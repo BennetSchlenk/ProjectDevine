@@ -27,6 +27,12 @@ public class Card : MonoBehaviour
 
     #endregion
 
+    public void SetUp(CardDataSO cardData)
+    {
+        this.cardData = cardData;
+        RefreshInfo();
+    }
+
     /// <summary>
     /// Refresh the card information with the current card data.
     /// </summary>
