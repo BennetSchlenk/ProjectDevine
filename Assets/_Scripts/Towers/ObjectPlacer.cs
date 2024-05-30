@@ -8,10 +8,13 @@ using UnityEngine.InputSystem;
 public class ObjectPlacer : MonoBehaviour
 {
     [SerializeField] private bool destroyObjectIfNotPlaced = true;
-    [SerializeField] private GameObject testInitialObject;
+    [SerializeField] private CardDataSO testInitialCardData;
     [SerializeField] private Grid grid;
 
-    private GameObject objectToPlace;
+    [Header("Towers Settings")]
+    [SerializeField] private GameObject towerRootPrefab;
+
+    private CardDataSO cardToUse;
     private GameObject instantiatedObject;
     private IPlaceable instantiatedObjectPlaceable;
     private bool isPlacing;
@@ -35,9 +38,9 @@ public class ObjectPlacer : MonoBehaviour
 
     private void Start()
     {
-        if (testInitialObject != null)
+        if (testInitialCardData != null)
         {
-            SetObjectToPlace(testInitialObject);
+            SetCardToUse(testInitialCardData);
         }
 
         if (grid  == null)
@@ -73,7 +76,51 @@ public class ObjectPlacer : MonoBehaviour
 
                 // Try to place object in node
                 if (GetWasPlaceButtonTriggered() && node != null)
-                    TryPlaceInNode(node);
+                {
+                    // Check if a tower is not placed in the node
+                    if (node.TowerObj == null)
+                    {
+                        TryPlaceInNode(node);
+                    }
+                    else
+                    {
+                        // Check if the card can be placed in a node with a tower.
+                        if (true)
+                        {
+                            switch (cardToUse.Type)
+                            {
+                                case CardType.Tower:
+                                    // Trying to place a tower in a node with a tower
+
+                                    // TODO: Upgrade tower if available
+                                    var tower = node.TowerObj.GetComponent<Tower>();
+                                    // Upgrade tower
+                                    bool upgraded = tower.ApplyUpgrade(cardToUse);
+                                    Debug.Log("Tower upgraded: " + upgraded);
+                                    if (upgraded)
+                                    {
+                                        StopPlacing();
+                                        onPlacingSuccess?.Invoke();
+                                    }
+                                    else
+                                    {
+                                        onPlacingFail?.Invoke();
+                                    }
+                                    
+                                    
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("Node already has a tower and card doesn't belong here.");
+                            onPlacingFail?.Invoke();
+                        }
+                    }
+
+
+                    
+                }
 
                 // Stop placing if right mouse button is pressed
                 if (Mouse.current.rightButton.wasPressedThisFrame)
@@ -129,7 +176,7 @@ public class ObjectPlacer : MonoBehaviour
 
     public void StartPlacingTestTower()
     {
-       SetObjectToPlace(testInitialObject);
+       SetCardToUse(testInitialCardData);
        StartPlacing();
     }
 
@@ -137,36 +184,56 @@ public class ObjectPlacer : MonoBehaviour
     /// Set up the object to place and the actions to be called when placing is successful or fails.
     /// Example: Call this method from a card click to set the object to place and the actions to be called when placing is successful or fails.
     /// </summary>
-    /// <param name="objectToPlace">Prefab to instantiate</param>
+    /// <param name="cardData">Prefab to instantiate</param>
     /// <param name="onSuccess"></param>
     /// <param name="onFail"></param>
     /// <param name="isClick">If the player clicked a card (true) or dragged (false) to call this method</param>
-    public void SetUpPlacing(GameObject objectToPlace, Action onSuccess, Action onFail, bool isClick)
+    public void UseCard(CardDataSO cardData, Action onSuccess, Action onFail, bool isClick)
     {
-        SetObjectToPlace(objectToPlace);
+        Debug.Log("Setting up card: " + cardData.Name + " for placing.", cardData);
+        SetCardToUse(cardData);
         onPlacingSuccess = onSuccess;
         onPlacingFail = onFail;
         lastIsClick = isClick;
-        StartPlacing(objectToPlace, isClick);
+        StartPlacing(cardData, isClick);
     }
 
-    private void SetObjectToPlace(GameObject objectToPlace)
+    private void SetCardToUse(CardDataSO cardData)
     {
-        if (this.objectToPlace != null && objectToPlace != null)
+        if (this.cardToUse != null && cardData != null)
             StopPlacing(true);
 
-        this.objectToPlace = objectToPlace;
+        this.cardToUse = cardData;
     }
 
-    public void StartPlacing(GameObject obj = null, bool isClick = false)
+    public void StartPlacing(CardDataSO cardData = null, bool isClick = false)
     {
-        if (obj != null) SetObjectToPlace(obj);
+        if (cardData != null) SetCardToUse(cardData);
 
+        // TODO: Implement different behavior for different card types
         placementCalledFromClick = isClick;
         isPlacing = true;
-        instantiatedObject = Instantiate(objectToPlace);
-        instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
-        instantiatedObjectPlaceable.OnPlacing();
+        // Tower card
+        
+        switch (cardData.Type)
+        {
+            case CardType.Tower:
+                // Instantiate tower root prefab and call OnPlacing
+                instantiatedObject = Instantiate(towerRootPrefab);
+                instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
+                
+
+                // Instantiate tower model
+                GameObject model = Instantiate(cardToUse.TowerPrefab);
+                
+                Tower tower = instantiatedObject.GetComponentInChildren<Tower>();
+                tower.SetUp(model, cardData);
+
+                // Call OnPlacing after SetUp so the tower model is already set up and the range is updated
+                instantiatedObjectPlaceable.OnPlacing();
+
+                break;
+        }
     }
 
     public void StopPlacing(bool destroy = false)
