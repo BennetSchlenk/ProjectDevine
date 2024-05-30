@@ -16,13 +16,14 @@ public class PlayerDataManager : MonoBehaviour
         
     private void Awake()
     {
+        ServiceLocator.Instance.RegisterService(this);
         currHP = MaxHP;
         currEssence = startAmountEssence;
     }
 
     private void Start()
     {
-        ServiceLocator.Instance.RegisterService(this);
+        
     }
 
     #endregion
