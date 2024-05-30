@@ -1,12 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
+/// <summary>
+/// HandVisualHandler is responsible for the visual management of cards in a player's hand in a card game.
+/// This class handles the animation and positioning of cards in the player's hand, as well as user interaction with the cards.
+/// </summary>
 [RequireComponent(typeof(Hand))]
 public class HandVisualHandler : MonoBehaviour
 {
+    // Card Events
     public event Action<CardMovement> OnCardClickedAction = delegate { };
     public event Action<CardMovement> OnCardDraggedAction = delegate { };
     public event Action<CardMovement> OnCardDroppedAction = delegate { };
@@ -27,18 +31,15 @@ public class HandVisualHandler : MonoBehaviour
     [Tooltip("Transform to take the Y position of cards that are hovered.")]
     [SerializeField] private Transform hoverPositionTransform;
 
-
+    // Components
     private HandController handController;
     private BezierCurve _bezierCurve;
     private Transform cardsContainer;
 
-    // Drag & Drop
-    private bool isDragging = false;
+    // Variables
     private CardMovement draggingCard;
 
-
-
-
+    #region Unity Callbacks
 
     private void Awake()
     {
@@ -46,19 +47,11 @@ public class HandVisualHandler : MonoBehaviour
         _bezierCurve = GetComponentInChildren<BezierCurve>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-
         cardsContainer = handController.CardsContainer;
-        OrderCardsInWorld();
+        OrderCards();
         handController.OnHandUpdate += OnHandUpdate;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnDestroy()
@@ -68,48 +61,57 @@ public class HandVisualHandler : MonoBehaviour
         OnCardDraggedAction = null;
         OnCardDroppedAction = null;
         OnCardRemoveAction = null;
+        OnCardClickedAction = null;
     }
 
-    [ContextMenu("Order Cards in World")]
-    public void OrderCardsInWorld()
-    {
+    #endregion
 
+    /// <summary>
+    /// Order cards in hand according to the Bezier curve.
+    /// TODO: Use AnimationCurve to define the distance between cards.
+    /// </summary>
+    [ContextMenu("Order Cards")]
+    public void OrderCards()
+    {
         List<Transform> children = GetWorldCards();
 
-        if (children == null) return;
+        if (children == null || children.Count == 0) return;
 
-        // If children.Count is 0, then there is no need to reorder
-        if (children.Count == 0) return;
-        // If children.Count is 1, then there is no need to reorder
+        // If children.Count is 1, set the card in the middle of the curve
         if (children.Count == 1)
         {
             children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.5f), _bezierCurve.ControlPoints[3].rotation, initialPlaceTime);
-        } else if (children.Count == 2)
+        }
+        else if (children.Count == 2)
         {
             children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.25f), _bezierCurve.GetCardOrientation(0.25f), initialPlaceTime);
             children[1].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.75f), _bezierCurve.GetCardOrientation(0.75f), initialPlaceTime);
-        } else if (children.Count == 3)
+        }
+        else if (children.Count == 3)
         {
             children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.2f), _bezierCurve.GetCardOrientation(0.2f), initialPlaceTime);
             children[1].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.5f), _bezierCurve.GetCardOrientation(0.5f), initialPlaceTime);
             children[2].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.8f), _bezierCurve.GetCardOrientation(0.8f), initialPlaceTime);
         }
-        
-        
         else
         {
+            // Position the cards in the Bezier curve with the same distance between them
             for (int i = 0; i < children.Count; i++)
             {
-                Vector3 cardFinalPosition = _bezierCurve.GetBezierPoint((float)i / (children.Count-1));
-                Quaternion cardFinalRotation = _bezierCurve.GetCardOrientation((float)i / (children.Count-1));
+                Vector3 cardFinalPosition = _bezierCurve.GetBezierPoint((float)i / (children.Count - 1));
+                Quaternion cardFinalRotation = _bezierCurve.GetCardOrientation((float)i / (children.Count - 1));
 
                 CardMovement cardMovement = children[i].GetComponent<CardMovement>();
 
                 cardMovement.MoveToPosition(cardFinalPosition, cardFinalRotation, reorderTime);
-                
             }
         }
 
+        SetCardProperties(children);
+    }
+
+    private void SetCardProperties(List<Transform> children)
+    {
         for (int i = 0; i < children.Count; i++)
         {
             CardMovement cardMovement = children[i].GetComponent<CardMovement>();
@@ -120,26 +122,29 @@ public class HandVisualHandler : MonoBehaviour
             cardMovement.OnCardRemove += OnCardRemove;
             cardMovement.OnCardClicked += OnCardClicked;
         }
-        
     }
 
+    /// <summary>
+    /// Retrieve the cards in the hand based on the children of the cards container.
+    /// </summary>
+    /// <returns>List of cards Transforms</returns>
     private List<Transform> GetWorldCards()
     {
         List<Transform> children = new List<Transform>();
+
         foreach (Transform t in cardsContainer)
-        {
             children.Add(t);
-        }
 
         return children;
     }
 
-    private void OnHandUpdate()
-    {
-        Debug.Log("OnHandUpdate()");
-        OrderCardsInWorld();
-    }
+    private void OnHandUpdate() => OrderCards();
+    private void OnCardClicked(CardMovement cardMovement) => OnCardClickedAction(cardMovement);
 
+    /// <summary>
+    /// Unsubscribe from the card events and call the OnCardRemoveAction.
+    /// </summary>
+    /// <param name="cardMovement"></param>
     private void OnCardRemove(CardMovement cardMovement)
     {
         cardMovement.OnCardDragged -= OnCardDragged;
@@ -149,30 +154,16 @@ public class HandVisualHandler : MonoBehaviour
         OnCardRemoveAction(cardMovement);
     }
 
-    private void OnCardClicked(CardMovement cardMovement)
-    {
-        Debug.Log("Clicked card: " + cardMovement.gameObject.name);
-        OnCardClickedAction(cardMovement);
-    }
-
-
     #region Drag & Drop
 
     private void OnCardDragged(CardMovement cardMovement)
     {
-        isDragging = true;
         draggingCard = cardMovement;
-        //Debug.Log("Dragging card: " + cardMovement.gameObject.name);
         OnCardDraggedAction(cardMovement);
     }
 
-    private void OnCardDropped(CardMovement cardMovement)
-    {
-        Debug.Log("Dropped card: " + cardMovement.gameObject.name, cardMovement.gameObject);
-        OnCardDroppedAction(cardMovement);
-    }
+    private void OnCardDropped(CardMovement cardMovement) => OnCardDroppedAction(cardMovement);
 
     #endregion
 
-    
 }

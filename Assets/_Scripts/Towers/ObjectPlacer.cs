@@ -19,7 +19,6 @@ public class ObjectPlacer : MonoBehaviour
     private IPlaceable instantiatedObjectPlaceable;
     private bool isPlacing;
     private Camera mainCam;
-    private float gridCellSize;
     private Transform towersContainerTransform;
     private ISelectable lastSelected;
     private bool placementCalledFromClick; // Used to differentiate between click and drag placement
@@ -56,8 +55,6 @@ public class ObjectPlacer : MonoBehaviour
             towersContainerTransform = new GameObject("Towers").transform;
             towersContainerTransform.SetParent(grid.transform);
         }
-
-        gridCellSize = GlobalData.GridNodeSize;
     }
 
     private void Update()
@@ -99,7 +96,7 @@ public class ObjectPlacer : MonoBehaviour
                                     Debug.Log("Tower upgraded: " + upgraded);
                                     if (upgraded)
                                     {
-                                        StopPlacing();
+                                        StopPlacing(true);
                                         onPlacingSuccess?.Invoke();
                                     }
                                     else
@@ -110,11 +107,6 @@ public class ObjectPlacer : MonoBehaviour
                                     
                                     break;
                             }
-                        }
-                        else
-                        {
-                            Debug.Log("Node already has a tower and card doesn't belong here.");
-                            onPlacingFail?.Invoke();
                         }
                     }
 
@@ -190,7 +182,7 @@ public class ObjectPlacer : MonoBehaviour
     /// <param name="isClick">If the player clicked a card (true) or dragged (false) to call this method</param>
     public void UseCard(CardDataSO cardData, Action onSuccess, Action onFail, bool isClick)
     {
-        Debug.Log("Setting up card: " + cardData.Name + " for placing.", cardData);
+        //Debug.Log("Setting up card: " + cardData.Name + " for placing.", cardData);
         SetCardToUse(cardData);
         onPlacingSuccess = onSuccess;
         onPlacingFail = onFail;
@@ -258,12 +250,12 @@ public class ObjectPlacer : MonoBehaviour
             return false;
         }
 
-        Debug.Log("Trying to place object in node: " + node.GridX + " / " + node.GridY);
+        //Debug.Log("Trying to place object in node: " + node.GridX + " / " + node.GridY);
 
         if (node.Buildable)
         {
             // Place object
-            Debug.Log("Placing object in node: " + node.GridX + " / " + node.GridY);
+            //Debug.Log("Placing object in node: " + node.GridX + " / " + node.GridY);
             instantiatedObject.transform.position = node.Position;
             instantiatedObjectPlaceable.OnPlaced();
             node.Buildable = false;
@@ -275,7 +267,7 @@ public class ObjectPlacer : MonoBehaviour
         }
         else
         {
-            Debug.Log("Node is not buildable!");
+            //Debug.Log("Node is not buildable!");
             if (destroyObjectIfNotPlaced)
                 StopPlacing(true);
 

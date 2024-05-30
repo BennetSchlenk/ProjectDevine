@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour, IPlaceable, ISelectable
 {
-    [Header("Initial Data")]
-    [SerializeField] private TowerDataUpgradeSO baseTowerStats;
 
     [Header("Runtime Data")]
     public TowerInfoSO TowerInfo;
-    [HideInInspector] public TowerRuntimeStats TowerRuntimeStats;
+    [SerializeField] private TowerDataUpgradeSO baseTowerStats;
+    [HideInInspector]
+    public TowerRuntimeStats TowerRuntimeStats;
     public List<DamageData> DamageDataList = new(); // List of damage data for each damage type
+
     [SerializeField]
     private GameObject rangeGameObject;
     [Tooltip("The container for the tower model. The tower model will be instantiated here.")]
     [SerializeField] private Transform towerModelContainer;
     [SerializeField] private TowerAttackHandler attackHandler;
+
+    [Header("Debug")]
+    [SerializeField] private Color debugColor;
 
     private CardDataSO currentCardDataSO;
     private bool isWorking = false;
@@ -23,25 +27,18 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     private float fireCooldown = 0f;
     private GameObject currentModel;
 
-    [Header("Debug")]
-    [SerializeField] private Color debugColor;
-
     #region Unity Callbacks
 
     private void Start()
     {
-        // Initialize the tower data with the base tower data
-        //TowerRuntimeStats = new(baseTowerStats);
 
         if (TowerInfo == null)
             Debug.LogError("Tower info is not set!");
 
-        Debug.Log("Setting up attack handler.");
         if (attackHandler == null)
             attackHandler = GetComponent<TowerAttackHandler>();
         if (attackHandler == null)
             Debug.LogError("Attack handler is not set on the tower.");
-        Debug.Log("Attack handler set up.");
         
     }
 
@@ -66,13 +63,19 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     #region IPlaceable Implementation
 
+    /// <summary>
+    /// Called when the tower is being placed.
+    /// </summary>
     public void OnPlacing()
     {
-        Debug.Log("Placing tower.");
+        //Debug.Log("Placing tower.");
         UpdateRange();
         Select();
     }
 
+    /// <summary>
+    /// Called when the tower is placed.
+    /// </summary>
     public void OnPlaced()
     {
         isWorking = true;
@@ -83,19 +86,13 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     #region ISelectable Implementation
 
-    public void Select()
-    {
-        rangeGameObject.SetActive(true);
-    }
+    public void Select() => rangeGameObject.SetActive(true);
 
-    public void Deselect()
-    {
-        rangeGameObject.SetActive(false);
-    }
+    public void Deselect() => rangeGameObject.SetActive(false);
 
     #endregion
 
-    
+
     /// <summary>
     /// Used to place the tower model inside the tower root.
     /// </summary>
@@ -103,12 +100,9 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     //public void SetUp(GameObject model, TowerDataUpgradeSO initialStats , Vector3 localPosition = default(Vector3))
     public void SetUp(GameObject model, CardDataSO cardDataSO, int tier = 1)
     {
-        Debug.Log("SetUp()");
-        Debug.Log(cardDataSO.TowerBaseStats.Range);
-
         // Stop all coroutines from this tower
         StopAllCoroutines();
-
+        isFiring = false;
 
         currentCardDataSO = cardDataSO;
 
@@ -118,14 +112,12 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         if (currentModel != null)
         {
-            Debug.Log("Destroying current model:", currentModel);
-            Destroy(currentModel);
-            Debug.Log(currentModel);
+            currentModel.transform.SetParent(null);
+            DestroyImmediate(currentModel);
         }
 
         currentModel = model;
 
-        Debug.Log("Destroyed children from:", gameObject);
         model.transform.SetParent(towerModelContainer);
         model.transform.localPosition = Vector3.zero;
         // TODO: Pass the localPosition in the future
@@ -133,13 +125,13 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
         baseTowerStats = cardDataSO.TowerBaseStats;
 
 
-        Debug.Log("End SetUp()");
         attackHandler.StoreAllFaceTargetInChildren();
         attackHandler.StoreAllProjectileSpawnPoints();
     }
 
     public bool ApplyUpgrade(CardDataSO cardDataSO)
     {
+        Debug.Log("Applying upgrade.");
         // If the tower's ID is different from the card's ID, return false
         if (TowerInfo.TowerId != cardDataSO.TowerInfo.TowerId)
         {
@@ -164,11 +156,6 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
             Debug.LogWarning("Tower tier is already at max level.");
             return false;
         }
-
-
-        
-
-        return false;
     }
     public void ApplyUpgrade(DamageDataUpgrade damageDataUpgrade)
     {
@@ -203,13 +190,16 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     private IEnumerator FireRoundCoroutine()
     {
-        Debug.Log("FireRoundCoroutine()");
+
+        List<GameObject> enemiesToIgnoreIfPossible = new();
 
         // TODO: By default target different enemies (if in range) for each attack
         isFiring = true;
         for (int i = 0; i < TowerRuntimeStats.FireRate; i++)
         {
-            AttackEnemy();
+            var enemy = AttackEnemy(enemiesToIgnoreIfPossible);
+            if (enemy != null && !enemiesToIgnoreIfPossible.Contains(enemy))
+                enemiesToIgnoreIfPossible.Add(enemy);
 
             yield return new WaitForSeconds(1f / TowerRuntimeStats.FireRate);
         }
@@ -219,15 +209,13 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
         isFiring = false;
     }
 
-    protected void AttackEnemy()
+    protected GameObject AttackEnemy(List<GameObject> enemiesToIgnoreIfPossible)
     {
-        attackHandler.Attack(TowerRuntimeStats, DamageDataList);
+        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, enemiesToIgnoreIfPossible);
     }
 
     private void UpdateRange()
     {
-        Debug.Log("Updating range.");
-        Debug.Log(baseTowerStats);
         if (baseTowerStats == null) return;
 
         rangeGameObject.transform.localScale = new Vector3((TowerRuntimeStats.Range + baseTowerStats.Range) * 2, 0.01f, (TowerRuntimeStats.Range + baseTowerStats.Range) * 2);
