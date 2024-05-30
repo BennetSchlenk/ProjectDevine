@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -177,6 +178,24 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
         TowerRuntimeStats.ApplyUpgrade(upgrade);
     }
 
+    public bool ApplyModifier(CardDataSO cardToUse)
+    {
+        // Check if the tower has empty modifier slots
+        int maxSlots = TowerRuntimeStats.Tier;
+
+        Debug.Log("Tower " + gameObject.name + " has " + DamageDataList.Count + " slots of " + maxSlots, gameObject);
+
+        if (DamageDataList.Count < maxSlots)
+        {
+            Debug.Log("Applying modifier.");
+            DamageDataList.Add(cardToUse.DamageData);
+            return true;
+        }
+
+        Debug.Log("No empty modifier slots.");
+        return false;
+    }
+
     protected void PlaceTower(TowerRuntimeStats stats, TowerInfoSO info)
     {
         SetStats(stats);
@@ -224,4 +243,6 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         rangeGameObject.transform.localScale = new Vector3((TowerRuntimeStats.Range + baseTowerStats.Range) * 2, 0.01f, (TowerRuntimeStats.Range + baseTowerStats.Range) * 2);
     }
+
+    
 }

@@ -9,5 +9,6 @@ public class DamageTypeSO : ScriptableObject
     public Sprite Sprite;
     public GameObject HitEffect;
     public GameObject TrailEffect;
+    public GameObject DamageOverTimeEffect;
     public bool IsInfection;
 }
