@@ -55,12 +55,13 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+	    ServiceLocator.Instance.RegisterService(this);
         soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
     }
 
     private void Start()
     {
-	    ServiceLocator.Instance.RegisterService(this);
+	    
         if (volumeUIManager != null)
         {
 			volumeUIManager.InitVolumeControllers();
