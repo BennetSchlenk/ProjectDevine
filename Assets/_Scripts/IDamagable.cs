@@ -1,18 +1,22 @@
 
+using System;
+using System.Collections.Generic;
+
 public interface IDamagable
 {
     float Health { get; set; }
+    float Armor {  get; set; }
 
     /// <summary>
-    /// Takes in a float as incoming Damage and return the amount of damage dealt
+    /// Takes in a list DamageData
     /// </summary>
-    /// <param name="incomingDamage">incoming Damage</param>
-    /// <returns> amount of damage dealt</returns>
-    float TakeDamage(float incomingDamage);
+    /// <param name="damageDataList">list DamageData</param>
+    /// <param name="xpGainer"></param>
+    void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer);
     
     /// <summary>
     /// This will kill the damage received instantly and returns their damage taken (all remaining health)
     /// </summary>
-    /// <returns></returns>
-    float InstantKill();
+    void InstantKill();
+    
 }
