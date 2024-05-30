@@ -7,8 +7,8 @@ public class EnemyWave
 {
     [SerializeField] private float waitBeforeStartingThisWave;
     [SerializeField] private Enemy enemy;
-    [SerializeField] private int howManyInTheWave;
-    [SerializeField] private float spawnInterval;
+    [SerializeField] private int howManyInTheWave = 5;
+    [SerializeField] private float spawnInterval = 1f;
     [SerializeField] private Sprite displaySprite;
 
     // getters
