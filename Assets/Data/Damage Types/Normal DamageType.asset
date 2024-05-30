@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a788af62e4359054e8f6ec76ca1669d3, type: 3}
+  m_Name: Normal DamageType
+  m_EditorClassIdentifier: 
+  DamageTypeName: Normal
+  Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  HitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
+    type: 3}
+  TrailEffect: {fileID: 3695715348286410753, guid: 476b3d2c5f0ce454aba80b497173b24e,
+    type: 3}
+  IsInfection: 0

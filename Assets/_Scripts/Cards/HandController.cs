@@ -45,7 +45,7 @@ public class HandController : MonoBehaviour
     // TODO: Remove Start and GiveCardsPeriodically
     private void Start()
     {
-        StartCoroutine(GiveCardsPeriodically(1f));
+        //StartCoroutine(GiveCardsPeriodically(1f));
     }
 
     private IEnumerator GiveCardsPeriodically(float delay)
@@ -97,7 +97,7 @@ public class HandController : MonoBehaviour
 
         SelectCard(card, true);
 
-        if (card.TowerPrefab != null)
+        if (card.CanBeUsed)
             objectPlacer.UseCard(card.CardData, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
     }
 

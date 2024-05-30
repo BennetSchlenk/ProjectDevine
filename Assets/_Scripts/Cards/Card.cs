@@ -14,8 +14,30 @@ public class Card : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI cardDescription;
     [SerializeField] private Image cardImage;
 
+    // Properties
     public CardDataSO CardData => cardData;
     public GameObject TowerPrefab => cardData.TowerPrefab;
+    /// <summary>
+    /// Check if the card can be used based on its type.
+    /// </summary>
+    /// <returns></returns>
+    public bool CanBeUsed
+    {
+        get
+        {
+            switch (cardData.Type)
+            {
+                case CardType.Tower:
+                    return cardData.TowerPrefab != null;
+                case CardType.Modifier:
+                    return cardData.DamageData != null;
+                case CardType.Ability:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    }
 
     #region Unity Callbacks
 
@@ -48,4 +70,6 @@ public class Card : MonoBehaviour
     /// </summary>
     /// <param name="toggle">Enable the highlight frame?</param>
     public void Highlight(bool toggle) => highlightFrame.SetActive(toggle);
+
+    
 }
