@@ -294,16 +294,12 @@ public class LevelEditorManager : MonoBehaviour
         {
             case RotationDirections.Up:
                 return 0f;
-                break;
             case RotationDirections.Right:
                 return 90f;
-                break;
             case RotationDirections.Down:
                 return 180f;
-                break;
             case RotationDirections.Left:
                 return 270f;
-                break;
             default:
                 return 0f;
         }
