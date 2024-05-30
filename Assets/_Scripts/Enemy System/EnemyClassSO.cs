@@ -10,15 +10,15 @@ public class EnemyClassSO : ScriptableObject
     [SerializeField] private float initialArmor;
     [SerializeField] private float movementSpeed;
     //[SerializeField] private float rotationSpeed;
-    [SerializeField] private float pointsForPlayerIfKilled;
-    [SerializeField] private float coreDamage;
+    [SerializeField] private int pointsForPlayerIfKilled;
+    [SerializeField] private int coreDamage;
 
     // Getters
     public float InitialLife => initialLife;
     public float InitialArmor => initialArmor;
     public float MovementSpeed => movementSpeed;
     public float RotationSpeed => movementSpeed * 100f;
-    public float PointsForPlayerIfKilled => pointsForPlayerIfKilled;
-    public float CoreDamage => coreDamage;
+    public int PointsForPlayerIfKilled => pointsForPlayerIfKilled;
+    public int CoreDamage => coreDamage;
 
 }

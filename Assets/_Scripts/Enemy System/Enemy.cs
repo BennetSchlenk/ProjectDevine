@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -18,6 +17,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public List<(IXPGainer XpGainder, DamageData DamageData)> infectiousDamageTypes = new();
 
+    public List<(DamageTypeSO DamageType, DamageData DamageData, Coroutine damageOverTimeCR)> activeDamageOverTimeList = new();
 
     #region Unity Callbacks
 
@@ -55,8 +55,6 @@ public class Enemy : MonoBehaviour, IDamagable
                 {
                     xpGainer.OnXPGain(damageTaken);
                 }
-
-
             }
 
             if (damageData.DamageOverTime > 0)
@@ -145,13 +143,21 @@ public class Enemy : MonoBehaviour, IDamagable
 
     }
 
+    private void StartDamageOverTime(DamageData damageData)
+    {
+        foreach (var item in activeDamageOverTimeList)
+        {
+            //item.DamageType == damageData.DamageType;
+        }
+    }
+
     /// <summary>
     /// Returns the damage dealt to the Core
     /// </summary>
     /// <returns>the damage dealt to the Core</returns>
     public void ReachedCore(Core core)
     {
-        core.TakeDamage(classAndStats.CoreDamage);
+        core.DamageCore(classAndStats.CoreDamage);
         InstantKill();
     }
 
