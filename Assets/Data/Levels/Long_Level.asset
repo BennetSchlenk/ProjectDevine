@@ -1,0 +1,4546 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498a3d069658020439574a4b47d8e769, type: 3}
+  m_Name: Long_Level
+  m_EditorClassIdentifier: 
+  LevelName: Long_Level
+  GridObj: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000000100000004000000000000000400000001000000040000000000000004000000010000000400000000000000040000000100000004000000000000000400000001000000040000000000000000000000000000000000000000000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000000000000000000000000000000000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000000000000000000000000000000000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000000000000000000000000000000000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000000000000000000000000000000000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000000000000000000000000000000000005000000040000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000040000000100000006000000000000000000000000000000000000000000000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000010000000400000000000000040000000100000004000000000000000400000001000000040000000000000004000000010000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  Grid:
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -24}
+    GridX: 0
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -22}
+    GridX: 0
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -20}
+    GridX: 0
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -18}
+    GridX: 0
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -16}
+    GridX: 0
+    GridY: 4
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -14}
+    GridX: 0
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -12}
+    GridX: 0
+    GridY: 6
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -10}
+    GridX: 0
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -8}
+    GridX: 0
+    GridY: 8
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -6}
+    GridX: 0
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -4}
+    GridX: 0
+    GridY: 10
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: -2}
+    GridX: 0
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 0}
+    GridX: 0
+    GridY: 12
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 2}
+    GridX: 0
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 4}
+    GridX: 0
+    GridY: 14
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 6}
+    GridX: 0
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 8}
+    GridX: 0
+    GridY: 16
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 10}
+    GridX: 0
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 12}
+    GridX: 0
+    GridY: 18
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 14}
+    GridX: 0
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 16}
+    GridX: 0
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 18}
+    GridX: 0
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 20}
+    GridX: 0
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 22}
+    GridX: 0
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -14, y: 0, z: 24}
+    GridX: 0
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -24}
+    GridX: 1
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -22}
+    GridX: 1
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: -20}
+    GridX: 1
+    GridY: 2
+    MeshIndex: 4
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -18}
+    GridX: 1
+    GridY: 3
+    MeshIndex: 1
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: -16}
+    GridX: 1
+    GridY: 4
+    MeshIndex: 4
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -14}
+    GridX: 1
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: -12}
+    GridX: 1
+    GridY: 6
+    MeshIndex: 4
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -10}
+    GridX: 1
+    GridY: 7
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: -8}
+    GridX: 1
+    GridY: 8
+    MeshIndex: 4
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -6}
+    GridX: 1
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: -4}
+    GridX: 1
+    GridY: 10
+    MeshIndex: 4
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: -2}
+    GridX: 1
+    GridY: 11
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: 0}
+    GridX: 1
+    GridY: 12
+    MeshIndex: 4
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 2}
+    GridX: 1
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: 4}
+    GridX: 1
+    GridY: 14
+    MeshIndex: 4
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 6}
+    GridX: 1
+    GridY: 15
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: 8}
+    GridX: 1
+    GridY: 16
+    MeshIndex: 4
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 10}
+    GridX: 1
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: 12}
+    GridX: 1
+    GridY: 18
+    MeshIndex: 4
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 14}
+    GridX: 1
+    GridY: 19
+    MeshIndex: 1
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: -12, y: 0, z: 16}
+    GridX: 1
+    GridY: 20
+    MeshIndex: 4
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 18}
+    GridX: 1
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 20}
+    GridX: 1
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 22}
+    GridX: 1
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -12, y: 0, z: 24}
+    GridX: 1
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -24}
+    GridX: 2
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -22}
+    GridX: 2
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -20}
+    GridX: 2
+    GridY: 2
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -18}
+    GridX: 2
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -16}
+    GridX: 2
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -14}
+    GridX: 2
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -12}
+    GridX: 2
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -10}
+    GridX: 2
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -8}
+    GridX: 2
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -6}
+    GridX: 2
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -4}
+    GridX: 2
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: -2}
+    GridX: 2
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 0}
+    GridX: 2
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 2}
+    GridX: 2
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 4}
+    GridX: 2
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 6}
+    GridX: 2
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 8}
+    GridX: 2
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 10}
+    GridX: 2
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 12}
+    GridX: 2
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 14}
+    GridX: 2
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 16}
+    GridX: 2
+    GridY: 20
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 18}
+    GridX: 2
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 20}
+    GridX: 2
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 22}
+    GridX: 2
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -10, y: 0, z: 24}
+    GridX: 2
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -24}
+    GridX: 3
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -22}
+    GridX: 3
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -20}
+    GridX: 3
+    GridY: 2
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -18}
+    GridX: 3
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -16}
+    GridX: 3
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -14}
+    GridX: 3
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -12}
+    GridX: 3
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -10}
+    GridX: 3
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -8}
+    GridX: 3
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -6}
+    GridX: 3
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -4}
+    GridX: 3
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: -2}
+    GridX: 3
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 0}
+    GridX: 3
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 2}
+    GridX: 3
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 4}
+    GridX: 3
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 6}
+    GridX: 3
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 8}
+    GridX: 3
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 10}
+    GridX: 3
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 12}
+    GridX: 3
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 14}
+    GridX: 3
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 16}
+    GridX: 3
+    GridY: 20
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 18}
+    GridX: 3
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 20}
+    GridX: 3
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 22}
+    GridX: 3
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -8, y: 0, z: 24}
+    GridX: 3
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -24}
+    GridX: 4
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -22}
+    GridX: 4
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -20}
+    GridX: 4
+    GridY: 2
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -18}
+    GridX: 4
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -16}
+    GridX: 4
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -14}
+    GridX: 4
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -12}
+    GridX: 4
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -10}
+    GridX: 4
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -8}
+    GridX: 4
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -6}
+    GridX: 4
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -4}
+    GridX: 4
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: -2}
+    GridX: 4
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 0}
+    GridX: 4
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 2}
+    GridX: 4
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 4}
+    GridX: 4
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 6}
+    GridX: 4
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 8}
+    GridX: 4
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 10}
+    GridX: 4
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 12}
+    GridX: 4
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 14}
+    GridX: 4
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 16}
+    GridX: 4
+    GridY: 20
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 18}
+    GridX: 4
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 20}
+    GridX: 4
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 22}
+    GridX: 4
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -6, y: 0, z: 24}
+    GridX: 4
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -24}
+    GridX: 5
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -22}
+    GridX: 5
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -20}
+    GridX: 5
+    GridY: 2
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -18}
+    GridX: 5
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -16}
+    GridX: 5
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -14}
+    GridX: 5
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -12}
+    GridX: 5
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -10}
+    GridX: 5
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -8}
+    GridX: 5
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -6}
+    GridX: 5
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -4}
+    GridX: 5
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: -2}
+    GridX: 5
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 0}
+    GridX: 5
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 2}
+    GridX: 5
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 4}
+    GridX: 5
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 6}
+    GridX: 5
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 8}
+    GridX: 5
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 10}
+    GridX: 5
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 12}
+    GridX: 5
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 14}
+    GridX: 5
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 16}
+    GridX: 5
+    GridY: 20
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 18}
+    GridX: 5
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 20}
+    GridX: 5
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 22}
+    GridX: 5
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -4, y: 0, z: 24}
+    GridX: 5
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -24}
+    GridX: 6
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -22}
+    GridX: 6
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -20}
+    GridX: 6
+    GridY: 2
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -18}
+    GridX: 6
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -16}
+    GridX: 6
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -14}
+    GridX: 6
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -12}
+    GridX: 6
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -10}
+    GridX: 6
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -8}
+    GridX: 6
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -6}
+    GridX: 6
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -4}
+    GridX: 6
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: -2}
+    GridX: 6
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 0}
+    GridX: 6
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 2}
+    GridX: 6
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 4}
+    GridX: 6
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 6}
+    GridX: 6
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 8}
+    GridX: 6
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 10}
+    GridX: 6
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 12}
+    GridX: 6
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 14}
+    GridX: 6
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 16}
+    GridX: 6
+    GridY: 20
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 18}
+    GridX: 6
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 20}
+    GridX: 6
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 22}
+    GridX: 6
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: -2, y: 0, z: 24}
+    GridX: 6
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -24}
+    GridX: 7
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 1
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 0, y: 0, z: -22}
+    GridX: 7
+    GridY: 1
+    MeshIndex: 5
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 0, y: 0, z: -20}
+    GridX: 7
+    GridY: 2
+    MeshIndex: 4
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -18}
+    GridX: 7
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -16}
+    GridX: 7
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -14}
+    GridX: 7
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -12}
+    GridX: 7
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -10}
+    GridX: 7
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -8}
+    GridX: 7
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -6}
+    GridX: 7
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -4}
+    GridX: 7
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: -2}
+    GridX: 7
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 0}
+    GridX: 7
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 2}
+    GridX: 7
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 4}
+    GridX: 7
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 6}
+    GridX: 7
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 8}
+    GridX: 7
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 10}
+    GridX: 7
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 12}
+    GridX: 7
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 14}
+    GridX: 7
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 0, y: 0, z: 16}
+    GridX: 7
+    GridY: 20
+    MeshIndex: 4
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 18}
+    GridX: 7
+    GridY: 21
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 1
+    Waypoint: 1
+    Position: {x: 0, y: 0, z: 20}
+    GridX: 7
+    GridY: 22
+    MeshIndex: 6
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 22}
+    GridX: 7
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 0, y: 0, z: 24}
+    GridX: 7
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -24}
+    GridX: 8
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -22}
+    GridX: 8
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -20}
+    GridX: 8
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -18}
+    GridX: 8
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -16}
+    GridX: 8
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -14}
+    GridX: 8
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -12}
+    GridX: 8
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -10}
+    GridX: 8
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -8}
+    GridX: 8
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -6}
+    GridX: 8
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -4}
+    GridX: 8
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: -2}
+    GridX: 8
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 0}
+    GridX: 8
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 2}
+    GridX: 8
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 4}
+    GridX: 8
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 6}
+    GridX: 8
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 8}
+    GridX: 8
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 10}
+    GridX: 8
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 12}
+    GridX: 8
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 14}
+    GridX: 8
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 16}
+    GridX: 8
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 18}
+    GridX: 8
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 20}
+    GridX: 8
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 22}
+    GridX: 8
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 2, y: 0, z: 24}
+    GridX: 8
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -24}
+    GridX: 9
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -22}
+    GridX: 9
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -20}
+    GridX: 9
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -18}
+    GridX: 9
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -16}
+    GridX: 9
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -14}
+    GridX: 9
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -12}
+    GridX: 9
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -10}
+    GridX: 9
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -8}
+    GridX: 9
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -6}
+    GridX: 9
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -4}
+    GridX: 9
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: -2}
+    GridX: 9
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 0}
+    GridX: 9
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 2}
+    GridX: 9
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 4}
+    GridX: 9
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 6}
+    GridX: 9
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 8}
+    GridX: 9
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 10}
+    GridX: 9
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 12}
+    GridX: 9
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 14}
+    GridX: 9
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 16}
+    GridX: 9
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 18}
+    GridX: 9
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 20}
+    GridX: 9
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 22}
+    GridX: 9
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 4, y: 0, z: 24}
+    GridX: 9
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -24}
+    GridX: 10
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -22}
+    GridX: 10
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -20}
+    GridX: 10
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -18}
+    GridX: 10
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -16}
+    GridX: 10
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -14}
+    GridX: 10
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -12}
+    GridX: 10
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -10}
+    GridX: 10
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -8}
+    GridX: 10
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -6}
+    GridX: 10
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -4}
+    GridX: 10
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: -2}
+    GridX: 10
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 0}
+    GridX: 10
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 2}
+    GridX: 10
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 4}
+    GridX: 10
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 6}
+    GridX: 10
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 8}
+    GridX: 10
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 10}
+    GridX: 10
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 12}
+    GridX: 10
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 14}
+    GridX: 10
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 16}
+    GridX: 10
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 18}
+    GridX: 10
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 20}
+    GridX: 10
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 22}
+    GridX: 10
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 6, y: 0, z: 24}
+    GridX: 10
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -24}
+    GridX: 11
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -22}
+    GridX: 11
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -20}
+    GridX: 11
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -18}
+    GridX: 11
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -16}
+    GridX: 11
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -14}
+    GridX: 11
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -12}
+    GridX: 11
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -10}
+    GridX: 11
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -8}
+    GridX: 11
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -6}
+    GridX: 11
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -4}
+    GridX: 11
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: -2}
+    GridX: 11
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 0}
+    GridX: 11
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 2}
+    GridX: 11
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 4}
+    GridX: 11
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 6}
+    GridX: 11
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 8}
+    GridX: 11
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 10}
+    GridX: 11
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 12}
+    GridX: 11
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 14}
+    GridX: 11
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 16}
+    GridX: 11
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 18}
+    GridX: 11
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 20}
+    GridX: 11
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 22}
+    GridX: 11
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 8, y: 0, z: 24}
+    GridX: 11
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -24}
+    GridX: 12
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -22}
+    GridX: 12
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -20}
+    GridX: 12
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -18}
+    GridX: 12
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -16}
+    GridX: 12
+    GridY: 4
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -14}
+    GridX: 12
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -12}
+    GridX: 12
+    GridY: 6
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -10}
+    GridX: 12
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -8}
+    GridX: 12
+    GridY: 8
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -6}
+    GridX: 12
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -4}
+    GridX: 12
+    GridY: 10
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: -2}
+    GridX: 12
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 0}
+    GridX: 12
+    GridY: 12
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 2}
+    GridX: 12
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 4}
+    GridX: 12
+    GridY: 14
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 6}
+    GridX: 12
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 8}
+    GridX: 12
+    GridY: 16
+    MeshIndex: 1
+    MeshYRotation: 90
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 10}
+    GridX: 12
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 12}
+    GridX: 12
+    GridY: 18
+    MeshIndex: 1
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 14}
+    GridX: 12
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 16}
+    GridX: 12
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 18}
+    GridX: 12
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 20}
+    GridX: 12
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 22}
+    GridX: 12
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 10, y: 0, z: 24}
+    GridX: 12
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -24}
+    GridX: 13
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -22}
+    GridX: 13
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -20}
+    GridX: 13
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -18}
+    GridX: 13
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: -16}
+    GridX: 13
+    GridY: 4
+    MeshIndex: 4
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -14}
+    GridX: 13
+    GridY: 5
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: -12}
+    GridX: 13
+    GridY: 6
+    MeshIndex: 4
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -10}
+    GridX: 13
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: -8}
+    GridX: 13
+    GridY: 8
+    MeshIndex: 4
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -6}
+    GridX: 13
+    GridY: 9
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: -4}
+    GridX: 13
+    GridY: 10
+    MeshIndex: 4
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: -2}
+    GridX: 13
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: 0}
+    GridX: 13
+    GridY: 12
+    MeshIndex: 4
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 2}
+    GridX: 13
+    GridY: 13
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: 4}
+    GridX: 13
+    GridY: 14
+    MeshIndex: 4
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 6}
+    GridX: 13
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: 8}
+    GridX: 13
+    GridY: 16
+    MeshIndex: 4
+    MeshYRotation: 270
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 10}
+    GridX: 13
+    GridY: 17
+    MeshIndex: 1
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 1
+    Buildable: 0
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 1
+    Position: {x: 12, y: 0, z: 12}
+    GridX: 13
+    GridY: 18
+    MeshIndex: 4
+    MeshYRotation: 180
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 14}
+    GridX: 13
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 16}
+    GridX: 13
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 18}
+    GridX: 13
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 20}
+    GridX: 13
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 22}
+    GridX: 13
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 12, y: 0, z: 24}
+    GridX: 13
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -24}
+    GridX: 14
+    GridY: 0
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -22}
+    GridX: 14
+    GridY: 1
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -20}
+    GridX: 14
+    GridY: 2
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -18}
+    GridX: 14
+    GridY: 3
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -16}
+    GridX: 14
+    GridY: 4
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -14}
+    GridX: 14
+    GridY: 5
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -12}
+    GridX: 14
+    GridY: 6
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -10}
+    GridX: 14
+    GridY: 7
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -8}
+    GridX: 14
+    GridY: 8
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -6}
+    GridX: 14
+    GridY: 9
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -4}
+    GridX: 14
+    GridY: 10
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: -2}
+    GridX: 14
+    GridY: 11
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 0}
+    GridX: 14
+    GridY: 12
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 2}
+    GridX: 14
+    GridY: 13
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 4}
+    GridX: 14
+    GridY: 14
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 6}
+    GridX: 14
+    GridY: 15
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 8}
+    GridX: 14
+    GridY: 16
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 10}
+    GridX: 14
+    GridY: 17
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 12}
+    GridX: 14
+    GridY: 18
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 14}
+    GridX: 14
+    GridY: 19
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 16}
+    GridX: 14
+    GridY: 20
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 18}
+    GridX: 14
+    GridY: 21
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 20}
+    GridX: 14
+    GridY: 22
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 22}
+    GridX: 14
+    GridY: 23
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  - Walkable: 0
+    Buildable: 1
+    Spawn: 0
+    EnemyTarget: 0
+    Waypoint: 0
+    Position: {x: 14, y: 0, z: 24}
+    GridX: 14
+    GridY: 24
+    MeshIndex: 0
+    MeshYRotation: 0
+    MeshObj: {fileID: 0}
+    TowerObj: {fileID: 0}
+  GridX: 15
+  GridY: 25
+  LevelWaypoints:
+  - NodePos:
+      x: 7
+      y: 1
+    Waypoints:
+    - {x: 0, y: -0.5, z: -22}
+    - {x: 0, y: -0.5, z: -20}
+    - {x: -12, y: -0.5, z: -20}
+    - {x: -12, y: -0.5, z: -16}
+    - {x: 12, y: -0.5, z: -16}
+    - {x: 12, y: -0.5, z: -12}
+    - {x: -12, y: -0.5, z: -12}
+    - {x: -12, y: -0.5, z: -8}
+    - {x: 12, y: -0.5, z: -8}
+    - {x: 12, y: -0.5, z: -4}
+    - {x: -12, y: -0.5, z: -4}
+    - {x: -12, y: -0.5, z: 0}
+    - {x: 12, y: -0.5, z: 0}
+    - {x: 12, y: -0.5, z: 4}
+    - {x: -12, y: -0.5, z: 4}
+    - {x: -12, y: -0.5, z: 8}
+    - {x: 12, y: -0.5, z: 8}
+    - {x: 12, y: -0.5, z: 12}
+    - {x: -12, y: -0.5, z: 12}
+    - {x: -12, y: -0.5, z: 16}
+    - {x: 0, y: -0.5, z: 16}
+    - {x: 0, y: -0.5, z: 20}
