@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public event Action<CardMovement> OnCardClicked = delegate { };
     public event Action<CardMovement> OnCardDragged = delegate { };
@@ -43,23 +43,19 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         button.onClick.AddListener(OnClick);
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-
         _initialLocalScale = transform.localScale;
-        targetScale = _initialLocalScale;
+        SetTargetScale(_initialLocalScale);
         targetPosition = _targetPosition;
         targetRotation = _targetRotation.eulerAngles;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
         if (_isMoving)
         {
-            //Debug.LogFormat("{0} - {1} / {2} - {3} / {4}", transform.gameObject.name, _currentMovementTime, _targetTime, transform.position, _targetPosition);
             _currentMovementTime += Time.deltaTime / _targetTime;
             transform.position = Vector3.Lerp(_startPosition, _targetPosition, _currentMovementTime / _targetTime);
             transform.rotation = Quaternion.Lerp(_startRotation, _targetRotation, _currentMovementTime / _targetTime);
@@ -103,22 +99,38 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         _isMoving = true;
     }
 
-    public void SetHoveredPositionTransform(Transform gameObjectTransform)
+    public void SetHoveredPositionTransform(Transform gameObjectTransform) => hoverPositionTransform = gameObjectTransform;
+
+    public bool CanBeUsed() => true;
+
+    public bool IsChooseTargetCard() => true;
+    private void SetTargetPositionWithHoverPositionY()
     {
-        hoverPositionTransform = gameObjectTransform;
+        // Take the global Y position from hoverPositionTransform
+        var hoverPositionTransformY = hoverPositionTransform.position.y;
+
+        targetPosition = new Vector3(_targetPosition.x, hoverPositionTransformY, _targetPosition.z);
+        targetRotation = new Vector3(_targetRotation.x, _targetRotation.y, 0f);
     }
 
-    public bool CanBeUsed()
+    private void SetTargetScale(Vector3 scale)
     {
-        return true;
+        targetScale = scale;
     }
 
-    public bool IsChooseTargetCard()
+    private void HandleCardScaleAnimation()
     {
-        return true;
+        if (transform.localScale != targetScale)
+            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleAnimationSpeed);
+        if (transform.position != targetPosition)
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * scaleAnimationSpeed);
+        if (transform.rotation.eulerAngles != targetRotation)
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * scaleAnimationSpeed);
     }
 
-    private void OnMouseDown()
+    #region Event Handlers
+
+    public void OnMouseDown()
     {
         if (!CanBeUsed()) return;
 
@@ -132,77 +144,40 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
             Debug.Log("Finished");
         }
-        else
-        {
-
-        }
-    }
-
-    private void OnMouseUp()
-    {
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        targetScale = mouseOverLocalScale;
+        SetTargetScale(mouseOverLocalScale);
+        SetTargetPositionWithHoverPositionY();
 
-        // Take the global Y position from hoverPositionTransform
-        var hoverPositionTransformY = hoverPositionTransform.position.y;
-
-        targetPosition = new Vector3(_targetPosition.x, hoverPositionTransformY, _targetPosition.z);
-        targetRotation = new Vector3(_targetRotation.x, _targetRotation.y, 0f);
         // Get the current sibling index
         currentSiblingIndex = transform.GetSiblingIndex();
+
         // Make this gameobject show on top of other gameobjects
         transform.SetAsLastSibling();
     }
 
+
     public void OnPointerExit(PointerEventData eventData)
     {
-        targetScale = _initialLocalScale;
+        SetTargetScale(_initialLocalScale);
         targetPosition = _targetPosition;
         targetRotation = _targetRotation.eulerAngles;
+
         // Return the gameobject to its original sibling index
         transform.SetSiblingIndex(currentSiblingIndex);
     }
 
-    private void HandleCardScaleAnimation()
-    {
-        if (transform.localScale != targetScale)
-            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleAnimationSpeed);
-        if (transform.position != targetPosition)
-            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * scaleAnimationSpeed);
-        if (transform.rotation.eulerAngles != targetRotation)
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * scaleAnimationSpeed);
-    }
+    public void OnBeginDrag(PointerEventData eventData) => OnCardDragged(this);
 
-
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        //Debug.Log("OnPointerUp: " + gameObject.name);
-        
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        OnCardDragged(this);
-        //Debug.Log("OnBeginDrag: " + gameObject.name);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        OnCardDropped(this);
-        //Debug.Log("OnEndDrag: " + gameObject.name);
-    }
+    public void OnEndDrag(PointerEventData eventData) => OnCardDropped(this);
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag: " + gameObject.name);
     }
 
-    private void OnClick()
-    {
-        OnCardClicked(this);
-    }
+    private void OnClick() => OnCardClicked(this);
+
+    #endregion
 }

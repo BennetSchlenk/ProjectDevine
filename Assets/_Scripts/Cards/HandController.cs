@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
+
 
 [RequireComponent(typeof(HandVisualHandler))]
 public class HandController : MonoBehaviour
@@ -30,11 +30,6 @@ public class HandController : MonoBehaviour
         handVisualHandler.OnCardRemoveAction += OnCardRemoved;
     }
 
-    private void Start()
-    {
-        //Refresh();
-    }
-
     private void OnDestroy()
     {
         handVisualHandler.OnCardDraggedAction -= UseCardFromDrag;
@@ -44,33 +39,15 @@ public class HandController : MonoBehaviour
 
     #endregion
 
-    // TODO: Is this used?
-    [ContextMenu("Refresh")]
-    public void Refresh()
-    {
-        // Destroy cards
-        //foreach (var card in cards)
-        //    Destroy(card.gameObject);
-
-        cards.Clear();
-
-        foreach (Transform transf in cardsContainer)
-        {
-            BezierChildMovement bcm = transf.GetComponent<BezierChildMovement>();
-            bcm.SetBezierCurve(bezierCurve);
-            if (bcm != null)
-                cards.Add(bcm);
-        }
-
-        for (int i = 0; i < cards.Count; i++)
-        {
-            cards[i].T = (float)i / (cards.Count - 1);
-        }
-
-
-    }
-
+    /// <summary>
+    /// Use a card when it is clicked.
+    /// </summary>
+    /// <param name="cardMovement"></param>
     private void UseCardFromClick(CardMovement cardMovement) => UseCard(cardMovement, true);
+    /// <summary>
+    /// Use a card when it is dragged.
+    /// </summary>
+    /// <param name="cardMovement"></param>
     private void UseCardFromDrag(CardMovement cardMovement) => UseCard(cardMovement, false);
 
     private void UseCard(CardMovement cardMovement, bool isClick = false)
@@ -81,33 +58,24 @@ public class HandController : MonoBehaviour
         SelectCard(card, true);
 
         if (card.TowerPrefab != null)
-        {
-            //objectPlacer.StartPlacing(card.Prefab, isClick);
             objectPlacer.UseCard(card.CardData, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
-        }
-
-
-        //card.Use();
-        //Refresh();
     }
 
     private void OnCardUsed(Card card)
     {
-        //card.Highlight(false);
-        Debug.Log("-------------Card used");
         Destroy(card.gameObject);
-        handVisualHandler.OrderCardsInWorld();
+        handVisualHandler.OrderCards();
     }
 
-    private void OnCardNotUsed(Card card)
-    {
-        Debug.Log("-------------Card not used");
-        SelectCard(card, false);
-    }
+    private void OnCardNotUsed(Card card) => SelectCard(card, false);
 
+    /// <summary>
+    /// Orders the cards after a card has been removed.
+    /// </summary>
+    /// <param name="cardMovement"></param>
     private void OnCardRemoved(CardMovement cardMovement)
     {
-        if (!gameObject.activeInHierarchy) return; // Remove the editor error when leaving play mode
+        if (!gameObject.activeInHierarchy) return; // If the game object is not active, return to avoid Coroutine errors.
 
         StartCoroutine(OrderCardsAfterDelay(0f));
     }
@@ -115,7 +83,7 @@ public class HandController : MonoBehaviour
     private IEnumerator OrderCardsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        handVisualHandler.OrderCardsInWorld();
+        handVisualHandler.OrderCards();
     }
 
     private void SelectCard(Card card, bool highlight)

@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 1662199122595618415}
   - component: {fileID: 7268910059400356537}
   - component: {fileID: 5620051842255734026}
-  - component: {fileID: 5365425439732859362}
   m_Layer: 0
   m_Name: Tower Root
   m_TagString: Untagged
@@ -195,9 +194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177bcab731b76fe4f8468a986e9f159b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseTowerData: {fileID: 11400000, guid: 2979fad0c7cfae344b3b2679fccc6f07, type: 2}
+  baseTowerStats: {fileID: 0}
   TowerInfo: {fileID: 11400000, guid: aff4745fbf0f86c44a534447d9aac7b7, type: 2}
-  TowerStats:
+  TowerRuntimeStats:
     BaseStats: {fileID: 0}
   DamageDataList:
   - DamageType: {fileID: 11400000, guid: 17f64c1bbd0a54c428d48141586b3135, type: 2}
@@ -228,20 +227,3 @@ MonoBehaviour:
   projectile: {fileID: 5590571820964772190, guid: 69f6173e0d235f94d965acbb71e8874e,
     type: 3}
   projectileSpawnPoints: []
---- !u!114 &5365425439732859362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4465158043754759250}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ac734788b60559468183764b5efb498, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  priority: 0
-  rotateX: 0
-  rotateY: 1
-  rotateZ: 0
-  rotationSpeed: 5
