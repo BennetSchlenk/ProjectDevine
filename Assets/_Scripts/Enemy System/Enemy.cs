@@ -127,7 +127,7 @@ public class Enemy : MonoBehaviour, IDamagable
                     
                     float damageTaken = HandleHealthDamage(details.Value.Data.DamageOverTime);
 
-                    Debug.Log($"<b>Enemy</b><color=#0000E6> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
+                    Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
 
                     // add XP to tower
                     if (details.Value.XpGainder != null)
