@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Core : MonoBehaviour, IDamagable
+public class Core : MonoBehaviour
 {
-    [SerializeField] float initialHealth = 500f;
     [SerializeField] GameObject hitEffect;
     private AudioManager audioManager;
-
-    public float Health { get; set; }
+    private PlayerDataManager playerDataManager;
+    
 
     #region Unity Callbacks
 
@@ -21,45 +20,28 @@ public class Core : MonoBehaviour, IDamagable
     private void Start()
     {
         audioManager = ServiceLocator.Instance.GetService<AudioManager>();
-        Health = initialHealth;
+        playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
+
     }
 
     #endregion
+    
 
-    public float InstantKill()
+    public float DamageCore(int incomingAmount)
     {
-        DestroySelf();
-        return Health;
-    }
-
-    public float TakeDamage(float incomingAmount)
-    {
-        float damageTaken;
-
-        Health = Mathf.Clamp(Health - incomingAmount, 0f, Health);
-
-        damageTaken = Health - (Health - incomingAmount);
-
-        if (damageTaken > 0f)
+        
+        if (incomingAmount > 0f)
         {
+            playerDataManager.RemoveHP(incomingAmount);
             // Handle the damage taken, animations, effects, etc
-            Debug.Log($"<color=#E60000>The Core took {damageTaken} damage</color>");
+            Debug.Log($"<color=#E60000>The Core took {incomingAmount} damage</color>");
             audioManager.PlayerLooseHPSound(this.transform.position);
             if (hitEffect != null )
             {
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
             }
-
-            // trigger death of enemy
-            if (Health <= 0f)
-            {
-                // Trigger GameOver!
-                Debug.Log("<color=#00FF00><b>---=== GAME OVER, YOU ARE DONE :D ===---</b></color>");
-                
-                //DestroySelf();
-            }
         }
-        return damageTaken;
+        return incomingAmount;
 
     }
 
