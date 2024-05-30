@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6933e782b5bbdb94ea170c6f1fdd7f80, type: 3}
-  m_Name: BasicTheme
+  m_Name: DefaultTheme
   m_EditorClassIdentifier: 
   Meshes:
   - {fileID: 8192726932342792941, guid: e860a72e9762d4b4384c09dcbc25e2f9, type: 3}
