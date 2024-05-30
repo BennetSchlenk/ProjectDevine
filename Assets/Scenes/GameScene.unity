@@ -730,9 +730,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3076903593389418134, guid: a924ba9c1c93f3e4d960d6c85febf345,
         type: 3}
+      propertyPath: looseHPClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 41ec21abc177df74e916ba3b71b3c89a, type: 3}
+    - target: {fileID: 3076903593389418134, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
       propertyPath: volumeUIManager
       value: 
       objectReference: {fileID: 66382859}
+    - target: {fileID: 3076903593389418134, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musicFiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3076903593389418134, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musicFiles.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 603efd0373ab1b944b08961f3a87ecee,
+        type: 2}
+    - target: {fileID: 3076903593389418134, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musicFiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 603efd0373ab1b944b08961f3a87ecee,
+        type: 2}
     - target: {fileID: 5448556691543264973, guid: a924ba9c1c93f3e4d960d6c85febf345,
         type: 3}
       propertyPath: m_LocalPosition.x

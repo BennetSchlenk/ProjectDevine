@@ -1,25 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
+using UnityEngine.InputSystem.Controls;
 
 [RequireComponent(typeof(EnemyMovementController))]
 public class Enemy : MonoBehaviour, IDamagable
 {
     [Header("Basic configs")]    
-    [SerializeField] private EnemyStatsSO stats;
+    [SerializeField] private EnemyClassSO classAndStats;
 
     public float Health { get; set; }
-    public EnemyStatsSO Stats { get {  return stats; } }
+    public float Armor { get; set; }
+    public EnemyClassSO Stats { get {  return classAndStats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
-    
+    public List<(IXPGainer XpGainder, DamageData DamageData)> infectiousDamageTypes = new();
+
+    public List<(DamageTypeSO DamageType, DamageData DamageData, Coroutine damageOverTimeCR)> activeDamageOverTimeList = new();
 
     #region Unity Callbacks
 
     private void Awake()
     {
-        Health = stats.InitialLife;
+        Health = classAndStats.InitialLife;
         MovementController = GetComponent<EnemyMovementController>();
     }
 
@@ -35,31 +39,127 @@ public class Enemy : MonoBehaviour, IDamagable
         MovementController.StartMoving(waypoints);
     }
 
-    public float InstantKill()
+    public void InstantKill()
     {
-        DestroySelf();
-        return Health;
+        DestroySelf();        
     }
 
-    public float TakeDamage(float incomingAmount)
+    public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
     {
-        float damageTaken;
-
-        Health = Mathf.Clamp(Health - incomingAmount, 0f, Health);
-
-        damageTaken = Health - (Health - incomingAmount);
-
-        if (damageTaken > 0f)
+        
+        foreach (DamageData damageData in damageDataList)
         {
-            // Handle the damage taken, animations, effects, etc
-
-            // trigger death of enemy
-            if (Health <= 0f)
+            
+            if (damageData.Damage > 0)
             {
-                DestroySelf();
+                float damageTaken = HandleHealthDamage(damageData.Damage);
+                if (xpGainer != null)
+                {
+                    xpGainer.OnXPGain(damageTaken);
+                }
+            }
+
+            if (damageData.DamageOverTime > 0)
+            {
+
+                //if (damageData.DamageType.IsInfectious)
+                //{
+
+                //}
+
+                StartCoroutine(
+                    DealDamageOverTime(
+                        damageData.DamageOverTime, 
+                        damageData.DamageOverTimeTickRate, 
+                        damageData.DamageOverTimeDuration, 
+                        xpGainer));
             }
         }
+
+       
+        
+    }
+
+
+    private float HandleArmorDamage(float amount)
+    {
+        float armorDamageTaken = 0f;
+
+        if (Armor > 0)
+        {
+            float newArmor = Mathf.Clamp(Armor - amount, 0f, Armor);
+
+            armorDamageTaken = Armor - newArmor;
+            Armor = newArmor;
+
+            if (armorDamageTaken > 0f)
+            {
+                // Handle the armor damage taken, animations, effects, etc
+                        
+            }
+            
+        }
+
+        return armorDamageTaken;
+        
+    }
+
+    private float HandleHealthDamage(float amount)
+    {
+        float damageTaken = 0f;
+        float newHealth;
+
+        float reducedDamageBasedOnArmor = amount;
+        if (Armor > 0)
+        {
+            reducedDamageBasedOnArmor = Mathf.Clamp(Armor - amount, 0, amount);
+        }        
+
+        if (reducedDamageBasedOnArmor > 0)
+        {
+            newHealth = Mathf.Clamp(Health - reducedDamageBasedOnArmor, 0f, Health);
+
+            damageTaken = Health - newHealth;
+            Health = newHealth;
+
+            if (damageTaken > 0f)
+            {
+                // Handle the damage taken, animations, effects, etc
+
+                // trigger death of enemy
+                if (Health <= 0f)
+                {
+                    DestroySelf();
+                }
+            }
+        } 
         return damageTaken;
+    }
+
+    private IEnumerator DealDamageOverTime(float damageAmount, float damageInterval, float damageDuration, IXPGainer xpGainer)
+    {
+        float timeOfStart = 0f; 
+
+        while (timeOfStart <= damageDuration)
+        {
+            float damageTaken = HandleHealthDamage(damageAmount);
+            if (xpGainer != null)
+            {
+                xpGainer.OnXPGain(damageTaken);
+            }
+
+            timeOfStart += Time.deltaTime;
+            yield return new WaitForSeconds(damageInterval);
+        }
+
+    }
+
+    private void StartDamageOverTime(DamageData damageData)
+    {
+        foreach (var item in activeDamageOverTimeList)
+        {
+            //item.DamageType == damageData.DamageType;
+        }
     }
 
     /// <summary>
@@ -68,12 +168,13 @@ public class Enemy : MonoBehaviour, IDamagable
     /// <returns>the damage dealt to the Core</returns>
     public void ReachedCore(Core core)
     {
-        core.DamageCore(stats.CoreDamage);
+        core.DamageCore(classAndStats.CoreDamage);
         InstantKill();
     }
 
     private void DestroySelf()
     {
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 

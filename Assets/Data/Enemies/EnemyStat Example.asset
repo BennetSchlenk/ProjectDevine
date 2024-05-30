@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f78a07ff73b39f4e937aced9d33c8ae, type: 3}
   m_Name: EnemyStat Example
   m_EditorClassIdentifier: 
-  initialLife: 100
+  initialLife: 50
   initialArmor: 0
-  movementSpeed: 8
-  rewardPointsForPlayer: 100
-  coreDamage: 100
+  movementSpeed: 7
+  pointsForPlayerIfKilled: 0
+  coreDamage: 5
