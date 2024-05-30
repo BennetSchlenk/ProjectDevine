@@ -18,6 +18,7 @@ public class CardDataSO : ScriptableObject
     [Tooltip("The tower info for the card")]
     public TowerInfoSO TowerInfo;
     public TowerDataUpgradeSO TowerBaseStats;
+    public CardDataSO NextTierData;
 
     public GameObject TowerPrefab => TowerInfo.TowerModels[TowerTier - 1];
 }
