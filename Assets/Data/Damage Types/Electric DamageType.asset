@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a788af62e4359054e8f6ec76ca1669d3, type: 3}
   m_Name: Electric DamageType
   m_EditorClassIdentifier: 
-  DamageTypeName: Poison
+  DamageTypeName: Electric
   Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   HitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
     type: 3}
