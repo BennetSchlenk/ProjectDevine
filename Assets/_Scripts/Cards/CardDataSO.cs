@@ -13,19 +13,23 @@ public class CardDataSO : ScriptableObject
     public CardType Type;
 
     [Header("Tower Settings")]
+
     [Tooltip("The tier of the tower card: 1-Basic, 2-Advanced, 3-Elite")]
     public int TowerTier = 1;
     [Tooltip("The tower info for the card")]
     public TowerInfoSO TowerInfo;
     public TowerDataUpgradeSO TowerBaseStats;
+    
     public CardDataSO NextTierData;
-
     public GameObject TowerPrefab => TowerInfo.TowerModels[TowerTier - 1];
+
+    [Header("DamageData Settings")]
+    public DamageData DamageData;
 }
 
 public enum CardType
 {
     Tower,
-    Upgrade,
+    Modifier,
     Ability
 }

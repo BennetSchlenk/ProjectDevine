@@ -75,7 +75,6 @@ public class HandVisualHandler : MonoBehaviour
     {
         
         List<Transform> children = GetWorldCards();
-        Debug.Log("Ordering cards: " + children.Count);
         if (children == null || children.Count == 0) return;
 
         // If children.Count is 1, set the card in the middle of the curve

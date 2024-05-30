@@ -264,7 +264,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
 
     private void DealDamage(IDamagable damagable, List<DamageData> damageDataList)
     {
-        //damagable.TakeDamage(damageDataList, this);
+        damagable.TakeDamage(damageDataList, this);
     }
 
 }

@@ -13,6 +13,7 @@ public class ObjectPlacer : MonoBehaviour
 
     [Header("Towers Settings")]
     [SerializeField] private GameObject towerRootPrefab;
+    [SerializeField] private GameObject modifierPlaceholderPrefab;
 
     private CardDataSO cardToUse;
     private GameObject instantiatedObject;
@@ -74,44 +75,38 @@ public class ObjectPlacer : MonoBehaviour
                 // Try to place object in node
                 if (GetWasPlaceButtonTriggered() && node != null)
                 {
-                    // Check if a tower is not placed in the node
-                    if (node.TowerObj == null)
+                    switch (cardToUse.Type)
                     {
-                        TryPlaceInNode(node);
-                    }
-                    else
-                    {
-                        // Check if the card can be placed in a node with a tower.
-                        if (true)
-                        {
-                            switch (cardToUse.Type)
+                        case CardType.Tower:
+
+                            // Check if a tower is not placed in the node
+                            if (node.TowerObj == null)
                             {
-                                case CardType.Tower:
-                                    // Trying to place a tower in a node with a tower
-
-                                    // TODO: Upgrade tower if available
-                                    var tower = node.TowerObj.GetComponent<Tower>();
-                                    // Upgrade tower
-                                    bool upgraded = tower.ApplyUpgrade(cardToUse);
-                                    Debug.Log("Tower upgraded: " + upgraded);
-                                    if (upgraded)
-                                    {
-                                        StopPlacing(true);
-                                        onPlacingSuccess?.Invoke();
-                                    }
-                                    else
-                                    {
-                                        onPlacingFail?.Invoke();
-                                    }
-                                    
-                                    
-                                    break;
+                                TryPlaceTowerInEmptyNode(node);
                             }
-                        }
+                            else
+                            {
+                                // Trying to place a tower in a node with a tower
+
+                                var tower = node.TowerObj.GetComponent<Tower>();
+                                // Upgrade tower if possible
+                                bool upgraded = tower.ApplyUpgrade(cardToUse);
+                                Debug.Log("Tower upgraded: " + upgraded);
+                                if (upgraded)
+                                {
+                                    StopPlacing(true);
+                                    onPlacingSuccess?.Invoke();
+                                }
+                                else
+                                {
+                                    onPlacingFail?.Invoke();
+                                }
+                            }
+                            break;
+                        case CardType.Modifier:
+                            break;
                     }
 
-
-                    
                 }
 
                 // Stop placing if right mouse button is pressed
@@ -225,6 +220,11 @@ public class ObjectPlacer : MonoBehaviour
                 instantiatedObjectPlaceable.OnPlacing();
 
                 break;
+            case CardType.Modifier:
+                instantiatedObject = Instantiate(modifierPlaceholderPrefab);
+                instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
+                instantiatedObjectPlaceable.OnPlacing();
+                break;
         }
     }
 
@@ -242,7 +242,7 @@ public class ObjectPlacer : MonoBehaviour
             instantiatedObjectPlaceable = null;
     }
 
-    private bool TryPlaceInNode(GridNode node)
+    private bool TryPlaceTowerInEmptyNode(GridNode node)
     {
         if (node == null)
         {
