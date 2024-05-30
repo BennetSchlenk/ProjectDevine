@@ -20,3 +20,4 @@ MonoBehaviour:
   TowerTier: 2
   TowerInfo: {fileID: 11400000, guid: aff4745fbf0f86c44a534447d9aac7b7, type: 2}
   TowerBaseStats: {fileID: 11400000, guid: 1efa7759c379c2949bb80e0598eb1633, type: 2}
+  NextTierData: {fileID: 11400000, guid: 5893a6f94b58aa845a00f335e4ecc844, type: 2}

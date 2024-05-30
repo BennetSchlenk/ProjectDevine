@@ -15,5 +15,5 @@ MonoBehaviour:
   range: 10
   fireRate: 2
   fireDuration: 1
-  fireCooldown: 10
+  fireCooldown: 1
   projectileSpeed: 30

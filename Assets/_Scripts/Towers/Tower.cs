@@ -98,7 +98,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     /// </summary>
     /// <param name="model"></param>
     //public void SetUp(GameObject model, TowerDataUpgradeSO initialStats , Vector3 localPosition = default(Vector3))
-    public void SetUp(GameObject model, CardDataSO cardDataSO, int tier = 1)
+    public void SetUp(GameObject model, CardDataSO cardDataSO, int tier = 1, bool applyNextTierStats = false)
     {
         // Stop all coroutines from this tower
         StopAllCoroutines();
@@ -106,7 +106,11 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         currentCardDataSO = cardDataSO;
 
-        TowerRuntimeStats = new(cardDataSO.TowerBaseStats, tier);
+        if (applyNextTierStats)
+            TowerRuntimeStats  = new(cardDataSO.NextTierData.TowerBaseStats, tier);
+        else
+            TowerRuntimeStats = new(cardDataSO.TowerBaseStats, tier);
+
         UpdateRange();
         fireCooldown = TowerRuntimeStats.FireCooldown;
 
@@ -147,7 +151,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
             GameObject newModel = Instantiate(cardDataSO.TowerInfo.TowerModels[TowerRuntimeStats.Tier - 1]);
 
-            SetUp(newModel, cardDataSO, TowerRuntimeStats.Tier);
+            SetUp(newModel, cardDataSO, TowerRuntimeStats.Tier, true);
             Debug.Log("Tower tier upgraded to " + TowerRuntimeStats.Tier);
             return true;
         }
