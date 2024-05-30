@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -15,21 +16,32 @@ public class Enemy : MonoBehaviour, IDamagable
     public EnemyClassSO Stats { get {  return classAndStats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
-    public List<(IXPGainer XpGainder, DamageData DamageData)> infectiousDamageTypes = new();
 
-    public List<(DamageTypeSO DamageType, DamageData DamageData, Coroutine damageOverTimeCR)> activeDamageOverTimeList = new();
+    private Dictionary<DamageTypeSO, DamageData> infectiousDamageTypes = new();
+    private Dictionary<DamageTypeSO, (DamageData Data, float LastTick, float StopTime, IXPGainer XpGainder)> activeDamageOverTime = new();
+
+    //cached vars
+    AudioManager audioManager;
+    PlayerDataManager playerDataManager;
 
     #region Unity Callbacks
 
     private void Awake()
     {
         Health = classAndStats.InitialLife;
+        Armor = classAndStats.InitialArmor;
         MovementController = GetComponent<EnemyMovementController>();
+    }
+
+    private void Start()
+    {
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
     }
 
     private void Update()
     {
-        
+        HandleDamageOverTime();
     }
 
     #endregion
@@ -39,9 +51,12 @@ public class Enemy : MonoBehaviour, IDamagable
         MovementController.StartMoving(waypoints);
     }
 
+    /// <summary>
+    /// In case of Instant Kill player will not get Essence for the kill.
+    /// </summary>
     public void InstantKill()
     {
-        DestroySelf();        
+        DestroySelf(false);
     }
 
     public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
@@ -53,6 +68,7 @@ public class Enemy : MonoBehaviour, IDamagable
             if (damageData.Damage > 0)
             {
                 float damageTaken = HandleHealthDamage(damageData.Damage);
+                Debug.Log($"<b>Enemy</b><color=#E60000> DirectDamage {damageTaken} {damageData.DamageType.DamageTypeName.ToUpper()} damage</color>");
                 if (xpGainer != null)
                 {
                     xpGainer.OnXPGain(damageTaken);
@@ -61,23 +77,74 @@ public class Enemy : MonoBehaviour, IDamagable
 
             if (damageData.DamageOverTime > 0)
             {
+                // adding Infectious damages to separate dictionary for easier tracking
+                if (damageData.DamageType.IsInfection)
+                {
+                    infectiousDamageTypes.TryAdd(damageData.DamageType, damageData);
+                }
 
-                //if (damageData.DamageType.IsInfectious)
-                //{
-
-                //}
-
-                StartCoroutine(
-                    DealDamageOverTime(
-                        damageData.DamageOverTime, 
-                        damageData.DamageOverTimeTickRate, 
-                        damageData.DamageOverTimeDuration, 
+                // check if damageOverTime is already ticking
+                if (!activeDamageOverTime.ContainsKey(damageData.DamageType))
+                {
+                    // adding it
+                    activeDamageOverTime.Add(damageData.DamageType,
+                        (damageData,
+                        Time.time, 
+                        Time.time + damageData.DamageOverTimeDuration,
                         xpGainer));
+                }
+                else
+                {
+                    // extending duration and updating tower reference
+                    activeDamageOverTime[damageData.DamageType] = 
+                        (damageData, 
+                        activeDamageOverTime[damageData.DamageType].LastTick, 
+                        activeDamageOverTime[damageData.DamageType].StopTime + damageData.DamageOverTimeDuration, 
+                        xpGainer);
+                }
+
+            }
+        }
+    }
+
+    private void HandleDamageOverTime()
+    {
+        List<DamageTypeSO> expiredDamageTypes = new();
+
+        foreach (var details in activeDamageOverTime)
+        {
+            float timeSinceLastTick = Time.time - details.Value.LastTick;
+
+            // checking if we reached or passed stop time
+            if (details.Value.StopTime <= Time.time)
+            {
+                expiredDamageTypes.Add(details.Key);
+            }
+            else
+            {
+                if (timeSinceLastTick >= details.Value.Data.DamageOverTimeTickRate)
+                {
+                    
+                    float damageTaken = HandleHealthDamage(details.Value.Data.DamageOverTime);
+
+                    Debug.Log($"<b>Enemy</b><color=#0000E6> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
+
+                    // add XP to tower
+                    if (details.Value.XpGainder != null)
+                    {
+                        details.Value.XpGainder.OnXPGain(damageTaken);
+                    }
+
+
+                }
             }
         }
 
-       
-        
+        foreach (var item in expiredDamageTypes)
+        {
+            activeDamageOverTime.Remove(item);
+            infectiousDamageTypes.Remove(item);
+        }
     }
 
 
@@ -136,31 +203,6 @@ public class Enemy : MonoBehaviour, IDamagable
         return damageTaken;
     }
 
-    private IEnumerator DealDamageOverTime(float damageAmount, float damageInterval, float damageDuration, IXPGainer xpGainer)
-    {
-        float timeOfStart = 0f; 
-
-        while (timeOfStart <= damageDuration)
-        {
-            float damageTaken = HandleHealthDamage(damageAmount);
-            if (xpGainer != null)
-            {
-                xpGainer.OnXPGain(damageTaken);
-            }
-
-            timeOfStart += Time.deltaTime;
-            yield return new WaitForSeconds(damageInterval);
-        }
-
-    }
-
-    private void StartDamageOverTime(DamageData damageData)
-    {
-        foreach (var item in activeDamageOverTimeList)
-        {
-            //item.DamageType == damageData.DamageType;
-        }
-    }
 
     /// <summary>
     /// Returns the damage dealt to the Core
@@ -174,9 +216,18 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void DestroySelf()
     {
+        DestroySelf(true);
+    }
+
+    private void DestroySelf(bool shouldGetEssencePoints)
+    {
+        if (shouldGetEssencePoints)
+        {
+            playerDataManager.AddEssence(classAndStats.PointsForPlayerIfKilled);
+        }
+
         StopAllCoroutines();
         Destroy(gameObject);
     }
-
 
 }
