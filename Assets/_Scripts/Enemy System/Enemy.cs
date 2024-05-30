@@ -46,8 +46,10 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
     {
+        
         foreach (DamageData damageData in damageDataList)
         {
+            
             if (damageData.Damage > 0)
             {
                 float damageTaken = HandleHealthDamage(damageData.Damage);
@@ -83,15 +85,19 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         float armorDamageTaken = 0f;
 
-        float newArmor = Mathf.Clamp(Armor - amount, 0f, Armor);
-
-        armorDamageTaken = Armor - newArmor;
-        Armor = newArmor;
-
-        if (armorDamageTaken > 0f)
+        if (Armor > 0)
         {
-            // Handle the armor damage taken, animations, effects, etc
+            float newArmor = Mathf.Clamp(Armor - amount, 0f, Armor);
+
+            armorDamageTaken = Armor - newArmor;
+            Armor = newArmor;
+
+            if (armorDamageTaken > 0f)
+            {
+                // Handle the armor damage taken, animations, effects, etc
                         
+            }
+            
         }
 
         return armorDamageTaken;
@@ -102,7 +108,12 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         float damageTaken = 0f;
         float newHealth;
-        float reducedDamageBasedOnArmor = Mathf.Clamp(Armor - amount, 0, amount);
+
+        float reducedDamageBasedOnArmor = amount;
+        if (Armor > 0)
+        {
+            reducedDamageBasedOnArmor = Mathf.Clamp(Armor - amount, 0, amount);
+        }        
 
         if (reducedDamageBasedOnArmor > 0)
         {
