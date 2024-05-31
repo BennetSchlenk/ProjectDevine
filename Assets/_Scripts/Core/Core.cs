@@ -34,7 +34,7 @@ public class Core : MonoBehaviour
         {
             playerDataManager.RemoveHP(incomingAmount);
             // Handle the damage taken, animations, effects, etc
-            //Debug.Log($"<color=#E60000>The Core took {incomingAmount} damage</color>");
+            Debug.Log($"<color=#E60000>The Core took {incomingAmount} damage</color>");
             audioManager.PlayerLooseHPSound(this.transform.position);
             if (hitEffect != null )
             {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(EnemyMovementController))]
 public class Enemy : MonoBehaviour, IDamagable
@@ -98,8 +99,8 @@ public class Enemy : MonoBehaviour, IDamagable
                     // extending duration and updating tower reference
                     activeDamageOverTime[damageData.DamageType] = 
                         (damageData, 
-                        activeDamageOverTime[damageData.DamageType].LastTick, 
-                        activeDamageOverTime[damageData.DamageType].StopTime + damageData.DamageOverTimeDuration, 
+                        activeDamageOverTime[damageData.DamageType].LastTick,
+                        Time.time + damageData.DamageOverTimeDuration, 
                         xpGainer);
                 }
 
@@ -128,6 +129,16 @@ public class Enemy : MonoBehaviour, IDamagable
                     float damageTaken = HandleHealthDamage(details.Value.Data.DamageOverTime);
 
                     Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
+
+                    if (damageTaken > 0)
+                    {
+                        // add effect
+                        if (details.Key.DamageOverTimeEffect != null)
+                        {
+                            GameObject newHitEffect = Instantiate(details.Key.DamageOverTimeEffect, transform.position, Quaternion.identity);
+                            newHitEffect.transform.SetParent(transform);
+                        }
+                    }
 
                     // add XP to tower
                     if (details.Value.XpGainder != null)
@@ -192,6 +203,8 @@ public class Enemy : MonoBehaviour, IDamagable
             if (damageTaken > 0f)
             {
                 // Handle the damage taken, animations, effects, etc
+                
+
 
                 // trigger death of enemy
                 if (Health <= 0f)

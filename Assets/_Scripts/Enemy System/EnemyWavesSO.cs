@@ -11,6 +11,6 @@ public class EnemyWavesSO : ScriptableObject
     [Header("Waves")]
     [SerializeField] private List<EnemyWave> waves;
 
-    public float InitialWaitTime;
-    public List<EnemyWave> Waves;
+    public float InitialWaitTime => initialWaitTimeBeforeStarting;
+    public List<EnemyWave> Waves => waves;
 }
