@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameStates state)
     {
+        Debug.Log($"<color=#FFFFFF>GAMESTATE: </color><color=#449E48> {state.ToString().ToUpper()}</color>");
         switch (state)
         {
             case GameStates.Menu:
