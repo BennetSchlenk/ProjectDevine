@@ -68,9 +68,12 @@ public class LevelEditorManager : MonoBehaviour
             var go = Instantiate(ButtonPrefab, MeshSelectionUIPanel.transform);
             Button button = go.GetComponent<Button>();
             Image image = go.GetComponent<Image>();
+#if UNITY_EDITOR            
             var tex = AssetPreview.GetAssetPreview(ThemeMeshes.Meshes[i]);
             Sprite sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, 100f, 100f), new Vector2(0.5f, 0.5f), 100.0f);
             image.sprite = sprite;
+#endif            
+            
             var i1 = i;
             button.onClick.AddListener(() => SetSelectedMesh(ThemeMeshes.Meshes[i1]));
         }
