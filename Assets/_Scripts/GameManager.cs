@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 {
     private Grid grid;
     private LevelDataSO LevelData;
-    private LevelThemeSO LevelMeshes;
+    private LevelThemeSO LevelTheme;
 
     private GameStates gameState;
 
@@ -27,10 +27,10 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         ServiceLocator.Instance.RegisterService(this);
-        if (LevelData == null || LevelMeshes == null)
+        if (LevelData == null || LevelTheme == null)
         {
             LevelData = Resources.Load(GlobalData.DefaultLevel) as LevelDataSO;
-            LevelMeshes = Resources.Load(GlobalData.DefaultTheme) as LevelThemeSO;
+            LevelTheme = Resources.Load(GlobalData.DefaultTheme) as LevelThemeSO;
         }
     }
 
@@ -43,8 +43,14 @@ public class GameManager : MonoBehaviour
     private void InitializeGame()
     {
         grid = FindObjectOfType<Grid>();
-        grid.SetLevelData(LevelData, LevelMeshes);
+        grid.SetLevelData(LevelData, LevelTheme);
         grid.CreateGrid();
+    }
+
+    public void SetLevelThemeAndData(LevelDataSO levelData,LevelThemeSO levelTheme)
+    {
+        LevelData = levelData;
+        LevelTheme = levelTheme;
     }
 
     public void SetGameState(GameStates state)
