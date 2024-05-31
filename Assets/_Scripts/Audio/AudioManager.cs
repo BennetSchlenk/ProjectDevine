@@ -21,6 +21,7 @@ public class VolumeTypeItem
     public string mixerExposedParamName;
 }
 
+[RequireComponent(typeof(AudioStore))]
 public class AudioManager : MonoBehaviour
 {
 	[Header("SoundEmitter setup")]
@@ -29,26 +30,15 @@ public class AudioManager : MonoBehaviour
 
 	[Header("Music player setup")]
 	[SerializeField] private SoundEmitter musicEmitter;
-	[SerializeField] private List<AudioFileSO> musicFiles;
 
-	[Header("Audio control")]
-	[Tooltip("We're assuming the range [-mixerToSlider to 0dB] becomes [0 to 1]")]
+	[Header("Audio control")]	
 	[SerializeField] private float mixerMultiplier = 20f;
     [SerializeField] private AudioMixer audioMixer = default;
 	[SerializeField] private AudioVolumeUIManager volumeUIManager;
     [SerializeField] private List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
-
-    [SerializeField] private AudioClip looseHPClip;
     
 	public AudioMixer AudioMixer => audioMixer;
-	public bool IsMasterEnabled { get; private set; } = true;
-	public bool IsMusicEnabled { get; private set; } = true;
-    public bool IsEffectEnabled { get; private set; } = true;
-
-
-    //const string MASTER_VOLUME_PARAM_NAME = "MasterVolume";
-    //const string MUSIC_VOLUME_PARAM_NAME = "MusicVolume";
-    //const string SFX_VOLUME_PARAM_NAME = "SFXVolume";
+	public AudioStore AudioStore { get; private set; }
 
     private int currentMusicFileIndex;
 	private AudioSourcePool soundEmitterPool;
@@ -57,6 +47,7 @@ public class AudioManager : MonoBehaviour
     {
 	    ServiceLocator.Instance.RegisterService(this);
         soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
+        AudioStore = GetComponent<AudioStore>();
     }
 
     private void Start()
@@ -87,26 +78,23 @@ public class AudioManager : MonoBehaviour
 
 	private void HandleIfMusicFinishedPlaying(SoundEmitter soundEmitter)
     {
-		if (musicFiles.Count > 1)
+		if (AudioStore.Musics.Count > 1)
 		{
-            currentMusicFileIndex = GetRandomIndexDifferentFromPrevious(currentMusicFileIndex, musicFiles.Count);
+            currentMusicFileIndex = GetRandomIndexDifferentFromPrevious(currentMusicFileIndex, AudioStore.Musics.Count);
 
-            PlayMusicTrack(musicFiles[currentMusicFileIndex]);
+            PlayMusicTrack(AudioStore.Musics[currentMusicFileIndex]);
         }
     }
 
 	public void StartPlayingMusic()
 	{
-		currentMusicFileIndex = UnityEngine.Random.Range(0, musicFiles.Count - 1);
-		PlayMusicTrack(musicFiles[currentMusicFileIndex]);
+		currentMusicFileIndex = UnityEngine.Random.Range(0, AudioStore.Musics.Count - 1);
+		PlayMusicTrack(AudioStore.Musics[currentMusicFileIndex]);
 	}
 
-    public void PlayMusicTrack(AudioFileSO audioFile)
+    public void PlayMusicTrack(AudioObject audioObject)
     {
-        if (IsMusicEnabled)
-        {
-			musicEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);
-        }
+		musicEmitter.PlayMusicClip(audioObject.Clip, audioObject.Volume, audioObject.Pitch, false);
     }
 
 	public void StopMusicTrack()
@@ -130,32 +118,52 @@ public class AudioManager : MonoBehaviour
         return intList[UnityEngine.Random.Range(0, max - 1)];
     }
 
-    #endregion
+	#endregion
 
-    public void PlaySFX(AudioFileSO audioFile)
+	#region Play Effect One Shot Functions
+
+	public bool FindEffectAudioObjectInStore(string name, out AudioObject audioObject)
+	{
+		audioObject = null;
+		audioObject = AudioStore.Effects.Find(item => item.Name.ToUpper() == name.ToUpper());
+		return audioObject != null;
+	}
+
+    public void PlaySFXOneShotAtPosition(string name, Vector3 position)
     {
-        if (IsEffectEnabled)
-        {
-			var soundEmitter = soundEmitterPool.Request();
-			soundEmitter.PlayAudioClip(audioFile.Clip, audioFile.Settings, audioFile.IsLooping);            
-        }
+		if (FindEffectAudioObjectInStore(name, out AudioObject audioObject)) 
+		{
+            PlaySFXOneShotAtPosition(audioObject.Clip, audioObject.Volume, audioObject.Pitch, position);
+		}
+		else
+		{
+			Debug.LogWarning($"Did not found {name} in AudioStore.");
+		}
+    }
+
+    public void PlaySFXOneShotAtPosition(AudioObject audioObject, Vector3 position)
+    {
+        PlaySFXOneShotAtPosition(audioObject.Clip, audioObject.Volume, audioObject.Pitch, position);        
 	}
     
-    public void PlaySFXOnShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position)
+    public void PlaySFXOneShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position)
     {
-	    if (IsEffectEnabled)
-	    {
-		    var soundEmitter = soundEmitterPool.Request();
-		    soundEmitter.PlayClipOnShotAtPosition(clip,volume, pitch, position);            
-	    }
+		var soundEmitter = soundEmitterPool.Request();
+		soundEmitter.PlayClipOneShotAtPosition(clip,volume, pitch, position);            
     }
+
+    #endregion
+
     #region Play Clip Functions
 
     public void PlayerLooseHPSound(Vector3 position)
     {
-	    PlaySFXOnShotAtPosition(looseHPClip, 1f, 1f, position);
+		// TODO this should be moved out of here
+	    PlaySFXOneShotAtPosition("looseHPClip", position);
     }
     #endregion
+
+
     #region Volume handling
 
     public void ChangeVolume(VolumeType volumeType, float newVolume)
@@ -212,34 +220,4 @@ public class AudioManager : MonoBehaviour
             return "NotFound";
         }
     }
-
-	public void ToggleVolumeOnOff(VolumeType volumeType, bool isOn)
-	{
-		switch (volumeType)
-		{
-			case VolumeType.Master:                
-                IsMasterEnabled = isOn; 
-				break;
-
-            case VolumeType.Music:
-				IsMusicEnabled = isOn;
-				if (isOn)
-				{
-					StartPlayingMusic();
-				} 
-				else 
-				{ 
-					StopMusicTrack(); 
-				}
-				break;
-
-			case VolumeType.Effect:
-				IsEffectEnabled = isOn;
-                break;
-
-			default:
-				break;
-		}
-	}
-
 }

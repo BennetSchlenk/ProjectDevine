@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 
 
@@ -8,6 +11,7 @@ using UnityEngine.Events;
 public class SoundEmitter : MonoBehaviour
 {
     private AudioSource audioSource;
+    private AudioMixer audioMixer;
 
     public event UnityAction<SoundEmitter> OnSoundFinishedPlaying;
 
@@ -17,6 +21,11 @@ public class SoundEmitter : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
+    private void Start()
+    {
+        audioMixer = GetComponent<AudioMixer>();
+    }
+
     /// <summary>
     /// Instructs the AudioSource to play a single clip, with optional looping, in a position in 3D space.
     /// </summary>
@@ -24,12 +33,15 @@ public class SoundEmitter : MonoBehaviour
     /// <param name="settings"></param>
     /// <param name="hasToLoop"></param>
     /// <param name="position"></param>
-    public void PlayAudioClip(AudioClip clip, AudioSourceConfigurationSO settings, bool hasToLoop,
-        Vector3 position = default)
+    public void PlayMusicClip(AudioClip clip, float volume, float pitch, bool hasToLoop, Vector3 position = default)
     {
         audioSource.clip = clip;
-        settings.ApplyTo(audioSource);
+
         audioSource.transform.position = position;
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("Music")[0];
+        audioSource.panStereo = 0f;
+        audioSource.volume = volume;
+        audioSource.pitch = pitch;
         audioSource.loop = hasToLoop;
         audioSource.time =
             0f; //Reset in case this AudioSource is being reused for a short SFX after being used for a long music track
@@ -41,11 +53,12 @@ public class SoundEmitter : MonoBehaviour
         }
     }
 
-    public void PlayClipOnShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position = default)
+    public void PlayClipOneShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position = default)
     {
         audioSource.clip = clip;
 
         audioSource.transform.position = position;
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups("SFX")[0];
         audioSource.panStereo = 0f;
         audioSource.volume = volume;
         audioSource.pitch = pitch;
@@ -54,7 +67,7 @@ public class SoundEmitter : MonoBehaviour
             0f; //Reset in case this AudioSource is being reused for a short SFX after being used for a long music track
         audioSource.Play();
         
-        StartCoroutine(FinishedPlaying(clip.length));
+        //StartCoroutine(FinishedPlaying(clip.length));
     }
 
     /// <summary>

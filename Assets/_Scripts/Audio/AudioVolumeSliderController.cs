@@ -11,11 +11,8 @@ public class AudioVolumeSliderController : MonoBehaviour
     [SerializeField] VolumeType type;
 
     [SerializeField] Slider slider;
-    //[SerializeField] float multiplier = 30f;
-    [SerializeField] float defaultValue = 0.8f;
-    [SerializeField] Toggle toggle;
-
-    private bool disableToggleEvent = false;
+    [SerializeField] float defaultValue = 0.8f;    
+        
     private string volumeParameter;
     private AudioManager audioManager;
     private AudioVolumeUIManager volumeManager;
@@ -27,7 +24,6 @@ public class AudioVolumeSliderController : MonoBehaviour
     {
         //save sound levels
         PlayerPrefs.SetFloat(volumeParameter, slider.value);
-        PlayerPrefs.SetInt(volumeParameter + "Toggle", toggle.isOn ? 1 : 0);
     }
 
     
@@ -41,45 +37,21 @@ public class AudioVolumeSliderController : MonoBehaviour
 
         volumeParameter = audioManager.GetVolumeTypeMixerName(type);
 
-        slider.onValueChanged.AddListener(HandleSliderValueChanged);
-        toggle.onValueChanged.AddListener(HandleToggleValueChanged);
+        slider.onValueChanged.AddListener(HandleSliderValueChanged);        
 
         // load and set volume
         float initVolumeValue = PlayerPrefs.GetFloat(volumeParameter, defaultValue);
-        bool initToggleValue = PlayerPrefs.GetInt(volumeParameter + "Toggle", 1) == 1;
 
         //mixer.SetFloat(volumeParameter, Mathf.Log10(initVolumeValue) * multiplier);
         audioManager.ChangeVolume(type, initVolumeValue);
-
-        //toggle.isOn = initVolumeValue > slider.minValue;
-        toggle.isOn = initToggleValue;
+                        
         slider.value = initVolumeValue;
-    }
-
-    private void HandleToggleValueChanged(bool enableSound)
-    {
-        audioManager.ToggleVolumeOnOff(type, enableSound);
-
-        if (disableToggleEvent) return;
-
-        if (enableSound)
-        {
-            slider.value = defaultValue;
-        }
-        else
-        {
-            slider.value = slider.minValue;
-        }
     }
 
     private void HandleSliderValueChanged(float value)
     {
         //mixer.SetFloat(volumeParameter, Mathf.Log10(value) * multiplier);
         audioManager.ChangeVolume(type, value);
-
-        disableToggleEvent = true;
-        toggle.isOn = slider.value > slider.minValue;
-        disableToggleEvent = false;
     }
 
     public float GetVolume()
