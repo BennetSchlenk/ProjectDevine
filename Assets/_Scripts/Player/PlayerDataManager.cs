@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 
 public class PlayerDataManager : MonoBehaviour
 {
+    private GameManager gameManager;
     [SerializeField]
     private int maxHP;
     public int currHP;
@@ -31,7 +32,7 @@ public class PlayerDataManager : MonoBehaviour
 
     private void Start()
     {
-        
+        gameManager = ServiceLocator.Instance.GetService<GameManager>();
     }
 
     #endregion
@@ -73,6 +74,7 @@ public class PlayerDataManager : MonoBehaviour
     
     private void TriggerGameOver()
     {
-        //Debug.Log("<color=#00FF00><b>---=== GAME OVER, YOU ARE DONE :D ===---</b></color>");
+        Debug.Log("<color=#00FF00><b>---=== GAME OVER, YOU ARE DONE :D ===---</b></color>");
+        gameManager.SetGameState(GameStates.GameOver);
     }
 }
