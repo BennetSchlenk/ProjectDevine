@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,4 +9,6 @@ public static class GlobalData
     public const string DefaultLevel = "DefaultLevel";
     public const string DefaultTheme = "DefaultTheme";
     public const string DefaultEnemyWaves = "DefaultEnemyWaves";
+
+    public static Action<CardDataSO> OnCardDragged;
 }

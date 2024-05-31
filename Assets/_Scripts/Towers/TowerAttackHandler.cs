@@ -31,7 +31,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     /// <param name="towerData"></param>
     /// <param name="damageDataList"></param>
     /// <returns>Enemy GameObject</returns>
-    public GameObject Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList, List<GameObject> enemiesToIgnoreIfPossible)
+    public GameObject Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList, List<GameObject> enemiesToIgnoreIfPossible, float range)
     {
         var enemy = GetAttackTargetWithinRange(attackTargetType, towerData.Range, enemiesToIgnoreIfPossible);
         if (enemy == null)
@@ -40,7 +40,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         }
         else
         {
-            if (IsEnemyInRange(enemy, towerData.Range))
+            if (IsEnemyInRange(enemy, range))
             {
                 // Get the damagable component of the enemy
                 IDamagable damagable = enemy.GetComponent<IDamagable>();

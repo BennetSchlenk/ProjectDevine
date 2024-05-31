@@ -6,7 +6,6 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class BezierCurve : MonoBehaviour
 {
-    public AnimationCurve curve;
     public Quaternion tstQuat;
     [SerializeField]
     private GameObject testCard;

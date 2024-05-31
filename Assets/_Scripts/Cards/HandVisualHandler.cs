@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -31,6 +33,11 @@ public class HandVisualHandler : MonoBehaviour
     [Tooltip("Transform to take the Y position of cards that are hovered.")]
     [SerializeField] private Transform hoverPositionTransform;
 
+    [SerializeField] private AnimationCurve curve;
+
+    private float4 maxValX, minValX;
+    private float4 maxValY, minValY;
+
     // Components
     private HandController handController;
     private BezierCurve _bezierCurve;
@@ -49,6 +56,11 @@ public class HandVisualHandler : MonoBehaviour
 
     void Start()
     {
+        minValX = new float4(-75, -25, 25, 75);
+        maxValX = new float4(-400, -200, 200, 400);
+        minValY = new float4(-36, -31, -31, -36);
+        maxValY = new float4(-36, 15, 15, -36);
+
         cardsContainer = handController.CardsContainer;
         OrderCards();
         handController.OnHandUpdate += OnHandUpdate;
@@ -73,28 +85,77 @@ public class HandVisualHandler : MonoBehaviour
     [ContextMenu("Order Cards")]
     public void OrderCards()
     {
-        
+
         List<Transform> children = GetWorldCards();
         if (children == null || children.Count == 0) return;
+
+
 
         // If children.Count is 1, set the card in the middle of the curve
         if (children.Count == 1)
         {
-            children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.5f), _bezierCurve.ControlPoints[3].rotation, initialPlaceTime);
-        }
-        else if (children.Count == 2)
-        {
-            children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.25f), _bezierCurve.GetCardOrientation(0.25f), initialPlaceTime);
-            children[1].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.75f), _bezierCurve.GetCardOrientation(0.75f), initialPlaceTime);
-        }
-        else if (children.Count == 3)
-        {
-            children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.2f), _bezierCurve.GetCardOrientation(0.2f), initialPlaceTime);
-            children[1].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.5f), _bezierCurve.GetCardOrientation(0.5f), initialPlaceTime);
-            children[2].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.8f), _bezierCurve.GetCardOrientation(0.8f), initialPlaceTime);
+            Debug.Log("Resize");
+            var pos1 = _bezierCurve.ControlPoints[0].localPosition;
+            pos1.x = minValX.x;
+            pos1.y = minValY.x;
+            _bezierCurve.ControlPoints[0].localPosition = pos1;
+
+            var pos2 = _bezierCurve.ControlPoints[1].localPosition;
+            pos2.x = minValX.y;
+            pos2.y = minValY.y;
+            _bezierCurve.ControlPoints[1].localPosition = pos2;
+
+            var pos3 = _bezierCurve.ControlPoints[2].localPosition;
+            pos3.x = minValX.z;
+            pos3.y = minValY.z;
+            _bezierCurve.ControlPoints[2].localPosition = pos3;
+
+            var pos4 = _bezierCurve.ControlPoints[3].localPosition;
+            pos4.x = minValX.w;
+            pos4.y = minValY.w;
+            _bezierCurve.ControlPoints[3].localPosition = pos4;
+
+            children[0].GetComponent<CardMovement>().MoveToPosition(_bezierCurve.GetBezierPoint(0.5f),
+                _bezierCurve.ControlPoints[3].rotation, initialPlaceTime);
         }
         else
         {
+            // Position the cards in the Bezier curve with the same distance between them
+
+            var val = curve.Evaluate(children.Count);
+            Debug.Log("Curve: " + val);
+            var newVal1 = math.remap(0, 1, maxValX.x, minValX.x, val);
+            var newVal2 = math.remap(0, 1, maxValX.y, minValX.y, val);
+            var newVal3 = math.remap(0, 1, maxValX.z, minValX.z, val);
+            var newVal4 = math.remap(0, 1, maxValX.w, minValX.w, val);
+
+            var newValY1 = math.remap(0, 1, maxValY.x, minValY.x, val);
+            var newValY2 = math.remap(0, 1, maxValY.y, minValY.y, val);
+            var newValY3 = math.remap(0, 1, maxValY.z, minValY.z, val);
+            var newValY4 = math.remap(0, 1, maxValY.w, minValY.w, val);
+
+
+            var pos1 = _bezierCurve.ControlPoints[0].localPosition;
+            pos1.x = (int)newVal1;
+            pos1.y = (int)newValY1;
+            _bezierCurve.ControlPoints[0].localPosition = pos1;
+
+
+
+            var pos2 = _bezierCurve.ControlPoints[1].localPosition;
+            pos2.x = (int)newVal2;
+            pos2.y = (int)newValY2;
+            _bezierCurve.ControlPoints[1].localPosition = pos2;
+
+            var pos3 = _bezierCurve.ControlPoints[2].localPosition;
+            pos3.x = (int)newVal3;
+            pos3.y = (int)newValY3;
+            _bezierCurve.ControlPoints[2].localPosition = pos3;
+
+            var pos4 = _bezierCurve.ControlPoints[3].localPosition;
+            pos4.x = (int)newVal4;
+            pos4.y = (int)newValY4;
+            _bezierCurve.ControlPoints[3].localPosition = pos4;
             // Position the cards in the Bezier curve with the same distance between them
             for (int i = 0; i < children.Count; i++)
             {

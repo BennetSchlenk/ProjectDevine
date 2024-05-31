@@ -99,6 +99,8 @@ public class ObjectPlacer : MonoBehaviour
                                 }
                                 else
                                 {
+                                    if (destroyObjectIfNotPlaced)
+                                        StopPlacing(true);
                                     onPlacingFail?.Invoke();
                                 }
                             }
@@ -119,12 +121,16 @@ public class ObjectPlacer : MonoBehaviour
                                 }
                                 else
                                 {
+                                    if (destroyObjectIfNotPlaced)
+                                        StopPlacing(true);
                                     onPlacingFail?.Invoke();
                                 }
                             }
                             else
                             {
                                 // Can't apply modifier to an empty node
+                                if (destroyObjectIfNotPlaced)
+                                    StopPlacing(true);
                                 onPlacingFail?.Invoke();
                             }
                             break;

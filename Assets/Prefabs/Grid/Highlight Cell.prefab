@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 1360465177595277412}
   - component: {fileID: 8045713344864728466}
   - component: {fileID: 4684387889659715927}
+  - component: {fileID: 4872480542410780652}
   m_Layer: 0
-  m_Name: Unavailable Cell
+  m_Name: Highlight Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d4b25e0a388f89c45a5830eeb9d14e61, type: 2}
+  - {fileID: 2100000, guid: c03b8e1bbdf40ce4eab5e3c148f00f94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,3 +107,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4872480542410780652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3836692709045821036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a15ea40cb5f9b94aa97e14fff017521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
