@@ -15,6 +15,7 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     [SerializeField] private float scaleAnimationSpeed = 10f;
     [SerializeField] private Vector3 positionOffset;
+    [SerializeField] private AnimationCurve movementCurve;
 
     private bool _isMoving = false;
     private Vector3 _startPosition;
@@ -57,8 +58,9 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (_isMoving)
         {
             _currentMovementTime += Time.deltaTime / _targetTime;
-            transform.position = Vector3.Lerp(_startPosition, _targetPosition, _currentMovementTime / _targetTime);
-            transform.rotation = Quaternion.Lerp(_startRotation, _targetRotation, _currentMovementTime / _targetTime);
+            float curveProgress = movementCurve.Evaluate(_currentMovementTime / _targetTime);
+            transform.position = Vector3.Lerp(_startPosition, _targetPosition, curveProgress);
+            transform.rotation = Quaternion.Lerp(_startRotation, _targetRotation, curveProgress);
 
             if (_currentMovementTime >= _targetTime) _isMoving = false;
 

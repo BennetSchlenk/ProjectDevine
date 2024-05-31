@@ -137,16 +137,11 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     public bool ApplyUpgrade(CardDataSO cardDataSO)
     {
         Debug.Log("Applying upgrade.");
-        // If the tower's ID is different from the card's ID, return false
-        if (TowerInfo.TowerId != cardDataSO.TowerInfo.TowerId)
-        {
-            Debug.Log("Tower ID is different from the card ID.");
-            return false;
-        }
 
-        // If the tower tier is less than the max tower tier and the tower tier is equal to the card's tier, apply the upgrade
         int maxTowerTier = TowerInfo.TowerModels.Count;
-        if (TowerRuntimeStats.Tier < maxTowerTier && TowerRuntimeStats.Tier == cardDataSO.TowerTier)
+        var canBeUpgraded = CanUpgradeTower(cardDataSO);
+
+        if (canBeUpgraded)
         {
             TowerRuntimeStats.Tier++;
 
@@ -154,14 +149,31 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
             SetUp(newModel, cardDataSO, TowerRuntimeStats.Tier, true);
             Debug.Log("Tower tier upgraded to " + TowerRuntimeStats.Tier);
-            return true;
         }
-        else
+
+        return canBeUpgraded;
+    }
+
+    public bool CanUpgradeTower(CardDataSO cardDataSO)
+    {
+        // If the tower tier is less than the max tower tier and the tower tier is equal to the card's tier, apply the upgrade
+        int maxTowerTier = TowerInfo.TowerModels.Count;
+
+        // If the tower's ID is different from the card's ID, return false
+        if (TowerInfo.TowerId != cardDataSO.TowerInfo.TowerId)
         {
-            Debug.LogWarning("Tower tier is already at max level.");
+            Debug.Log("Tower ID is different from the card ID.");
             return false;
         }
+
+        if (TowerRuntimeStats.Tier < maxTowerTier && TowerRuntimeStats.Tier == cardDataSO.TowerTier)
+        {
+            return true;
+        }
+
+        return false;
     }
+
     public void ApplyUpgrade(DamageDataUpgrade damageDataUpgrade)
     {
         DamageData damageData = DamageDataList.Find(d => d.DamageType == damageDataUpgrade.DamageType);
@@ -185,15 +197,32 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         Debug.Log("Tower " + gameObject.name + " has " + DamageDataList.Count + " slots of " + maxSlots, gameObject);
 
-        if (DamageDataList.Count < maxSlots)
+        bool canBeApplied = CanApplyModifier();
+
+        if (canBeApplied)
         {
             Debug.Log("Applying modifier.");
             DamageDataList.Add(cardToUse.DamageData);
-            return true;
         }
 
-        Debug.Log("No empty modifier slots.");
-        return false;
+        return canBeApplied;
+    }
+
+    public bool CanApplyModifier()
+    {
+        // Check if the tower has empty modifier slots
+        int maxSlots = TowerRuntimeStats.Tier;
+
+        if (DamageDataList.Count < maxSlots)
+        {
+            Debug.Log("Applying modifier.");
+            return true;
+        }
+        else
+        {
+            Debug.Log("No empty modifier slots.");
+            return false;
+        }
     }
 
     protected void PlaceTower(TowerRuntimeStats stats, TowerInfoSO info)
@@ -234,14 +263,14 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     protected GameObject AttackEnemy(List<GameObject> enemiesToIgnoreIfPossible)
     {
-        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, enemiesToIgnoreIfPossible);
+        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, enemiesToIgnoreIfPossible, TowerRuntimeStats.Range + baseTowerStats.Range);
     }
 
     private void UpdateRange()
     {
         if (baseTowerStats == null) return;
 
-        rangeGameObject.transform.localScale = new Vector3((TowerRuntimeStats.Range + baseTowerStats.Range) * 2, 0.01f, (TowerRuntimeStats.Range + baseTowerStats.Range) * 2);
+        rangeGameObject.transform.localScale = new Vector3((TowerRuntimeStats.Range + baseTowerStats.Range), 0.01f, (TowerRuntimeStats.Range + baseTowerStats.Range));
     }
 
     

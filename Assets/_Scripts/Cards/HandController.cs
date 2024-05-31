@@ -13,6 +13,7 @@ public class HandController : MonoBehaviour
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardsContainer;
     [SerializeField] private ObjectPlacer objectPlacer;
+    [SerializeField] private Transform cardSpawnPoint;
 
     public Transform CardsContainer => cardsContainer;
 
@@ -45,15 +46,15 @@ public class HandController : MonoBehaviour
     // TODO: Remove Start and GiveCardsPeriodically
     private void Start()
     {
-        //StartCoroutine(GiveCardsPeriodically(1f));
+        StartCoroutine(GiveCardsPeriodically(2f));
     }
 
     private IEnumerator GiveCardsPeriodically(float delay)
     {
         while (true)
         {
-            GiveCardDebug();
             yield return new WaitForSeconds(delay);
+            GiveCardDebug();
         }
     }
 
@@ -68,6 +69,7 @@ public class HandController : MonoBehaviour
 
         // Instantiate and set up the card
         GameObject card = Instantiate(cardPrefab, cardsContainer);
+        card.transform.localPosition = cardSpawnPoint.localPosition;
         card.GetComponent<Card>().SetUp(cardData);
 
         OnCardAdded(card);
@@ -98,7 +100,10 @@ public class HandController : MonoBehaviour
         SelectCard(card, true);
 
         if (card.CanBeUsed)
+        {
             objectPlacer.UseCard(card.CardData, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
+            GlobalData.OnCardDragged?.Invoke(card.CardData);
+        }
     }
 
     private void OnCardAdded(GameObject cardGO)
@@ -110,10 +115,15 @@ public class HandController : MonoBehaviour
     {
         DestroyImmediate(card.gameObject);
         handVisualHandler.OrderCards();
+        GlobalData.OnCardDragged?.Invoke(null);
         RefreshHand();
     }
 
-    private void OnCardNotUsed(Card card) => SelectCard(card, false);
+    private void OnCardNotUsed(Card card)
+    {
+        SelectCard(card, false);
+        GlobalData.OnCardDragged?.Invoke(null);
+    }
 
     /// <summary>
     /// Orders the cards after a card has been removed.

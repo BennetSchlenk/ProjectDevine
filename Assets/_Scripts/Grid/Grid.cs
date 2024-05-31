@@ -26,6 +26,11 @@ public class Grid : MonoBehaviour
 
     public int MaxGridSize => gridNodesX * gridNodesY;
 
+    #region Highlight Cell Implementation
+    [SerializeField] private GameObject highlightCellPrefab;
+    public GridNode[,] GridNodes => grid;
+    #endregion
+
     private void Awake()
     {
         GridNodeRadius = GlobalData.GridNodeSize / 2;
@@ -62,8 +67,16 @@ public class Grid : MonoBehaviour
 
                 var go = Instantiate(LevelMeshes.Meshes[levelDataGrid[x, y].MeshIndex], nodePos, Quaternion.Euler(0f,levelDataGrid[x, y].MeshYRotation,0f), this.transform);
                 grid[x, y].MeshObj = go;
-                
-                
+
+                #region Highlight Cell Implementation
+
+                var highlightCell = Instantiate(highlightCellPrefab, nodePos, Quaternion.identity, grid[x,y].MeshObj.transform);
+                highlightCell.transform.localPosition = new Vector3(0, 0.1f, 0);
+                highlightCell.SetActive(false);
+                grid[x, y].HighlightCell = highlightCell.GetComponent<HighlightPlaceholder>();
+
+                #endregion
+
                 if (levelDataGrid[x, y].Spawn)
                 {
                     go.AddComponent<WaypointsContainer>().WaypointsList = LevelData.LevelWaypoints.First(w => (w.NodePos.x == x && w.NodePos.y == y)).Waypoints;

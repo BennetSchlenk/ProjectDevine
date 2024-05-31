@@ -125,12 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2d4615a583bff45b2172923fee6ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   tstQuat: {x: 0, y: 0, z: 0, w: 0}
   testCard: {fileID: 3088727256875557239}
   alwaysSameRotation: 0
@@ -366,6 +360,39 @@ MonoBehaviour:
   initialPlaceTime: 0.5
   discardTime: 0
   hoverPositionTransform: {fileID: 1563622188232586433}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: -0
+      outSlope: -0.125
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 0
+      inSlope: -0.125
+      outSlope: 2
+      tangentMode: 69
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1135858307742548960
 MonoBehaviour:
   m_ObjectHideFlags: 0
