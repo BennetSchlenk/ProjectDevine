@@ -48,6 +48,8 @@ public class Core : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        if (enemy == null) enemy = other.gameObject.GetComponentInParent<Enemy>();
+
         if (enemy != null)
         {
             enemy.ReachedCore(this);

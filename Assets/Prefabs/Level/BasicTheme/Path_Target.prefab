@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31992688576df1f4abf3ba82feba3d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialHealth: 500
   hitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
     type: 3}
 --- !u!65 &5776887802544243324
@@ -122,5 +121,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9999998, y: 2.2345223, z: 1.9999998}
+  m_Size: {x: 1.7, y: 2.2345223, z: 1.7}
   m_Center: {x: 0, y: 0.6172611, z: 0}
