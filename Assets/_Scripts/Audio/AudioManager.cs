@@ -21,12 +21,11 @@ public class VolumeTypeItem
     public string mixerExposedParamName;
 }
 
-[RequireComponent(typeof(AudioStore))]
+[RequireComponent(typeof(AudioStore),typeof(SoundEmitterPool))]
 public class AudioManager : MonoBehaviour
 {
 	[Header("SoundEmitter setup")]
-	[SerializeField] private AudioSource soundEmitterPrefab;
-	[SerializeField] private int prewarmSize = 10;
+	[SerializeField] private SoundEmitterPool soundEmitterPool;
 
 	[Header("Music player setup")]
 	[SerializeField] private SoundEmitter musicEmitter;
@@ -41,18 +40,20 @@ public class AudioManager : MonoBehaviour
 	public AudioStore AudioStore { get; private set; }
 
     private int currentMusicFileIndex;
-	private AudioSourcePool soundEmitterPool;
+	//private AudioSourcePool soundEmitterPool;
 
     private void Awake()
     {
 	    ServiceLocator.Instance.RegisterService(this);
-        soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
-        AudioStore = GetComponent<AudioStore>();
+        soundEmitterPool = GetComponent<SoundEmitterPool>();
+
+        //soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
+        
+		AudioStore = GetComponent<AudioStore>();
     }
 
     private void Start()
     {
-	    
         if (volumeUIManager != null)
         {
 			volumeUIManager.InitVolumeControllers();
@@ -61,6 +62,8 @@ public class AudioManager : MonoBehaviour
 		{
 			Debug.LogWarning("Add Volume UI Manager link!");
 		}
+
+		musicEmitter.Init();
     }
 
     private void OnEnable()
@@ -122,7 +125,7 @@ public class AudioManager : MonoBehaviour
 
 	#region Play Effect One Shot Functions
 
-	public bool FindEffectAudioObjectInStore(string name, out AudioObject audioObject)
+	private bool FindEffectAudioObjectInStore(string name, out AudioObject audioObject)
 	{
 		audioObject = null;
 		audioObject = AudioStore.Effects.Find(item => item.Name.ToUpper() == name.ToUpper());
@@ -143,25 +146,26 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFXOneShotAtPosition(AudioObject audioObject, Vector3 position)
     {
-        PlaySFXOneShotAtPosition(audioObject.Clip, audioObject.Volume, audioObject.Pitch, position);        
+        PlaySFXOneShotAtPosition(audioObject.Clip, audioObject.Volume, audioObject.Pitch, position);
 	}
     
     public void PlaySFXOneShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position)
     {
-		var soundEmitter = soundEmitterPool.Request();
+		var soundEmitter = soundEmitterPool.Pool.Get();
 		soundEmitter.PlayClipOneShotAtPosition(clip,volume, pitch, position);            
     }
 
     #endregion
 
-    #region Play Clip Functions
+ //   #region Play Clip Functions
 
-    public void PlayerLooseHPSound(Vector3 position)
-    {
-		// TODO this should be moved out of here
-	    PlaySFXOneShotAtPosition("looseHPClip", position);
-    }
-    #endregion
+	////
+ //   public void PlayerLooseHPSound(Vector3 position)
+ //   {
+	//	// TODO this should be moved out of here
+	//    PlaySFXOneShotAtPosition("looseHPClip", position);
+ //   }
+ //   #endregion 
 
 
     #region Volume handling

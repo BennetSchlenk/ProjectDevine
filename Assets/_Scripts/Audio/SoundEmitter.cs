@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Audio;
 using UnityEngine.Events;
+using UnityEngine.Pool;
 
 
 [RequireComponent(typeof(AudioSource))]
@@ -12,6 +13,8 @@ public class SoundEmitter : MonoBehaviour
 {
     private AudioSource audioSource;
     private AudioMixer audioMixer;
+
+    private ObjectPool<SoundEmitter> pool;
 
     public event UnityAction<SoundEmitter> OnSoundFinishedPlaying;
 
@@ -21,21 +24,37 @@ public class SoundEmitter : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
-    private void OnEnable()
+    #region Pooling related
+    
+    public void Init()
     {
+        // called when when created by Pool
         audioMixer = ServiceLocator.Instance.GetService<AudioManager>().AudioMixer;
-        //Debug.Log($"AudioMixer found: {audioMixer != null}");
-        //AudioMixerGroup amg = audioMixer.FindMatchingGroups("Music")[0];
-        //Debug.Log($"Music AudioMixerGroup found: {amg != null}");
-        //AudioMixerGroup amg2 = audioMixer.FindMatchingGroups("SFX")[0];
-        //Debug.Log($"SFX AudioMixerGroup found: {amg2 != null}");
     }
+
+    public void OnGet()
+    {
+        // called when pulled from pool
+    }
+
+    public void ReturnToPool()
+    {    
+        pool.Release(this);
+    }
+
+    public void SetPool(ObjectPool<SoundEmitter> pool)
+    {
+        this.pool = pool;
+    }
+
+    #endregion
 
     /// <summary>
     /// Instructs the AudioSource to play a single clip, with optional looping, in a position in 3D space.
     /// </summary>
     /// <param name="clip"></param>
-    /// <param name="settings"></param>
+    /// <param name="volume"></param>
+    /// <param name="pitch"></param>
     /// <param name="hasToLoop"></param>
     /// <param name="position"></param>
     public void PlayMusicClip(AudioClip clip, float volume, float pitch, bool hasToLoop, Vector3 position = default)
@@ -58,6 +77,13 @@ public class SoundEmitter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Instructs the AudioSource to play a single clip once, in a position in 3D space.
+    /// </summary>
+    /// <param name="clip"></param>
+    /// <param name="volume"></param>
+    /// <param name="pitch"></param>
+    /// <param name="position"></param>
     public void PlayClipOneShotAtPosition(AudioClip clip, float volume, float pitch, Vector3 position = default)
     {
         audioSource.clip = clip;
@@ -72,7 +98,7 @@ public class SoundEmitter : MonoBehaviour
             0f; //Reset in case this AudioSource is being reused for a short SFX after being used for a long music track
         audioSource.Play();
         
-        //StartCoroutine(FinishedPlaying(clip.length));
+        StartCoroutine(FinishedPlaying(clip.length));
     }
 
     /// <summary>
@@ -130,10 +156,20 @@ public class SoundEmitter : MonoBehaviour
         yield return new WaitForSeconds(clipLength);
 
         NotifyBeingDone();
+
+        //return object to pool
+        if (pool != null)
+        {
+            ReturnToPool();
+        }
     }
 
     private void NotifyBeingDone()
     {
-        OnSoundFinishedPlaying?.Invoke(this); // The AudioManager should pick this up
+        if (OnSoundFinishedPlaying != null)
+        {
+            // The AudioManager should pick this up
+            OnSoundFinishedPlaying.Invoke(this); 
+        }
     }
 }
