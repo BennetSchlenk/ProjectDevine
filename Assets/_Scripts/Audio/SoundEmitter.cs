@@ -21,9 +21,14 @@ public class SoundEmitter : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        audioMixer = GetComponent<AudioMixer>();
+        audioMixer = ServiceLocator.Instance.GetService<AudioManager>().AudioMixer;
+        //Debug.Log($"AudioMixer found: {audioMixer != null}");
+        //AudioMixerGroup amg = audioMixer.FindMatchingGroups("Music")[0];
+        //Debug.Log($"Music AudioMixerGroup found: {amg != null}");
+        //AudioMixerGroup amg2 = audioMixer.FindMatchingGroups("SFX")[0];
+        //Debug.Log($"SFX AudioMixerGroup found: {amg2 != null}");
     }
 
     /// <summary>
