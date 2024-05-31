@@ -29,8 +29,8 @@ public class GameManager : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         if (LevelData == null || LevelTheme == null)
         {
-            LevelData = Resources.Load(GlobalData.DefaultLevel) as LevelDataSO;
-            LevelTheme = Resources.Load(GlobalData.DefaultTheme) as LevelThemeSO;
+            LevelData = Resources.Load("Levels/" + GlobalData.DefaultLevel) as LevelDataSO;
+            LevelTheme = Resources.Load("Themes/" + GlobalData.DefaultTheme) as LevelThemeSO;
         }
     }
 
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         grid.CreateGrid();
     }
 
-    public void SetLevelThemeAndData(LevelDataSO levelData,LevelThemeSO levelTheme)
+    public void SetLevelThemeAndData(LevelDataSO levelData, LevelThemeSO levelTheme)
     {
         LevelData = levelData;
         LevelTheme = levelTheme;
@@ -85,13 +85,12 @@ public class GameManager : MonoBehaviour
         // This is particularly good for creating loading screens.
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
-        
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Single);
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {
-            
             yield return null;
         }
 
