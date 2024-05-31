@@ -151,6 +151,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5448556691543264973}
   - component: {fileID: 3076903593389418134}
+  - component: {fileID: 2978620010405877874}
+  - component: {fileID: 8408671326978215748}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -186,14 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 277beeabe41b93e44b30aaf81f1fdaed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEmitterPrefab: {fileID: 3513074755813036357, guid: 36313585d86b47e47a9da7edecb38e67,
-    type: 3}
-  prewarmSize: 15
+  soundEmitterPool: {fileID: 8408671326978215748}
   musicEmitter: {fileID: 2386366227629864707}
-  musicFiles:
-  - {fileID: 11400000, guid: 603efd0373ab1b944b08961f3a87ecee, type: 2}
   mixerMultiplier: 20
-  audioMixer: {fileID: 24100000, guid: 5f89050ce2a721d48825c43c75e97b11, type: 2}
+  audioMixer: {fileID: 24100000, guid: 562a982cf71d07847821af1b825bf37a, type: 2}
   volumeUIManager: {fileID: 0}
   volumeExposedParamNames:
   - volumeType: 0
@@ -202,3 +200,52 @@ MonoBehaviour:
     mixerExposedParamName: MusicVolume
   - volumeType: 2
     mixerExposedParamName: SFXVolume
+--- !u!114 &2978620010405877874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751939604329772144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4af3c127398d5459c20a6f2c8087bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+  - Name: Ding
+    Clip: {fileID: 8300000, guid: aed0d0b2b956829448183a3bc500432f, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: Sheep
+    Clip: {fileID: 8300000, guid: 41ec21abc177df74e916ba3b71b3c89a, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: looseHPClip
+    Clip: {fileID: 8300000, guid: 41ec21abc177df74e916ba3b71b3c89a, type: 3}
+    Volume: 1
+    Pitch: 1
+  musics:
+  - Name: SheepAmbient
+    Clip: {fileID: 8300000, guid: d00ed3a85e2e2dc4db20c75b58e30145, type: 3}
+    Volume: 1
+    Pitch: 1
+--- !u!114 &8408671326978215748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751939604329772144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d631d34405bef409ecb9fed739e332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentForPoolObjects: {fileID: 5448556691543264973}
+  collectionCheck: 1
+  soundEmitterPrefab: {fileID: 2849814818879439244, guid: 36313585d86b47e47a9da7edecb38e67,
+    type: 3}
+  defaultCapacity: 15
+  maxCapacity: 30
+  setActiveOnGet: 1
