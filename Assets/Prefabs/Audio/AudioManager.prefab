@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 3076903593389418134}
   - component: {fileID: 2978620010405877874}
   - component: {fileID: 8408671326978215748}
+  - component: {fileID: 6242018000199890851}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -190,16 +191,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundEmitterPool: {fileID: 8408671326978215748}
   musicEmitter: {fileID: 2386366227629864707}
+  playMusicOnStart: 1
+  defaultVolumeValue: 0.9
   mixerMultiplier: 20
   audioMixer: {fileID: 24100000, guid: 562a982cf71d07847821af1b825bf37a, type: 2}
-  volumeUIManager: {fileID: 0}
   volumeExposedParamNames:
   - volumeType: 0
     mixerExposedParamName: MasterVolume
+    slider: {fileID: 0}
   - volumeType: 1
     mixerExposedParamName: MusicVolume
+    slider: {fileID: 0}
   - volumeType: 2
     mixerExposedParamName: SFXVolume
+    slider: {fileID: 0}
 --- !u!114 &2978620010405877874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +258,15 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: 5f731b8cf51f9974790cfb05f6eb5c22, type: 3}
     Volume: 1
     Pitch: 1
+  - Name: enemyDied
+    Clip: {fileID: 8300000, guid: 93c4ea50aea8ecf499b1055326655f96, type: 3}
+    Volume: 1
+    Pitch: 0.78
   musics:
+  - Name: TavernAmbience
+    Clip: {fileID: 8300000, guid: 46286588a70cd294298e0e3bc7f0a1d0, type: 3}
+    Volume: 0.795
+    Pitch: 1
   - Name: SheepAmbient
     Clip: {fileID: 8300000, guid: d00ed3a85e2e2dc4db20c75b58e30145, type: 3}
     Volume: 1
@@ -277,3 +290,15 @@ MonoBehaviour:
   defaultCapacity: 15
   maxCapacity: 30
   setActiveOnGet: 1
+--- !u!114 &6242018000199890851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751939604329772144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90531b8e171c32045a4773f9e0979434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
