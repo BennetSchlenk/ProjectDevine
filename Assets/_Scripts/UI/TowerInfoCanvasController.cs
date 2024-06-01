@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,11 @@ public class TowerInfoCanvasController : MonoBehaviour
         towerInfoPanel.gameObject.SetActive(false);
 
         GlobalData.OnTowerSelected += OnTowerSelected;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalData.OnTowerSelected -= OnTowerSelected;
     }
 
     #endregion

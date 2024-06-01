@@ -94,7 +94,6 @@ public class HandVisualHandler : MonoBehaviour
         // If children.Count is 1, set the card in the middle of the curve
         if (children.Count == 1)
         {
-            Debug.Log("Resize");
             var pos1 = _bezierCurve.ControlPoints[0].localPosition;
             pos1.x = minValX.x;
             pos1.y = minValY.x;
@@ -123,7 +122,6 @@ public class HandVisualHandler : MonoBehaviour
             // Position the cards in the Bezier curve with the same distance between them
 
             var val = curve.Evaluate(children.Count);
-            Debug.Log("Curve: " + val);
             var newVal1 = math.remap(0, 1, maxValX.x, minValX.x, val);
             var newVal2 = math.remap(0, 1, maxValX.y, minValX.y, val);
             var newVal3 = math.remap(0, 1, maxValX.z, minValX.z, val);

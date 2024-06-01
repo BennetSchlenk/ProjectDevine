@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,11 @@ public class GridHighlightHandler : MonoBehaviour
     {
         grid = GetComponent<Grid>();
         GlobalData.OnCardDragged += OnCardDragged;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalData.OnCardDragged -= OnCardDragged;
     }
 
     public void HideCells()
