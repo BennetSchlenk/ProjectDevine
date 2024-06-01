@@ -198,17 +198,7 @@ MonoBehaviour:
   baseTowerStats: {fileID: 0}
   TowerRuntimeStats:
     BaseStats: {fileID: 0}
-  DamageDataList:
-  - DamageType: {fileID: 11400000, guid: 17f64c1bbd0a54c428d48141586b3135, type: 2}
-    damage: 10
-    damageOverTime: 5
-    damageOverTimeDuration: 4
-    damageOverTimeTickRate: 1
-  - DamageType: {fileID: 11400000, guid: 1f2e2d66ee97e634f8cf7bef87a8fa46, type: 2}
-    damage: 20
-    damageOverTime: 0
-    damageOverTimeDuration: 0
-    damageOverTimeTickRate: 0
+  DamageDataList: []
   rangeGameObject: {fileID: 3001542270543079244}
   towerModelContainer: {fileID: 5725281969552442171}
   attackHandler: {fileID: 5620051842255734026}
