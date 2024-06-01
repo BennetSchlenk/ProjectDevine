@@ -20,6 +20,8 @@ public class CardDataSO : ScriptableObject
     [Tooltip("The tower info for the card")]
     public TowerInfoSO TowerInfo;
     public TowerDataUpgradeSO TowerBaseStats;
+    public TowerAttackType TowerAttackType;
+    public float TowerAttackArea;
     
     public CardDataSO NextTierData;
     public GameObject TowerPrefab => TowerInfo.TowerModels[TowerTier - 1];
@@ -33,4 +35,11 @@ public enum CardType
     Tower,
     Modifier,
     Ability
+}
+
+public enum TowerAttackType
+{
+    Target,
+    Area,
+    TowerArea,
 }

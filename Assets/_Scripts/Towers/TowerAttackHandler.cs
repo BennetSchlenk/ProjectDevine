@@ -16,6 +16,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     private Transform enemiesContainerTransform;
     private int currentProjectileSpawnPointIndex = 0;
     private List<FaceTarget> faceTargets = new();
+    private CardDataSO currentCardDataSO;
 
     private void Start()
     {
@@ -33,8 +34,10 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     /// <param name="towerData"></param>
     /// <param name="damageDataList"></param>
     /// <returns>Enemy GameObject</returns>
-    public GameObject Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList, List<GameObject> enemiesToIgnoreIfPossible, float range)
+    public GameObject Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList, List<GameObject> enemiesToIgnoreIfPossible, float range, CardDataSO cardDataSO)
     {
+        currentCardDataSO = cardDataSO;
+
         var enemy = GetAttackTargetWithinRange(attackTargetType, towerData.Range, enemiesToIgnoreIfPossible);
         if (enemy == null)
         {
@@ -42,7 +45,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         }
         else
         {
-            if (IsEnemyInRange(enemy, range))
+            if (IsEnemyInRange(enemy, range, transform.position))
             {
                 // Get the damagable component of the enemy
                 IDamagable damagable = enemy.GetComponent<IDamagable>();
@@ -50,7 +53,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
                 {
                     OnTargetChange.Invoke(enemy.transform);
                     SetAllFaceTargets(enemy);
-                    return SpawnAndConfigureProjectile(towerData, damageDataList, enemy, damagable);
+                    return SpawnAndConfigureProjectile(towerData, damageDataList, enemy, damagable, cardDataSO);
                 }
             }
             else
@@ -87,7 +90,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         OnXPChange?.Invoke(xp);
     }
 
-    private GameObject SpawnAndConfigureProjectile(TowerRuntimeStats towerData, List<DamageData> damageDataList, GameObject enemy, IDamagable damagable)
+    private GameObject SpawnAndConfigureProjectile(TowerRuntimeStats towerData, List<DamageData> damageDataList, GameObject enemy, IDamagable damagable, CardDataSO cardDataSO)
     {
         if (projectileSpawnPoints != null && projectileSpawnPoints.Count > 0)
         {
@@ -103,9 +106,31 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
                 hitEffects.Add(damageData.DamageType.HitEffect);
             }
 
-            projectileComponent.MoveTowardsTarget(enemy.transform, towerData.ProjectileSpeed, effects, hitEffects, () =>
+            bool followTarget = true;
+            if (cardDataSO.TowerAttackType == TowerAttackType.Area) followTarget = false;
+
+
+            projectileComponent.MoveTowardsTarget(enemy.transform, followTarget, towerData.ProjectileSpeed, effects, hitEffects, (position) =>
             {
-                DealDamage(damagable, damageDataList);
+                if (!followTarget && cardDataSO.TowerAttackType == TowerAttackType.Area)
+                {
+                    List<GameObject> allEnemies = new List<GameObject>();
+                    foreach (Transform enemy in enemiesContainerTransform)
+                        allEnemies.Add(enemy.gameObject);
+
+                    // Deal damage to all enemies within the area
+                    var enemies = GetClosestEnemiesWithinRange(allEnemies, cardDataSO.TowerAttackArea, position);
+                    foreach (GameObject enemyInArea in enemies)
+                    {
+                        Debug.Log("Dealing damage to enemy in area to: " + enemyInArea.gameObject.name);
+                        IDamagable damagableInArea = enemyInArea.GetComponent<IDamagable>();
+                        if (damagableInArea != null)
+                            DealDamage(damagableInArea, damageDataList);
+                    }
+
+
+                } else
+                    DealDamage(damagable, damageDataList);
             });
 
             return enemy;
@@ -125,7 +150,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
             faceTarget.SetTarget(enemy.transform);
     }
 
-    private GameObject GetAttackTargetWithinRange(AttackTargetType attackTargetType, float range, List<GameObject> enemiesToIgnoreIfPossible)
+    private GameObject GetAttackTargetWithinRange(AttackTargetType attackTargetType, float range, List<GameObject> enemiesToIgnoreIfPossible = null)
     {
         // TODO: Integrate with IDamageable interface.
         // Get the list of enemies
@@ -143,16 +168,16 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         switch (attackTargetType)
         {
             case AttackTargetType.Closest:
-                potentialEnemies = GetClosestEnemiesWithinRange(allEnemies, range);
+                potentialEnemies = GetClosestEnemiesWithinRange(allEnemies, range, transform.position);
                 break;
             case AttackTargetType.Farthest:
-                potentialEnemies = GetFarthestEnemiesWithinRange(allEnemies, range);
+                potentialEnemies = GetFarthestEnemiesWithinRange(allEnemies, range, transform.position);
                 break;
             case AttackTargetType.Strongest:
-                potentialEnemies = GetStrongestEnemyWithinRange(allEnemies, range);
+                potentialEnemies = GetStrongestEnemyWithinRange(allEnemies, range, transform.position);
                 break;
             case AttackTargetType.Weakest:
-                potentialEnemies = GetWeakestEnemiesWithinRange(allEnemies, range);
+                potentialEnemies = GetWeakestEnemiesWithinRange(allEnemies, range, transform.position);
                 break;
             default:
                 Debug.LogError("Attack target type not found.");
@@ -168,7 +193,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         {
             foreach (GameObject potentialEnemy in potentialEnemies)
             {
-                if (!enemiesToIgnoreIfPossible.Contains(potentialEnemy))
+                if (enemiesToIgnoreIfPossible != null && !enemiesToIgnoreIfPossible.Contains(potentialEnemy))
                     return potentialEnemy;
             }
         }
@@ -176,16 +201,16 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         return null;
     }
 
-    private List<GameObject> GetClosestEnemiesWithinRange(List<GameObject> enemies, float range)
+    private List<GameObject> GetClosestEnemiesWithinRange(List<GameObject> enemies, float range, Vector3 originPosition)
     {
         List<GameObject> closestEnemies = new();
         float closestDistance = Mathf.Infinity;
 
         foreach (GameObject enemy in enemies)
         {
-            if (IsEnemyInRange(enemy, range))
+            if (IsEnemyInRange(enemy, range, originPosition))
             {
-                float distance = Vector3.Distance(transform.position, enemy.transform.position);
+                float distance = Vector3.Distance(originPosition, enemy.transform.position);
                 if (distance < closestDistance)
                 {
                     closestEnemies.Add(enemy);
@@ -194,17 +219,17 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         }
 
         // Sort the closest enemies based on their distance
-        closestEnemies.Sort((a, b) => Vector3.Distance(transform.position, a.transform.position).CompareTo(Vector3.Distance(transform.position, b.transform.position)));
+        closestEnemies.Sort((a, b) => Vector3.Distance(originPosition, a.transform.position).CompareTo(Vector3.Distance(originPosition, b.transform.position)));
 
         return closestEnemies;
     }
-    private List<GameObject> GetFarthestEnemiesWithinRange(List<GameObject> enemies, float range)
+    private List<GameObject> GetFarthestEnemiesWithinRange(List<GameObject> enemies, float range, Vector3 originPosition)
     {
         List<GameObject> farthestEnemies = new();
 
         foreach (GameObject enemy in enemies)
         {
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            float distance = Vector3.Distance(originPosition, enemy.transform.position);
             if (distance <= range)
             {
                 farthestEnemies.Add(enemy);
@@ -212,17 +237,17 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         }
 
         // Sort the farthest enemies based on their distance
-        farthestEnemies.Sort((a, b) => Vector3.Distance(transform.position, b.transform.position).CompareTo(Vector3.Distance(transform.position, a.transform.position)));
+        farthestEnemies.Sort((a, b) => Vector3.Distance(originPosition, b.transform.position).CompareTo(Vector3.Distance(originPosition, a.transform.position)));
 
         return farthestEnemies;
     }
-    private List<GameObject> GetStrongestEnemyWithinRange(List<GameObject> enemies, float range)
+    private List<GameObject> GetStrongestEnemyWithinRange(List<GameObject> enemies, float range, Vector3 originPosition)
     {
         List<GameObject> strongestEnemies = new();
 
         foreach (GameObject enemy in enemies)
         {
-            if (IsEnemyInRange(enemy, range))
+            if (IsEnemyInRange(enemy, range, originPosition))
             {
                 IDamagable damagable = enemy.GetComponent<IDamagable>();
                 if (damagable != null)
@@ -237,13 +262,13 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
 
         return strongestEnemies;
     }
-    private List<GameObject> GetWeakestEnemiesWithinRange(List<GameObject> enemies, float range)
+    private List<GameObject> GetWeakestEnemiesWithinRange(List<GameObject> enemies, float range, Vector3 originPosition)
     {
         List<GameObject> weakestEnemies = new();
 
         foreach (GameObject enemy in enemies)
         {
-            if (IsEnemyInRange(enemy, range))
+            if (IsEnemyInRange(enemy, range, originPosition))
             {
                 IDamagable damagable = enemy.GetComponent<IDamagable>();
                 if (damagable != null)
@@ -259,9 +284,9 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
         return weakestEnemies;
     }
 
-    private bool IsEnemyInRange(GameObject enemy, float range)
+    private bool IsEnemyInRange(GameObject enemy, float range, Vector3 originPosition)
     {
-        return Vector3.Distance(transform.position, enemy.transform.position) <= range;
+        return Vector3.Distance(originPosition, enemy.transform.position) <= range;
     }
 
     private void DealDamage(IDamagable damagable, List<DamageData> damageDataList)
