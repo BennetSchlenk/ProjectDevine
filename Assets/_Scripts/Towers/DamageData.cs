@@ -21,6 +21,10 @@ public class DamageData: IDamageData
     [SerializeField] private float damageOverTimeTickRate;
     public float DamageOverTimeTickRate => damageOverTimeTickRate;
 
+    [Tooltip("The speed multiplier for the damage over time effect. It will use damageOverTimeDuration")]
+    [SerializeField] private float speedMultiplier = 1f;
+    public float SpeedMultiplier => speedMultiplier;
+
     #endregion
 
     public DamageData(DamageTypeSO damageType)
