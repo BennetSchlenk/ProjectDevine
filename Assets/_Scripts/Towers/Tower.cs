@@ -30,11 +30,22 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     private float currentXP;
 
     public float CurrentXP => currentXP;
-    public float CurrentLevelMaxXP => TowerInfo.TowerStatsPerLevel[TowerRuntimeStats.Level-1].XP;
+    public float CurrentLevelMaxXP
+    {
+        get
+        {
+            // If the tower is max level, return the current XP
+            if (TowerRuntimeStats.Level > TowerInfo.TowerStatsPerLevel.Count)
+                return currentXP;
+            else
+                return TowerInfo.TowerStatsPerLevel[TowerRuntimeStats.Level - 1].XP;
+        }
+    }
+
     public CardDataSO CurrentCardDataSO => currentCardDataSO;
     public int MaxTowerTier => TowerInfo.TowerModels.Count;
     public int MaxTowerModifiers => TowerRuntimeStats.Tier; // Temporal solution
-    public int MaxLevel => CurrentCardDataSO.TowerInfo.TowerStatsPerLevel.Count;
+    public int MaxLevel => CurrentCardDataSO.TowerInfo.TowerStatsPerLevel.Count + 1;
 
     #region Unity Callbacks
 
@@ -308,7 +319,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     private void LevelUp()
     {
-        bool canLevelUp = TowerRuntimeStats.Level <= TowerInfo.TowerStatsPerLevel.Count - 1;
+        bool canLevelUp = TowerRuntimeStats.Level <= TowerInfo.TowerStatsPerLevel.Count;
         if (canLevelUp)
         {
             currentXP -= CurrentLevelMaxXP;
