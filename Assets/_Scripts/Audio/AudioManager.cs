@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 
 public enum VolumeType
@@ -19,6 +20,7 @@ public class VolumeTypeItem
 {
     public VolumeType volumeType;
     public string mixerExposedParamName;
+	public Slider slider;
 }
 
 [RequireComponent(typeof(AudioStore),typeof(SoundEmitterPool))]
@@ -29,42 +31,41 @@ public class AudioManager : MonoBehaviour
 
 	[Header("Music player setup")]
 	[SerializeField] private SoundEmitter musicEmitter;
+	[SerializeField] private bool playMusicOnStart;
 
-	[Header("Audio control")]	
-	[SerializeField] private float mixerMultiplier = 20f;
+	[Header("Audio control")]
+	[SerializeField] private float defaultVolumeValue = 0.9f;
+    [SerializeField] private float mixerMultiplier = 20f;
     [SerializeField] private AudioMixer audioMixer = default;
-	[SerializeField] private AudioVolumeUIManager volumeUIManager;
     [SerializeField] private List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
     
 	public AudioMixer AudioMixer => audioMixer;
 	public AudioStore AudioStore { get; private set; }
+	public float DefaultVolumeValue => defaultVolumeValue;
 
     private int currentMusicFileIndex;
-	//private AudioSourcePool soundEmitterPool;
 
     private void Awake()
     {
 	    ServiceLocator.Instance.RegisterService(this);
         soundEmitterPool = GetComponent<SoundEmitterPool>();
-
-        //soundEmitterPool = new AudioSourcePool(soundEmitterPrefab, this.transform, prewarmSize);
-        
+		        
 		AudioStore = GetComponent<AudioStore>();
     }
 
     private void Start()
     {
-        if (volumeUIManager != null)
-        {
-			volumeUIManager.InitVolumeControllers();
-		}
-		else
+		musicEmitter.Init();
+
+		if (playMusicOnStart)
 		{
-			Debug.LogWarning("Add Volume UI Manager link!");
+			StartPlayingMusic();
 		}
 
-		musicEmitter.Init();
+        SetupMixerVolumes();
     }
+
+
 
     private void OnEnable()
     {
@@ -77,9 +78,18 @@ public class AudioManager : MonoBehaviour
         musicEmitter.OnSoundFinishedPlaying -= HandleIfMusicFinishedPlaying;
     }
 
-	#region Music player
+    private void OnDestroy()
+    {
+		foreach (var item in volumeExposedParamNames)
+		{
+			PlayerPrefs.SetFloat(item.mixerExposedParamName, GetVolume(item.volumeType));
+		}
+    }
 
-	private void HandleIfMusicFinishedPlaying(SoundEmitter soundEmitter)
+
+    #region Music player
+
+    private void HandleIfMusicFinishedPlaying(SoundEmitter soundEmitter)
     {
 		if (AudioStore.Musics.Count > 1)
 		{
@@ -157,58 +167,111 @@ public class AudioManager : MonoBehaviour
 
     #endregion
 
- //   #region Play Clip Functions
-
-	////
- //   public void PlayerLooseHPSound(Vector3 position)
- //   {
-	//	// TODO this should be moved out of here
-	//    PlaySFXOneShotAtPosition("looseHPClip", position);
- //   }
- //   #endregion 
-
 
     #region Volume handling
 
-    public void ChangeVolume(VolumeType volumeType, float newVolume)
+	public void RegisterSlider(AudioVolumeSliderController volumeController, VolumeType volumeType, Slider slider)
 	{
-		SetGroupVolume(GetVolumeTypeMixerName(volumeType), newVolume);
+		VolumeTypeItem item = volumeExposedParamNames.Find(x => (x.volumeType == volumeType));
+		if (item != null)
+		{
+			item.slider = slider;
+		}
 	}
 
+    private void SetupMixerVolumes()
+    {
+		foreach (var item in volumeExposedParamNames)
+		{
+			float initVolumeValue = PlayerPrefs.GetFloat(item.mixerExposedParamName, defaultVolumeValue);
+			ChangeVolume(item.volumeType, initVolumeValue);
+        }
 
-	public void SetGroupVolume(string parameterName, float normalizedVolume)
+    }
+
+    public void ChangeVolume(VolumeType volumeType, float newVolume, bool isVolumeNormalized = true)
+	{
+		if (isVolumeNormalized)
+		{
+			SetGroupVolumeFromNormalized(GetVolumeTypeMixerName(volumeType), newVolume);
+		}
+		else
+		{
+            SetGroupVolumeFromMixer(GetVolumeTypeMixerName(volumeType), newVolume);
+        }
+	}
+
+	/// <summary>
+	/// Returns the slide normalized float between 0f and 1f
+	/// </summary>
+	/// <param name="volumeType"></param>
+	/// <returns></returns>
+	public float GetVolume(VolumeType volumeType)
+	{		
+		return GetGroupVolume(GetVolumeTypeMixerName(volumeType));
+	}
+
+    public float GetGroupVolume(string parameterName)
+    {
+        if (audioMixer.GetFloat(parameterName, out float rawVolume))
+        {
+            return MixerValueToNormalized(rawVolume);
+        }
+        else
+        {
+            Debug.LogError("The AudioMixer parameter was not found");
+            return 0f;
+        }
+    }
+
+    public void SetGroupVolumeFromNormalized(string parameterName, float normalizedVolume)
 	{
 		bool volumeSet = audioMixer.SetFloat(parameterName, NormalizedToMixerValue(normalizedVolume));
 		if (!volumeSet)
 			Debug.LogError("The AudioMixer parameter was not found");
 	}
 
-	public float GetGroupVolume(string parameterName)
+	public void SetGroupVolumeFromMixer(string parameterName, float mixerVolume)
 	{
-		if (audioMixer.GetFloat(parameterName, out float rawVolume))
-		{
-			return MixerValueToNormalized(rawVolume);
-		}
-		else
-		{
+		bool volumeSet = audioMixer.SetFloat(parameterName, mixerVolume);
+		if (!volumeSet)
 			Debug.LogError("The AudioMixer parameter was not found");
-			return 0f;
-		}
 	}
 
 	#endregion
 
 	// Both MixerValueNormalized and NormalizedToMixerValue functions are used for easier transformations
 	/// when using UI sliders normalized format
-	private float MixerValueToNormalized(float mixerValue)
-	{		
-		return Mathf.Log10(mixerValue * mixerMultiplier);
-	}
-
-	private float NormalizedToMixerValue(float normalizedValue)
+	public float MixerValueToNormalized(float mixerValue)
 	{
-		return Mathf.Log10(normalizedValue) * mixerMultiplier;
-	}
+        // Clamp dB value to avoid issues with calculations at extremes
+        mixerValue = Mathf.Clamp(mixerValue, - 80.0f, 0.0f); // Clamp to -80 dB to 0 dB
+
+        // Convert from dB to linear scale using anti-logarithm (10 raised to the power of dB/20)
+        float sliderValue = Mathf.Pow(10.0f, mixerValue / mixerMultiplier);
+
+        // Clamp slider value to valid range (0.0 to 1.0)
+        sliderValue = Mathf.Clamp01(sliderValue);
+
+        return sliderValue;
+    }
+
+
+    private float NormalizedToMixerValue(float sliderValue)
+	{
+        
+		// Clamp slider value to avoid issues at 0 or 1
+        sliderValue = Mathf.Clamp01(sliderValue);
+
+        // Convert to decibel (dB) using log10 with a factor of 20
+        // This factor converts linear scale (0-1) to logarithmic dB scale (-80 to 0 dB)
+        float dB = mixerMultiplier * Mathf.Log10(sliderValue);
+
+        // Optional: Limit dB to a specific range (adjust as needed)
+        dB = Mathf.Clamp(dB, -80.0f, 0.0f); // Clamp to -80 dB (inaudible) to 0 dB (full volume)
+
+        return dB;
+    }
 
 
     public string GetVolumeTypeMixerName(VolumeType vt)
