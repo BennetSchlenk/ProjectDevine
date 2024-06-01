@@ -12,6 +12,7 @@ public class Card : MonoBehaviour
     [SerializeField] private GameObject highlightFrame;
     [SerializeField] private TMPro.TextMeshProUGUI cardName;
     [SerializeField] private TMPro.TextMeshProUGUI cardDescription;
+    [SerializeField] private TMPro.TextMeshProUGUI cardCost;
     [SerializeField] private Image cardImage;
 
     // Properties
@@ -70,6 +71,7 @@ public class Card : MonoBehaviour
         cardName.text = cardData.Name;
         cardDescription.text = cardData.Description;
         cardImage.sprite = cardData.Icon;
+        cardCost.text = cardData.Cost.ToString();
     }
 
     /// <summary>
