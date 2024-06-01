@@ -18,8 +18,8 @@ MonoBehaviour:
   towerSprite: {fileID: 0}
   towerModels:
   - {fileID: 7070019936602964733, guid: 6211bd27044efc346b885323f841a373, type: 3}
-  - {fileID: 4465158043754759250, guid: 0de567eab0ece2647b77202de2e3e983, type: 3}
-  - {fileID: 4465158043754759250, guid: 52efb5c759f979047ae6738c0db71370, type: 3}
+  - {fileID: 3279461211568308092, guid: 74c21ee21ee24b040a63e3229c452f1f, type: 3}
+  - {fileID: 2626901194994093189, guid: 4bd378841ac509d4fb9d02f88f0066bd, type: 3}
   towerStatsPerLevel:
   - XP: 90
     TowerStats: {fileID: 11400000, guid: 1efa7759c379c2949bb80e0598eb1633, type: 2}
