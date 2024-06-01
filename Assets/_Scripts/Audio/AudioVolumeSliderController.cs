@@ -9,44 +9,37 @@ using UnityEngine.UI;
 public class AudioVolumeSliderController : MonoBehaviour
 {
     [SerializeField] VolumeType type;
-
     [SerializeField] Slider slider;
-    [SerializeField] float defaultValue = 0.8f;    
         
-    private string volumeParameter;
+    //private string volumeParameter;
     private AudioManager audioManager;
-    private AudioVolumeUIManager volumeManager;
+    //private GameManager gameManager;
 
+    private bool wasInitialized = false;
 
     #region Unity Callbacks
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        //save sound levels
-        PlayerPrefs.SetFloat(volumeParameter, slider.value);
-    }
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
 
-    
+        Assert.IsNotNull(audioManager, "AudioVolumeSliderController: AudioManager should be available");
+
+        audioManager.RegisterSlider(this, type, slider);
+
+        if (!wasInitialized)
+        {
+            wasInitialized = true;
+            slider.onValueChanged.AddListener(HandleSliderValueChanged);
+        }        
+
+        slider.value = audioManager.GetVolume(type);            
+
+    }
+        
 
     #endregion
 
-    public void Init(AudioVolumeUIManager volumeManager, AudioManager audioManager)
-    {
-        this.volumeManager = volumeManager;
-        this.audioManager = audioManager;
-
-        volumeParameter = audioManager.GetVolumeTypeMixerName(type);
-
-        slider.onValueChanged.AddListener(HandleSliderValueChanged);        
-
-        // load and set volume
-        float initVolumeValue = PlayerPrefs.GetFloat(volumeParameter, defaultValue);
-
-        //mixer.SetFloat(volumeParameter, Mathf.Log10(initVolumeValue) * multiplier);
-        audioManager.ChangeVolume(type, initVolumeValue);
-                        
-        slider.value = initVolumeValue;
-    }
 
     private void HandleSliderValueChanged(float value)
     {
@@ -64,9 +57,5 @@ public class AudioVolumeSliderController : MonoBehaviour
         return type;
     }
 
-    public float GetDefaultVolume()
-    {
-        return defaultValue;
-    }
 
 }

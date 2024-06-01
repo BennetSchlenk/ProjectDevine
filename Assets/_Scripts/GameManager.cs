@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     private GameStates gameState;
 
+    public delegate void GameStateChangedDelegate();
+    public event GameStateChangedDelegate OnGameStateChanged;
+
     #region Unity Callbacks
 
     private void Awake()
@@ -113,6 +116,10 @@ public class GameManager : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        // fire game State changed event
+        if (OnGameStateChanged != null) OnGameStateChanged();
+
     }
 
     #region ContextMenu

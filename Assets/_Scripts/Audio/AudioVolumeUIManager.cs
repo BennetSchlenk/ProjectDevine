@@ -21,26 +21,26 @@ public class AudioVolumeUIManager : MonoBehaviour
     #endregion
 
     
-    public void InitVolumeControllers()
-    {
-        volumeControllers = GetComponentsInChildren<AudioVolumeSliderController>().ToList();
-        audioManager = ServiceLocator.Instance.GetService<AudioManager>();;
-        volumeControllers.ForEach(x => x.Init(this, audioManager));
-    }
+    //public void InitVolumeControllers()
+    //{
+    //    volumeControllers = GetComponentsInChildren<AudioVolumeSliderController>().ToList();
+    //    audioManager = ServiceLocator.Instance.GetService<AudioManager>();;
+    //    volumeControllers.ForEach(x => x.Init(this, audioManager));
+    //}
 
 
-    public float GetVolume(VolumeType vt)
-    {
-        AudioVolumeSliderController desiredVolumeController = volumeControllers.Find(x => x.GetVolumeType() == vt);
-        if (desiredVolumeController != null)
-        {
-            return desiredVolumeController.GetVolume();
-        }
-        else
-        {
-            Debug.LogWarning($"The {desiredVolumeController.GetVolumeType()} volumeController was not found!");
-            return 0;
-        }
-    }
+    //public float GetVolume(VolumeType vt)
+    //{
+    //    AudioVolumeSliderController desiredVolumeController = volumeControllers.Find(x => x.GetVolumeType() == vt);
+    //    if (desiredVolumeController != null)
+    //    {
+    //        return desiredVolumeController.GetVolume();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning($"The {desiredVolumeController.GetVolumeType()} volumeController was not found!");
+    //        return 0;
+    //    }
+    //}
 
 }
