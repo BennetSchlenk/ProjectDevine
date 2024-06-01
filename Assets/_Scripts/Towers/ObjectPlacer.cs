@@ -169,7 +169,7 @@ public class ObjectPlacer : MonoBehaviour
                         var selectable = node.TowerObj.GetComponent<ISelectable>();
                         if (selectable != null)
                         {
-                            selectable.Select();
+                            selectable.Select(true);
                             lastSelected = selectable;
                         }
                     }

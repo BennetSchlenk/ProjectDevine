@@ -28,6 +28,9 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     private float fireCooldown = 0f;
     private GameObject currentModel;
 
+    public int MaxTowerTier => TowerInfo.TowerModels.Count;
+    public int MaxTowerModifiers => TowerRuntimeStats.Tier; // Temporal solution
+
     #region Unity Callbacks
 
     private void Start()
@@ -87,9 +90,18 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     #region ISelectable Implementation
 
-    public void Select() => rangeGameObject.SetActive(true);
+    public void Select(bool triggerEvent = false)
+    {
+        rangeGameObject.SetActive(true);
+        if (triggerEvent)
+            GlobalData.OnTowerSelected?.Invoke(this);
+    }
 
-    public void Deselect() => rangeGameObject.SetActive(false);
+    public void Deselect()
+    {
+        rangeGameObject.SetActive(false);
+        GlobalData.OnTowerSelected?.Invoke(null);
+    }
 
     #endregion
 
@@ -138,7 +150,6 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     {
         Debug.Log("Applying upgrade.");
 
-        int maxTowerTier = TowerInfo.TowerModels.Count;
         var canBeUpgraded = CanUpgradeTower(cardDataSO);
 
         if (canBeUpgraded)
@@ -156,8 +167,6 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     public bool CanUpgradeTower(CardDataSO cardDataSO)
     {
-        // If the tower tier is less than the max tower tier and the tower tier is equal to the card's tier, apply the upgrade
-        int maxTowerTier = TowerInfo.TowerModels.Count;
 
         // If the tower's ID is different from the card's ID, return false
         if (TowerInfo.TowerId != cardDataSO.TowerInfo.TowerId)
@@ -166,7 +175,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
             return false;
         }
 
-        if (TowerRuntimeStats.Tier < maxTowerTier && TowerRuntimeStats.Tier == cardDataSO.TowerTier)
+        if (TowerRuntimeStats.Tier < MaxTowerTier && TowerRuntimeStats.Tier == cardDataSO.TowerTier)
         {
             return true;
         }

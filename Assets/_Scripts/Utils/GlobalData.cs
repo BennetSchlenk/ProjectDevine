@@ -11,4 +11,6 @@ public static class GlobalData
     public const string DefaultEnemyWaves = "DefaultEnemyWaves";
 
     public static Action<CardDataSO> OnCardDragged;
+    public static Action<Tower> OnTowerSelected;
+    public static HandController HandController;
 }

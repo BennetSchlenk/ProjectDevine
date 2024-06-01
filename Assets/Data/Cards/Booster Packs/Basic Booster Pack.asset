@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4647273371fb094a994a04046d68977, type: 3}
+  m_Name: Basic Booster Pack
+  m_EditorClassIdentifier: 
+  ID: 0
+  PackName: Basic
+  PackDescription: Basic Booster Pack
+  PackCost: 50
+  PackIcon: {fileID: 21300000, guid: 054119273c3a341439522c0c28beb6ec, type: 3}
+  cardLists:
+  - cardListName: Towers
+    cardsProbability:
+    - probability: 50
+      card: {fileID: 11400000, guid: 43910c4af0db7dc4b92a03397a6d2002, type: 2}
+    - probability: 50
+      card: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5, type: 2}
+    minCards: 2
+  - cardListName: Modifiers
+    cardsProbability:
+    - probability: 20
+      card: {fileID: 11400000, guid: 3e3f544ba68cbae4f9d71d4838dbb5bb, type: 2}
+    - probability: 60
+      card: {fileID: 11400000, guid: 0a183e77e0284ea42a60ed51b5654594, type: 2}
+    - probability: 20
+      card: {fileID: 11400000, guid: 3f680923ac8468b4ebe7cfd356a85bab, type: 2}
+    minCards: 2
+  totalCards: 4
