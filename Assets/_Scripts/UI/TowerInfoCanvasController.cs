@@ -7,6 +7,8 @@ public class TowerInfoCanvasController : MonoBehaviour
 {
     private UIFollowGameObject uiFollowGameObject;
     private TowerInfoPanel towerInfoPanel;
+    private float refreshRate = 1f;
+    private float currentTime = 0f;
 
     #region Unity Callbacks
         
@@ -21,6 +23,16 @@ public class TowerInfoCanvasController : MonoBehaviour
         towerInfoPanel.gameObject.SetActive(false);
 
         GlobalData.OnTowerSelected += OnTowerSelected;
+    }
+
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+        if (currentTime < refreshRate) return;
+
+        if (towerInfoPanel.gameObject.activeSelf)
+            towerInfoPanel.Refresh();
+        currentTime -= refreshRate;
     }
 
     private void OnDestroy()

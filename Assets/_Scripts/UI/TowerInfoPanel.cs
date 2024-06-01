@@ -29,11 +29,19 @@ public class TowerInfoPanel : MonoBehaviour
 
     private Tower tower;
 
-    public void SetTower(Tower tower)
+    public void SetTower(Tower _tower)
     {
-        towerName.text = tower.TowerInfo.TowerName;
-        towerDescription.text = tower.TowerInfo.TowerDescription;
-        towerCost.text = tower.CurrentCardDataSO.Cost.ToString();
+        if (_tower == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        tower = _tower;
+
+        towerName.text = _tower.TowerInfo.TowerName;
+        towerDescription.text = _tower.TowerInfo.TowerDescription;
+        towerCost.text = _tower.CurrentCardDataSO.Cost.ToString();
 
         // Destroy all Transforms inside the modifiers container
         foreach (Transform child in modifiersContainer)
@@ -41,7 +49,7 @@ public class TowerInfoPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var modifier in tower.DamageDataList)
+        foreach (var modifier in _tower.DamageDataList)
         {
             GameObject modifierGO = Instantiate(modifierPrefab, modifiersContainer);
             modifierGO.GetComponent<ModifierUI>().SetUp(modifier);
@@ -54,10 +62,10 @@ public class TowerInfoPanel : MonoBehaviour
         }
 
         // Create as much placeholders as the tower has modifiers
-        for (int i = 0; i < tower.MaxTowerTier; i++)
+        for (int i = 0; i < _tower.MaxTowerTier; i++)
         {
             GameObject placeholderGO = Instantiate(lockedPlaceholderPrefab, lockedPlaceholdersContainer);
-            placeholderGO.GetComponent<Image>().sprite = i < tower.MaxTowerModifiers ? unlockedIcon : lockedIcon;
+            placeholderGO.GetComponent<Image>().sprite = i < _tower.MaxTowerModifiers ? unlockedIcon : lockedIcon;
         }
 
         // Clear the stats container
@@ -68,32 +76,37 @@ public class TowerInfoPanel : MonoBehaviour
 
         // Show the tower stats in the stats container
         GameObject rangeStatGO = Instantiate(statPrefab, statsContainer);
-        rangeStatGO.GetComponent<ModifierAttributeUI>().SetUp(tower.TowerRuntimeStats.Range, rangeIcon);
+        rangeStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.Range, rangeIcon);
         
         GameObject projectileSpeedStatGO = Instantiate(statPrefab, statsContainer);
-        projectileSpeedStatGO.GetComponent<ModifierAttributeUI>().SetUp(tower.TowerRuntimeStats.ProjectileSpeed, projectileSpeedIcon);
+        projectileSpeedStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.ProjectileSpeed, projectileSpeedIcon);
 
         GameObject fireRateStatGO = Instantiate(statPrefab, statsContainer);
-        fireRateStatGO.GetComponent<ModifierAttributeUI>().SetUp(tower.TowerRuntimeStats.FireRate, fireRateIcon);
+        fireRateStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.FireRate, fireRateIcon);
 
         GameObject fireDurationStatGO = Instantiate(statPrefab, statsContainer);
-        fireDurationStatGO.GetComponent<ModifierAttributeUI>().SetUp(tower.TowerRuntimeStats.FireDuration, fireDurationIcon);
+        fireDurationStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.FireDuration, fireDurationIcon);
 
         GameObject fireCooldownStatGO = Instantiate(statPrefab, statsContainer);
-        fireCooldownStatGO.GetComponent<ModifierAttributeUI>().SetUp(tower.TowerRuntimeStats.FireCooldown, fireCooldownIcon);
+        fireCooldownStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.FireCooldown, fireCooldownIcon);
 
         // Show level stats
-        currentLevelText.text = tower.TowerRuntimeStats.Level.ToString();
-        int nextLevel = tower.TowerRuntimeStats.Level + 1;
+        currentLevelText.text = _tower.TowerRuntimeStats.Level.ToString();
+        int nextLevel = _tower.TowerRuntimeStats.Level + 1;
         string finalStr = nextLevel.ToString();
-        if (nextLevel >= tower.TowerInfo.TowerStatsPerLevel.Count+1)
+        if (nextLevel > _tower.MaxLevel)
         {
-            nextLevel = tower.TowerInfo.TowerStatsPerLevel.Count;
+            nextLevel = _tower.MaxLevel;
             finalStr = "Max";
         }
         nextLevelText.text = finalStr;
-        levelProgressBar.fillAmount = (float)tower.CurrentXP / tower.CurrentLevelMaxXP;
+        levelProgressBar.fillAmount = (float)_tower.CurrentXP / _tower.CurrentLevelMaxXP;
 
 
+    }
+
+    public void Refresh()
+    {
+        SetTower(tower);
     }
 }
