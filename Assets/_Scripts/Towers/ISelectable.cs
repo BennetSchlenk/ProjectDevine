@@ -9,6 +9,6 @@ using UnityEngine;
 /// </summary>
 public interface ISelectable
 {
-    void Select();
+    void Select(bool triggerEvent = false);
     void Deselect();
 }

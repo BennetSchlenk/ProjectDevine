@@ -11,6 +11,7 @@ public class CardDataSO : ScriptableObject
     public string Description;
     public Sprite Icon;
     public CardType Type;
+    public int Cost;
 
     [Header("Tower Settings")]
 

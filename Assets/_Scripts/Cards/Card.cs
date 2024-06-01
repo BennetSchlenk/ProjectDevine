@@ -25,6 +25,9 @@ public class Card : MonoBehaviour
     {
         get
         {
+            if (playerDataManager.currEssence < cardData.Cost)
+                return false;
+
             switch (cardData.Type)
             {
                 case CardType.Tower:
@@ -39,12 +42,16 @@ public class Card : MonoBehaviour
         }
     }
 
+    private PlayerDataManager playerDataManager;
+
     #region Unity Callbacks
 
     private void Start()
     {
         if (CardData != null)
             RefreshInfo();
+
+        playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
     }
 
     #endregion

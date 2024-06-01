@@ -18,9 +18,11 @@ public class HandController : MonoBehaviour
     public Transform CardsContainer => cardsContainer;
 
     private List<Transform> cards = new();
+    public List<Transform> Cards => cards;
     private HandVisualHandler handVisualHandler;
     private Card lastCardSelected;
     private int maxCards = 10;
+    private PlayerDataManager playerDataManager;
 
     [Header("Debug")]
     [SerializeField] private CardDataSO cardDataDebug;
@@ -46,7 +48,10 @@ public class HandController : MonoBehaviour
     // TODO: Remove Start and GiveCardsPeriodically
     private void Start()
     {
-        StartCoroutine(GiveCardsPeriodically(2f));
+        playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
+        GlobalData.HandController = this;
+
+        //StartCoroutine(GiveCardsPeriodically(2f));
     }
 
     private IEnumerator GiveCardsPeriodically(float delay)
@@ -62,6 +67,13 @@ public class HandController : MonoBehaviour
 
     [ContextMenu("Give Card Debug")]
     public void GiveCardDebug() => GiveCard(cardDataDebug);
+
+    public void GiveCards(List<CardDataSO> cards)
+    {
+        foreach (CardDataSO card in cards)
+            GiveCard(card);
+        
+    }
 
     public void GiveCard(CardDataSO cardData)
     {
@@ -97,12 +109,15 @@ public class HandController : MonoBehaviour
         Card card = cardMovement.GetComponent<Card>();
         if (card == null) return;
 
-        SelectCard(card, true);
 
         if (card.CanBeUsed)
         {
+            SelectCard(card, true);
             objectPlacer.UseCard(card.CardData, () => { OnCardUsed(card); }, () => { OnCardNotUsed(card); }, isClick);
             GlobalData.OnCardDragged?.Invoke(card.CardData);
+        } else
+        {
+            Debug.Log("<color=red>Card cannot be used. Not enough essence!</color>");
         }
     }
 
@@ -116,6 +131,7 @@ public class HandController : MonoBehaviour
         DestroyImmediate(card.gameObject);
         handVisualHandler.OrderCards();
         GlobalData.OnCardDragged?.Invoke(null);
+        playerDataManager.RemoveEssence(card.CardData.Cost);
         RefreshHand();
     }
 
@@ -153,4 +169,10 @@ public class HandController : MonoBehaviour
             card.Highlight(true);
     }
 
+    public bool CanAddCards(int totalCards)
+    {
+        return cards.Count + totalCards <= maxCards;
+    }
+
+    
 }

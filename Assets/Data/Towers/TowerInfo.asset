@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949a6710efa4b57429a233729ae75d48, type: 3}
   m_Name: TowerInfo
   m_EditorClassIdentifier: 
-  towerName: 
-  towerDescription: 
+  towerId: 0
+  towerName: T01
+  towerDescription: T01 description
   towerSprite: {fileID: 0}
   towerModels:
   - {fileID: 4465158043754759250, guid: 1d09363cb561bae45a80fe50eb4aa7b9, type: 3}
