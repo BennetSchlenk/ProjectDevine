@@ -35,6 +35,7 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Vector3 targetRotation;
     private int currentSiblingIndex;
     private Transform hoverPositionTransform;
+    private AudioManager audioManager;
 
     #region Unity Callbacks
 
@@ -46,6 +47,8 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void Start()
     {
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+
         _initialLocalScale = transform.localScale;
         SetTargetScale(_initialLocalScale);
         targetPosition = _targetPosition;
@@ -150,6 +153,8 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        audioManager.PlaySFXOneShotAtPosition("cardHover", transform.position);
+
         SetTargetScale(mouseOverLocalScale);
         SetTargetPositionWithHoverPositionY();
 

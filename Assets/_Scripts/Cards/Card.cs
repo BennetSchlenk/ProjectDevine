@@ -27,7 +27,10 @@ public class Card : MonoBehaviour
         get
         {
             if (playerDataManager.currEssence < cardData.Cost)
+            {
+                audioManager.PlaySFXOneShotAtPosition("cardUnavailable", transform.position);
                 return false;
+            }
 
             switch (cardData.Type)
             {
@@ -44,6 +47,7 @@ public class Card : MonoBehaviour
     }
 
     private PlayerDataManager playerDataManager;
+    private AudioManager audioManager;
 
     #region Unity Callbacks
 
@@ -53,6 +57,7 @@ public class Card : MonoBehaviour
             RefreshInfo();
 
         playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
     }
 
     #endregion

@@ -23,6 +23,7 @@ public class HandController : MonoBehaviour
     private Card lastCardSelected;
     private int maxCards = 10;
     private PlayerDataManager playerDataManager;
+    private AudioManager audioManager;
 
     [Header("Debug")]
     [SerializeField] private CardDataSO cardDataDebug;
@@ -49,6 +50,8 @@ public class HandController : MonoBehaviour
     private void Start()
     {
         playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+
         GlobalData.HandController = this;
 
         //StartCoroutine(GiveCardsPeriodically(2f));
@@ -70,9 +73,16 @@ public class HandController : MonoBehaviour
 
     public void GiveCards(List<CardDataSO> cards)
     {
+        StartCoroutine(GiveCards(cards, 0.25f));        
+    }
+
+    private IEnumerator GiveCards(List<CardDataSO> cards, float delay)
+    {
         foreach (CardDataSO card in cards)
+        {
             GiveCard(card);
-        
+            yield return new WaitForSeconds(delay);
+        }
     }
 
     public void GiveCard(CardDataSO cardData)
@@ -85,6 +95,7 @@ public class HandController : MonoBehaviour
         card.GetComponent<Card>().SetUp(cardData);
 
         OnCardAdded(card);
+        audioManager.PlaySFXOneShotAtPosition("cardDeal", transform.position);
     }
 
     private void RefreshHand()
@@ -128,6 +139,8 @@ public class HandController : MonoBehaviour
 
     private void OnCardUsed(Card card)
     {
+        audioManager.PlaySFXOneShotAtPosition("cardPlace", transform.position);
+
         DestroyImmediate(card.gameObject);
         handVisualHandler.OrderCards();
         GlobalData.OnCardDragged?.Invoke(null);
@@ -137,6 +150,7 @@ public class HandController : MonoBehaviour
 
     private void OnCardNotUsed(Card card)
     {
+        audioManager.PlaySFXOneShotAtPosition("cardPlaceWrong", transform.position);
         SelectCard(card, false);
         GlobalData.OnCardDragged?.Invoke(null);
     }
@@ -167,6 +181,8 @@ public class HandController : MonoBehaviour
 
         if (highlight)
             card.Highlight(true);
+
+        audioManager.PlaySFXOneShotAtPosition("cardClick", transform.position);
     }
 
     public bool CanAddCards(int totalCards)
