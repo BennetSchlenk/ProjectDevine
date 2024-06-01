@@ -10,11 +10,9 @@ public class AudioVolumeSliderController : MonoBehaviour
 {
     [SerializeField] VolumeType type;
     [SerializeField] Slider slider;
-        
-    //private string volumeParameter;
+      
     private AudioManager audioManager;
-    //private GameManager gameManager;
-
+    
     private bool wasInitialized = false;
 
     #region Unity Callbacks
@@ -33,8 +31,7 @@ public class AudioVolumeSliderController : MonoBehaviour
             slider.onValueChanged.AddListener(HandleSliderValueChanged);
         }        
 
-        slider.value = audioManager.GetVolume(type);            
-
+        slider.value = audioManager.GetVolume(type);
     }
         
 

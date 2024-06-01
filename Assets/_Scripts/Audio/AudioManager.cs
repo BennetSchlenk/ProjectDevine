@@ -2,11 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 
@@ -84,7 +82,7 @@ public class AudioManager : MonoBehaviour
     {
 		foreach (var item in volumeExposedParamNames)
 		{
-			PlayerPrefs.SetFloat(item.mixerExposedParamName, item.slider.value);
+			PlayerPrefs.SetFloat(item.mixerExposedParamName, GetVolume(item.volumeType));
 		}
     }
 
@@ -178,7 +176,6 @@ public class AudioManager : MonoBehaviour
 		if (item != null)
 		{
 			item.slider = slider;
-            slider.value = GetVolume(volumeType);
 		}
 	}
 
@@ -210,11 +207,24 @@ public class AudioManager : MonoBehaviour
 	/// <param name="volumeType"></param>
 	/// <returns></returns>
 	public float GetVolume(VolumeType volumeType)
-	{
+	{		
 		return GetGroupVolume(GetVolumeTypeMixerName(volumeType));
 	}
 
-	public void SetGroupVolumeFromNormalized(string parameterName, float normalizedVolume)
+    public float GetGroupVolume(string parameterName)
+    {
+        if (audioMixer.GetFloat(parameterName, out float rawVolume))
+        {
+            return MixerValueToNormalized(rawVolume);
+        }
+        else
+        {
+            Debug.LogError("The AudioMixer parameter was not found");
+            return 0f;
+        }
+    }
+
+    public void SetGroupVolumeFromNormalized(string parameterName, float normalizedVolume)
 	{
 		bool volumeSet = audioMixer.SetFloat(parameterName, NormalizedToMixerValue(normalizedVolume));
 		if (!volumeSet)
@@ -228,31 +238,14 @@ public class AudioManager : MonoBehaviour
 			Debug.LogError("The AudioMixer parameter was not found");
 	}
 
-	public float GetGroupVolume(string parameterName)
-	{
-		if (audioMixer.GetFloat(parameterName, out float rawVolume))
-		{
-			return MixerValueToNormalized(rawVolume);
-		}
-		else
-		{
-			Debug.LogError("The AudioMixer parameter was not found");
-			return 0f;
-		}
-	}
-
 	#endregion
 
 	// Both MixerValueNormalized and NormalizedToMixerValue functions are used for easier transformations
 	/// when using UI sliders normalized format
-	private float MixerValueToNormalized(float mixerValue)
+	public float MixerValueToNormalized(float mixerValue)
 	{
-        Debug.Log($"MixerValueToNormalized mixerValue> {mixerValue}");
-        Debug.Log($"MixerValueToNormalized result> {Mathf.Pow(10.0f, mixerValue / mixerMultiplier)}");
-        //return Mathf.Clamp01(Mathf.Log10(mixerValue * mixerMultiplier));
-
         // Clamp dB value to avoid issues with calculations at extremes
-        mixerValue = Mathf.Clamp(-80.0f, 0.0f, mixerValue); // Clamp to -80 dB to 0 dB
+        mixerValue = Mathf.Clamp(mixerValue, - 80.0f, 0.0f); // Clamp to -80 dB to 0 dB
 
         // Convert from dB to linear scale using anti-logarithm (10 raised to the power of dB/20)
         float sliderValue = Mathf.Pow(10.0f, mixerValue / mixerMultiplier);
@@ -261,17 +254,13 @@ public class AudioManager : MonoBehaviour
         sliderValue = Mathf.Clamp01(sliderValue);
 
         return sliderValue;
-
-
     }
 
-	private float NormalizedToMixerValue(float sliderValue)
-	{
-        Debug.Log($"NormalizedToMixerValue sliderValue> {sliderValue}");
-        Debug.Log($"NormalizedToMixerValue result> {mixerMultiplier * Mathf.Log10(sliderValue)}");
-        //return Mathf.Log10(normalizedValue) * mixerMultiplier;
 
-        // Clamp slider value to avoid issues at 0 or 1
+    private float NormalizedToMixerValue(float sliderValue)
+	{
+        
+		// Clamp slider value to avoid issues at 0 or 1
         sliderValue = Mathf.Clamp01(sliderValue);
 
         // Convert to decibel (dB) using log10 with a factor of 20
