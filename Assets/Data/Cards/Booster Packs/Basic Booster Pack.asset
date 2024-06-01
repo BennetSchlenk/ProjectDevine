@@ -23,7 +23,7 @@ MonoBehaviour:
     - probability: 50
       card: {fileID: 11400000, guid: 43910c4af0db7dc4b92a03397a6d2002, type: 2}
     - probability: 50
-      card: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5, type: 2}
+      card: {fileID: 11400000, guid: e050aadf52c96c649b025926264b173f, type: 2}
     minCards: 2
   - cardListName: Modifiers
     cardsProbability:

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949a6710efa4b57429a233729ae75d48, type: 3}
+  m_Name: Cannon Tower Info
+  m_EditorClassIdentifier: 
+  towerId: 0
+  towerName: T04 Area Tower
+  towerDescription: T04 Area Tower description
+  towerSprite: {fileID: 21300000, guid: c2d2159760aef314187b4b3039220dd2, type: 3}
+  towerModels:
+  - {fileID: 2867552112866341769, guid: 6032da82254eff24e855dade8c41a5b4, type: 3}
+  - {fileID: 5313974937363464743, guid: c819cb22c85365a48867112ae344958c, type: 3}
+  - {fileID: 4224103424761131456, guid: a31d558d038ff9b4eac7cf06a814aafc, type: 3}
+  towerStatsPerLevel:
+  - XP: 90
+    TowerStats: {fileID: 11400000, guid: 1efa7759c379c2949bb80e0598eb1633, type: 2}
+  - XP: 500
+    TowerStats: {fileID: 11400000, guid: 01202612eb282044cbd013deae1f95b8, type: 2}
