@@ -482,4 +482,6 @@ MonoBehaviour:
   packNameText: {fileID: 4171593358504106127}
   packCostText: {fileID: 5119887632366883920}
   packIcon: {fileID: 7145064070700773637}
+  buyButton: {fileID: 623072249202809768}
+  buyCooldown: 1
   boosterPackSO: {fileID: 11400000, guid: 593e6c2026d5f5e449e8c9e4d8351295, type: 2}

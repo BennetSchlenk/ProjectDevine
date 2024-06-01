@@ -17,11 +17,12 @@ MonoBehaviour:
   Description: Basic test tower
   Icon: {fileID: 21300000, guid: bc9752e73176453428806003b7dc8325, type: 3}
   Type: 0
-  Cost: 15
+  Cost: 1500
   TowerTier: 1
   TowerInfo: {fileID: 11400000, guid: aff4745fbf0f86c44a534447d9aac7b7, type: 2}
   TowerBaseStats: {fileID: 11400000, guid: 2979fad0c7cfae344b3b2679fccc6f07, type: 2}
   TowerAttackType: 0
+  TowerAttackArea: 0
   NextTierData: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5, type: 2}
   DamageData:
     DamageType: {fileID: 0}
