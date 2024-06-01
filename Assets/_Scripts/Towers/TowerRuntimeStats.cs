@@ -11,7 +11,7 @@ public class TowerRuntimeStats: ITowerData
 
     #region Tower runtime stats
 
-    private int level;
+    private int level = 1;
     private int tier;
     private float range;
     private float fireRate;
@@ -39,12 +39,15 @@ public class TowerRuntimeStats: ITowerData
         Tier = _tier;
     }
 
-    public void ApplyUpgrade(TowerDataUpgradeSO upgrade)
+    public void ApplyUpgrade(TowerDataUpgradeSO upgrade, bool levelUp = false)
     {
         range += upgrade.Range;
         fireRate += upgrade.FireRate;
         fireDuration += upgrade.FireDuration;
         fireCooldown += upgrade.FireCooldown;
+
+        if (levelUp)
+            level++;
     }
 
     public void RemoveUpgrade(TowerDataUpgradeSO upgrade)

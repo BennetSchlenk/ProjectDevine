@@ -17,12 +17,15 @@ MonoBehaviour:
   Description: 
   Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   Type: 1
+  Cost: 0
   TowerTier: 1
   TowerInfo: {fileID: 0}
   TowerBaseStats: {fileID: 0}
+  NextTierData: {fileID: 0}
   DamageData:
     DamageType: {fileID: 11400000, guid: f41238c04cf512e4fa1e3b8f2853c6e1, type: 2}
-    damage: 10
+    damage: 100
     damageOverTime: 0
     damageOverTimeDuration: 0
     damageOverTimeTickRate: 0
+    speedMultiplier: 0
