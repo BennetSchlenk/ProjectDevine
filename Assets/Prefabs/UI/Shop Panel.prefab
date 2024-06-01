@@ -305,6 +305,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elite
       objectReference: {fileID: 0}
+    - target: {fileID: 6239050693201180070, guid: a8414a3b799b6a343ba875c1bfee7482,
+        type: 3}
+      propertyPath: boosterPackSO
+      value: 
+      objectReference: {fileID: 11400000, guid: ed07f1f7c53ff6747b23f12c49828f7e,
+        type: 2}
     - target: {fileID: 7145064070700773637, guid: a8414a3b799b6a343ba875c1bfee7482,
         type: 3}
       propertyPath: m_Sprite
@@ -446,6 +452,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Advanced
       objectReference: {fileID: 0}
+    - target: {fileID: 6239050693201180070, guid: a8414a3b799b6a343ba875c1bfee7482,
+        type: 3}
+      propertyPath: boosterPackSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b16f169eb0f19e4b8bb02e74921b2f4,
+        type: 2}
     - target: {fileID: 7145064070700773637, guid: a8414a3b799b6a343ba875c1bfee7482,
         type: 3}
       propertyPath: m_Sprite

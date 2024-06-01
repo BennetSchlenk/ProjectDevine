@@ -298,7 +298,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     protected GameObject AttackEnemy(List<GameObject> enemiesToIgnoreIfPossible)
     {
-        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, enemiesToIgnoreIfPossible, TowerRuntimeStats.Range + baseTowerStats.Range);
+        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, enemiesToIgnoreIfPossible, TowerRuntimeStats.Range + baseTowerStats.Range, currentCardDataSO);
     }
 
     private void UpdateRange()

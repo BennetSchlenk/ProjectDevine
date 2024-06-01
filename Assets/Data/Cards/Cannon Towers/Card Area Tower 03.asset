@@ -10,21 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce179743d13e3d342bd189185f6dd2c1, type: 3}
-  m_Name: Card T01-1
+  m_Name: Card Area Tower 03
   m_EditorClassIdentifier: 
-  Id: 0
-  Name: T01-1
+  Id: 6
+  Name: Area Tower - 3
   Description: Basic test tower
   Icon: {fileID: 21300000, guid: bc9752e73176453428806003b7dc8325, type: 3}
   Type: 0
-  Cost: 1
+  Cost: 15
   TowerTier: 1
-  TowerInfo: {fileID: 11400000, guid: aff4745fbf0f86c44a534447d9aac7b7, type: 2}
+  TowerInfo: {fileID: 11400000, guid: 65fe1619e1c836540aaa12b7bc67f909, type: 2}
   TowerBaseStats: {fileID: 11400000, guid: 2979fad0c7cfae344b3b2679fccc6f07, type: 2}
-  NextTierData: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5, type: 2}
+  TowerAttackType: 1
+  TowerAttackArea: 20
+  NextTierData: {fileID: 0}
   DamageData:
     DamageType: {fileID: 0}
     damage: 0
     damageOverTime: 0
     damageOverTimeDuration: 0
     damageOverTimeTickRate: 0
+    speedMultiplier: 0
