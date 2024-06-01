@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.Events;
 public class TowerAttackHandler : MonoBehaviour, IXPGainer
 {
     public UnityEvent<Transform> OnTargetChange;
+    public event Action<float> OnXPChange = delegate { };
 
     [SerializeField] private AttackTargetType attackTargetType;
     [SerializeField] private GameObject projectile;
@@ -82,7 +84,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     public void OnXPGain(float xp)
     {
         //Debug.Log("XP Gained: " + xp);
-        // TODO: Implement
+        OnXPChange?.Invoke(xp);
     }
 
     private GameObject SpawnAndConfigureProjectile(TowerRuntimeStats towerData, List<DamageData> damageDataList, GameObject enemy, IDamagable damagable)

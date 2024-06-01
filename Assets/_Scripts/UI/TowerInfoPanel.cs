@@ -12,6 +12,9 @@ public class TowerInfoPanel : MonoBehaviour
     [SerializeField] private Transform modifiersContainer;
     [SerializeField] private Transform statsContainer;
     [SerializeField] private Transform lockedPlaceholdersContainer;
+    [SerializeField] private TMPro.TextMeshProUGUI currentLevelText;
+    [SerializeField] private TMPro.TextMeshProUGUI nextLevelText;
+    [SerializeField] private Image levelProgressBar;
 
     [SerializeField] private GameObject modifierPrefab;
     [SerializeField] private GameObject statPrefab;
@@ -30,7 +33,7 @@ public class TowerInfoPanel : MonoBehaviour
     {
         towerName.text = tower.TowerInfo.TowerName;
         towerDescription.text = tower.TowerInfo.TowerDescription;
-        //towerCost.text = tower.TowerInfo.TowerCost.ToString();
+        towerCost.text = tower.CurrentCardDataSO.Cost.ToString();
 
         // Destroy all Transforms inside the modifiers container
         foreach (Transform child in modifiersContainer)
@@ -79,7 +82,17 @@ public class TowerInfoPanel : MonoBehaviour
         GameObject fireCooldownStatGO = Instantiate(statPrefab, statsContainer);
         fireCooldownStatGO.GetComponent<ModifierAttributeUI>().SetUp(tower.TowerRuntimeStats.FireCooldown, fireCooldownIcon);
 
-        
+        // Show level stats
+        currentLevelText.text = tower.TowerRuntimeStats.Level.ToString();
+        int nextLevel = tower.TowerRuntimeStats.Level + 1;
+        string finalStr = nextLevel.ToString();
+        if (nextLevel >= tower.TowerInfo.TowerStatsPerLevel.Count+1)
+        {
+            nextLevel = tower.TowerInfo.TowerStatsPerLevel.Count;
+            finalStr = "Max";
+        }
+        nextLevelText.text = finalStr;
+        levelProgressBar.fillAmount = (float)tower.CurrentXP / tower.CurrentLevelMaxXP;
 
 
     }

@@ -23,4 +23,15 @@ public class TowerInfoSO : ScriptableObject
     [Tooltip("The tower models (per tier) that will be instantiated when the tower is placed.")]
     [SerializeField] private List<GameObject> towerModels;
     public List<GameObject> TowerModels => towerModels;
+
+    [Tooltip("The tower stats per level.")]
+    [SerializeField] private List<TowerStatsPerLevel> towerStatsPerLevel;
+    public List<TowerStatsPerLevel> TowerStatsPerLevel => towerStatsPerLevel;
+}
+
+[System.Serializable]
+public class TowerStatsPerLevel
+{
+    public int XP;
+    public TowerDataUpgradeSO TowerStats;
 }

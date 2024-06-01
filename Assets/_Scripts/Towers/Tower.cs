@@ -27,11 +27,26 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     private bool isFiring = false;
     private float fireCooldown = 0f;
     private GameObject currentModel;
+    private float currentXP;
 
+    public float CurrentXP => currentXP;
+    public float CurrentLevelMaxXP => TowerInfo.TowerStatsPerLevel[TowerRuntimeStats.Level-1].XP;
+    public CardDataSO CurrentCardDataSO => currentCardDataSO;
     public int MaxTowerTier => TowerInfo.TowerModels.Count;
     public int MaxTowerModifiers => TowerRuntimeStats.Tier; // Temporal solution
+    public int MaxLevel => CurrentCardDataSO.TowerInfo.TowerStatsPerLevel.Count;
 
     #region Unity Callbacks
+
+    private void Awake()
+    {
+        attackHandler.OnXPChange += OnXPChange;
+    }
+
+    private void OnDestroy()
+    {
+        attackHandler.OnXPChange -= OnXPChange;
+    }
 
     private void Start()
     {
@@ -194,9 +209,9 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         damageData.ApplyUpgrade(damageDataUpgrade);
     }
-    public void ApplyUpgrade(TowerDataUpgradeSO upgrade)
+    public void ApplyUpgrade(TowerDataUpgradeSO upgrade, bool levelUp = false)
     {
-        TowerRuntimeStats.ApplyUpgrade(upgrade);
+        TowerRuntimeStats.ApplyUpgrade(upgrade, levelUp);
     }
 
     public bool ApplyModifier(CardDataSO cardToUse)
@@ -224,12 +239,12 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         if (DamageDataList.Count < maxSlots)
         {
-            Debug.Log("Applying modifier.");
+            
             return true;
         }
         else
         {
-            Debug.Log("No empty modifier slots.");
+            
             return false;
         }
     }
@@ -282,5 +297,24 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
         rangeGameObject.transform.localScale = new Vector3((TowerRuntimeStats.Range + baseTowerStats.Range), 0.01f, (TowerRuntimeStats.Range + baseTowerStats.Range));
     }
 
-    
+    private void OnXPChange(float xp)
+    {
+        currentXP += xp;
+        if (currentXP >= CurrentLevelMaxXP)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        bool canLevelUp = TowerRuntimeStats.Level <= TowerInfo.TowerStatsPerLevel.Count - 1;
+        if (canLevelUp)
+        {
+            currentXP -= CurrentLevelMaxXP;
+            TowerDataUpgradeSO newStats = TowerInfo.TowerStatsPerLevel[TowerRuntimeStats.Level - 1].TowerStats;
+            ApplyUpgrade(newStats, true);
+            Debug.Log("Level up to: " + TowerRuntimeStats.Level);
+        }
+    }
 }
