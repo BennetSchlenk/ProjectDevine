@@ -239,6 +239,8 @@ public class Enemy : MonoBehaviour, IDamagable
             playerDataManager.AddEssence(classAndStats.PointsForPlayerIfKilled);
         }
 
+        audioManager.PlaySFXOneShotAtPosition("enemyDied", transform.position);
+
         StopAllCoroutines();
         Destroy(gameObject);
     }
