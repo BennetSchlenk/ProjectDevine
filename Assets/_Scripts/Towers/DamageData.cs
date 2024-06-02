@@ -66,6 +66,7 @@ public class DamageData: IDamageData
         damageOverTime = 0;
         damageOverTimeDuration = 0;
         damageOverTimeTickRate = 0;
+        speedMultiplier = 1f;
     }
 }
 
@@ -75,4 +76,5 @@ public interface IDamageData
     float DamageOverTime { get; }
     float DamageOverTimeDuration { get; }
     float DamageOverTimeTickRate { get; }
+    float SpeedMultiplier {  get; }
 }

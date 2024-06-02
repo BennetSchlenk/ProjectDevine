@@ -27,11 +27,15 @@ MonoBehaviour:
     minCards: 2
   - cardListName: Modifiers
     cardsProbability:
-    - probability: 20
+    - probability: 50
       card: {fileID: 11400000, guid: 3e3f544ba68cbae4f9d71d4838dbb5bb, type: 2}
-    - probability: 60
+    - probability: 20
       card: {fileID: 11400000, guid: 0a183e77e0284ea42a60ed51b5654594, type: 2}
     - probability: 20
       card: {fileID: 11400000, guid: 3f680923ac8468b4ebe7cfd356a85bab, type: 2}
+    - probability: 20
+      card: {fileID: 11400000, guid: 3f680923ac8468b4ebe7cfd356a85bab, type: 2}
+    - probability: 50
+      card: {fileID: 11400000, guid: cc15cc5c5b80c204faa1acdf9cd82d6b, type: 2}
     minCards: 2
   totalCards: 4

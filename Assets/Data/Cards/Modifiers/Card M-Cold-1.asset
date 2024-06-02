@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce179743d13e3d342bd189185f6dd2c1, type: 3}
-  m_Name: Card M-Fire-2
+  m_Name: Card M-Cold-1
   m_EditorClassIdentifier: 
   Id: 1
-  Name: Fire Modifier 2
+  Name: Cold Modifier 1
   Description: 
   Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   Type: 1
@@ -25,9 +25,9 @@ MonoBehaviour:
   TowerAttackArea: 0
   NextTierData: {fileID: 0}
   DamageData:
-    DamageType: {fileID: 11400000, guid: 17f64c1bbd0a54c428d48141586b3135, type: 2}
-    damage: 10
-    damageOverTime: 3
-    damageOverTimeDuration: 8
+    DamageType: {fileID: 11400000, guid: c8961a61ca09fcf4481859fb78cedc92, type: 2}
+    damage: 5
+    damageOverTime: 1
+    damageOverTimeDuration: 5
     damageOverTimeTickRate: 0.5
-    speedMultiplier: 1
+    speedMultiplier: 0.5

@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public float Health { get; set; }
     public float Armor { get; set; }
+    public float MovementSpeed { get { return classAndStats.MovementSpeed * speedModifier; } }
     public EnemyClassSO Stats { get {  return classAndStats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour, IDamagable
     private Dictionary<DamageTypeSO, DamageData> infectiousDamageTypes = new();
     private Dictionary<DamageTypeSO, (DamageData Data, float LastTick, float StopTime, IXPGainer XpGainder)> activeDamageOverTime = new();
     private Dictionary<DamageTypeSO, GameObject> activeVFXObjects = new();
+
+    private float speedModifier = 1f;
 
     //cached vars
     AudioManager audioManager;
@@ -53,6 +56,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void Update()
     {
         HandleDamageOverTime();
+        CheckForSpeedModifiers();
     }
 
     private void FixedUpdate()
@@ -170,6 +174,26 @@ public class Enemy : MonoBehaviour, IDamagable
         }
     }
 
+    private void CheckForSpeedModifiers()
+    {
+        List<float> speedModifiers = new();
+
+        foreach (var details in activeDamageOverTime)
+        {
+            float damageDataSpeedModifier = details.Value.Data.SpeedMultiplier;
+            speedModifiers.Add(damageDataSpeedModifier);
+        }
+
+        if (speedModifiers.Count > 0)
+        {
+            speedModifiers.Sort();
+            speedModifier = speedModifiers[0];
+        }
+        else
+        {
+            speedModifier = 1f;
+        }
+    }
 
     private float HandleArmorDamage(float amount)
     {

@@ -57,7 +57,7 @@ public class EnemyMovementController : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemy.Stats.RotationSpeed * Time.deltaTime);
-            transform.Translate(Vector3.forward * enemy.Stats.MovementSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * enemy.MovementSpeed * Time.deltaTime);
         }
         else
         {

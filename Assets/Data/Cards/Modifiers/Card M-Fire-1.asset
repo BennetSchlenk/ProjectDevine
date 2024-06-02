@@ -30,4 +30,4 @@ MonoBehaviour:
     damageOverTime: 2
     damageOverTimeDuration: 5
     damageOverTimeTickRate: 0.5
-    speedMultiplier: 0
+    speedMultiplier: 1
