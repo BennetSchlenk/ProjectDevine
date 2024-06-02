@@ -29,7 +29,6 @@ public class Projectile : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.Log("Target is null!!!!!!!!!!!!!");
             onHit(transform.position);
             Return();
             return;

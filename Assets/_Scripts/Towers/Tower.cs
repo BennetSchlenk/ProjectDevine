@@ -11,6 +11,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     [SerializeField] private TowerDataUpgradeSO baseTowerStats;
     [HideInInspector]
     public TowerRuntimeStats TowerRuntimeStats;
+    public DamageData DefaultDamageData;
     public List<DamageData> DamageDataList = new(); // List of damage data for each damage type
 
     [SerializeField]
@@ -146,6 +147,9 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
         currentCardDataSO = cardDataSO;
 
+        // Set the default damage data
+        DefaultDamageData = cardDataSO.DamageData;
+
         if (applyNextTierStats)
             TowerRuntimeStats  = new(cardDataSO.NextTierData.TowerBaseStats, tier);
         else
@@ -231,13 +235,11 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
         // Check if the tower has empty modifier slots
         int maxSlots = TowerRuntimeStats.Tier;
 
-        Debug.Log("Tower " + gameObject.name + " has " + DamageDataList.Count + " slots of " + maxSlots, gameObject);
 
         bool canBeApplied = CanApplyModifier();
 
         if (canBeApplied)
         {
-            Debug.Log("Applying modifier.");
             DamageDataList.Add(cardToUse.DamageData);
         }
 
@@ -299,7 +301,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
 
     protected GameObject AttackEnemy(List<GameObject> enemiesToIgnoreIfPossible)
     {
-        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, enemiesToIgnoreIfPossible, TowerRuntimeStats.Range + baseTowerStats.Range, currentCardDataSO);
+        return attackHandler.Attack(TowerRuntimeStats, DamageDataList, DefaultDamageData, enemiesToIgnoreIfPossible, TowerRuntimeStats.Range + baseTowerStats.Range, currentCardDataSO);
     }
 
     private void UpdateRange()
@@ -326,7 +328,6 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
             currentXP -= CurrentLevelMaxXP;
             TowerDataUpgradeSO newStats = TowerInfo.TowerStatsPerLevel[TowerRuntimeStats.Level - 1].TowerStats;
             ApplyUpgrade(newStats, true);
-            Debug.Log("Level up to: " + TowerRuntimeStats.Level);
         }
     }
 }

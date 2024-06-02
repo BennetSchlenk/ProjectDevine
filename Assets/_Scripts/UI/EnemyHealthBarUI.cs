@@ -78,7 +78,6 @@ public class EnemyHealthBarUI : MonoBehaviour
 
     private void OnEnemyDied(Enemy enemy)
     {
-        Debug.Log("Enemy Died");
         ReturnToPool();
     }
 
