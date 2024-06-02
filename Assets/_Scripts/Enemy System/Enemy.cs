@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     [Header("Basic configs")]    
     [SerializeField] private EnemyClassSO classAndStats;
+    [SerializeField] private float raycastLength = 0.1f;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private Collider baseCollider;
 
     public float Health { get; set; }
     public float Armor { get; set; }
@@ -20,6 +23,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private Dictionary<DamageTypeSO, DamageData> infectiousDamageTypes = new();
     private Dictionary<DamageTypeSO, (DamageData Data, float LastTick, float StopTime, IXPGainer XpGainder)> activeDamageOverTime = new();
+    private Dictionary<DamageTypeSO, GameObject> activeVFXObjects = new();
 
     //cached vars
     AudioManager audioManager;
@@ -32,6 +36,12 @@ public class Enemy : MonoBehaviour, IDamagable
         Health = classAndStats.InitialLife;
         Armor = classAndStats.InitialArmor;
         MovementController = GetComponent<EnemyMovementController>();
+
+        if (baseCollider == null)
+        {
+            baseCollider = GetComponent<Collider>();
+            if (baseCollider == null) baseCollider = GetComponentInChildren<Collider>();            
+        }
     }
 
     private void Start()
@@ -45,6 +55,11 @@ public class Enemy : MonoBehaviour, IDamagable
         HandleDamageOverTime();
     }
 
+    private void FixedUpdate()
+    {
+        CheckForEnemies();
+    }
+
     #endregion
 
     public void Init(List<Vector3> waypoints)
@@ -52,13 +67,6 @@ public class Enemy : MonoBehaviour, IDamagable
         MovementController.StartMoving(waypoints);
     }
 
-    /// <summary>
-    /// In case of Instant Kill player will not get Essence for the kill.
-    /// </summary>
-    public void InstantKill()
-    {
-        DestroySelf(false);
-    }
 
     public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
     {
@@ -132,11 +140,14 @@ public class Enemy : MonoBehaviour, IDamagable
 
                     if (damageTaken > 0)
                     {
-                        // add effect
-                        if (details.Key.DamageOverTimeEffect != null)
+                        // add effect if not yet added
+                        if (details.Key.DamageOverTimeEffect != null 
+                            && !activeVFXObjects.ContainsKey(details.Key))
                         {
                             GameObject newHitEffect = Instantiate(details.Key.DamageOverTimeEffect, transform.position, Quaternion.identity);
                             newHitEffect.transform.SetParent(transform);
+
+                            activeVFXObjects.Add(details.Key, newHitEffect);
                         }
                     }
 
@@ -155,6 +166,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             activeDamageOverTime.Remove(item);
             infectiousDamageTypes.Remove(item);
+            activeVFXObjects.Remove(item);
         }
     }
 
@@ -191,7 +203,7 @@ public class Enemy : MonoBehaviour, IDamagable
         if (Armor > 0)
         {
             reducedDamageBasedOnArmor = Mathf.Clamp(Armor - amount, 0, amount);
-        }        
+        }
 
         if (reducedDamageBasedOnArmor > 0)
         {
@@ -216,6 +228,48 @@ public class Enemy : MonoBehaviour, IDamagable
         return damageTaken;
     }
 
+    private void CheckForEnemies()
+    {
+        Debug.Log($"CheckForEnemies()");
+
+        if (infectiousDamageTypes.Count > 0)
+        {
+            // switching off own collider temporarily to avoid self-collision
+            baseCollider.enabled = false;
+                        
+            Ray ray = new Ray(transform.position, transform.forward);
+
+            // Perform raycast and store the hit information
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, raycastLength, enemyLayer))
+            {
+                Debug.Log($"CheckForEnemies() - Physics.Raycast HIT");
+
+                if (!hit.collider.gameObject.TryGetComponent(out Enemy enemy))
+                {
+                    enemy = hit.collider.gameObject.GetComponentInParent<Enemy>();
+                }
+
+                if (enemy != null)
+                {
+                    Debug.Log($"CheckForEnemies() - enemy {enemy.gameObject.name}");
+
+                    List<DamageData> damageDataList = new();
+
+                    foreach (var infectiousDamage in infectiousDamageTypes)
+                    {
+                        damageDataList.Add(infectiousDamage.Value);
+                        Debug.Log($"Enemy infecting other enemy with Damage: {infectiousDamage.Key.DamageTypeName}");
+                    }
+
+                    // passing in the list of infecting damages and NULL as no points should be given for these damages
+                    enemy.TakeDamage(damageDataList, null);
+                }
+            }
+
+            baseCollider.enabled = true;
+        }
+    }
 
     /// <summary>
     /// Returns the damage dealt to the Core
@@ -225,6 +279,16 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         core.DamageCore(classAndStats.CoreDamage);
         InstantKill();
+    }
+
+    #region Self Destruct related functions
+
+    /// <summary>
+    /// In case of Instant Kill player will not get Essence for the kill.
+    /// </summary>
+    public void InstantKill()
+    {
+        DestroySelf(false);
     }
 
     private void DestroySelf()
@@ -244,5 +308,7 @@ public class Enemy : MonoBehaviour, IDamagable
         StopAllCoroutines();
         Destroy(gameObject);
     }
+
+    #endregion
 
 }

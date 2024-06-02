@@ -21,11 +21,13 @@ MonoBehaviour:
   TowerTier: 1
   TowerInfo: {fileID: 0}
   TowerBaseStats: {fileID: 0}
+  TowerAttackType: 0
+  TowerAttackArea: 0
   NextTierData: {fileID: 0}
   DamageData:
     DamageType: {fileID: 11400000, guid: 17f64c1bbd0a54c428d48141586b3135, type: 2}
-    damage: 100
+    damage: 10
     damageOverTime: 2
-    damageOverTimeDuration: 4
+    damageOverTimeDuration: 5
     damageOverTimeTickRate: 0.5
     speedMultiplier: 0

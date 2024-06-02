@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6094801353933312656}
   - component: {fileID: 4048735868994252658}
   - component: {fileID: 553168719332603758}
-  - component: {fileID: 7133581476581811053}
   - component: {fileID: 2954674989576138416}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SlowAndBigEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   classAndStats: {fileID: 11400000, guid: bbdf44968feedc442a4bb2d532765b44, type: 2}
+  raycastLength: 0.1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  baseCollider: {fileID: 4535654156173342252}
 --- !u!114 &553168719332603758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,29 +66,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reachWaypointTolerance: 0.5
---- !u!136 &7133581476581811053
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274669514275036209}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2954674989576138416
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -124,7 +105,7 @@ GameObject:
   - component: {fileID: 8207856238695951647}
   - component: {fileID: 4907751360577991051}
   - component: {fileID: 2136504885326065569}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: eye2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +210,7 @@ GameObject:
   - component: {fileID: 2164606433979342574}
   - component: {fileID: 3230378894901688006}
   - component: {fileID: 1665757164240155443}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: eye1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +315,7 @@ GameObject:
   - component: {fileID: 240835737865292271}
   - component: {fileID: 8166532251374278276}
   - component: {fileID: 4535654156173342252}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +426,7 @@ GameObject:
   - component: {fileID: 8972968068237326256}
   - component: {fileID: 7815944874410772644}
   - component: {fileID: 1194773959106092480}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,7 +533,7 @@ GameObject:
   - component: {fileID: 4385554969363301110}
   - component: {fileID: 6803843321209053249}
   - component: {fileID: 1506685310315523287}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hat1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +635,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5304514948329951536}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +671,7 @@ GameObject:
   - component: {fileID: 6961405139290879144}
   - component: {fileID: 1720338802229182383}
   - component: {fileID: 2277732791212646664}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hat2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

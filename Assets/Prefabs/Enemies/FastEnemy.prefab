@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 6094801353933312656}
   - component: {fileID: 4048735868994252658}
   - component: {fileID: 553168719332603758}
-  - component: {fileID: 7133581476581811053}
   - component: {fileID: 2954674989576138416}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FastEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   classAndStats: {fileID: 11400000, guid: 185275ba57dbe3c44a0c211f2004063c, type: 2}
+  raycastLength: 0.1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  baseCollider: {fileID: 4535654156173342252}
 --- !u!114 &553168719332603758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,29 +66,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reachWaypointTolerance: 0.5
---- !u!136 &7133581476581811053
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274669514275036209}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.38
-  m_Height: 1.52
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.48, z: 0}
 --- !u!54 &2954674989576138416
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -124,7 +105,7 @@ GameObject:
   - component: {fileID: 240835737865292271}
   - component: {fileID: 8166532251374278276}
   - component: {fileID: 4535654156173342252}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +213,7 @@ GameObject:
   - component: {fileID: 4385554969363301110}
   - component: {fileID: 6803843321209053249}
   - component: {fileID: 1506685310315523287}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hat1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5304514948329951536}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +351,7 @@ GameObject:
   - component: {fileID: 6961405139290879144}
   - component: {fileID: 1720338802229182383}
   - component: {fileID: 2277732791212646664}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: hat2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
