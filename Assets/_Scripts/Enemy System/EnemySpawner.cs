@@ -61,7 +61,8 @@ public class EnemySpawner : MonoBehaviour
 
             if (loopCount == 10000)
             {
-                Debug.LogWarning("You are crazy to allow to run 10000 spawn cycles");
+                Debug.LogError("You are crazy to allow to run 10000 spawn cycles");
+                ServiceLocator.Instance.GetService<GameManager>().SetGameState(GameStates.GameOver);
                 break;
             }
         }
