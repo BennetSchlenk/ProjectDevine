@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f78a07ff73b39f4e937aced9d33c8ae, type: 3}
-  m_Name: EnemyStat BigAndSlow
+  m_Name: EnemyStat-Fast-LowHP-NoArmor
   m_EditorClassIdentifier: 
-  initialLife: 1000
+  initialLife: 500
   initialArmor: 0
-  movementSpeed: 1.8
-  pointsForPlayerIfKilled: 20
+  movementSpeed: 4
+  pointsForPlayerIfKilled: 5
   coreDamage: 5
