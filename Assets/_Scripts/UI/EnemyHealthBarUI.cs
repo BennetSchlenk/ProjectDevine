@@ -9,6 +9,7 @@ public class EnemyHealthBarUI : MonoBehaviour
     [SerializeField] private RectTransform armorBar;
     [SerializeField] private RectTransform armorBackgroundBar;
     [SerializeField] private Vector3 offset;  // The offset from the target's position
+    [SerializeField] private AnimationCurve panelSizeOverDistance;
 
     private Enemy enemy;
 
@@ -35,6 +36,11 @@ public class EnemyHealthBarUI : MonoBehaviour
 
         // Set the position of the UI element to the screen position
         transform.position = screenPos + offset;
+
+        // Set the size of the panel based on the distance from the camera
+        float distance = Vector3.Distance(Camera.main.transform.position, enemy.transform.position);
+        float size = panelSizeOverDistance.Evaluate(distance);
+        transform.localScale = new Vector3(size, size, size);
     }
 
     private void OnDisable()
