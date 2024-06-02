@@ -66,7 +66,11 @@ MeshRenderer:
   - {fileID: -9117483709511198939, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
   - {fileID: 1099619612952196417, guid: ceae1135730db644696bca44fd25c689, type: 3}
   - {fileID: 2045447248349477837, guid: ceae1135730db644696bca44fd25c689, type: 3}
-  - {fileID: -9035303427466704066, guid: ceae1135730db644696bca44fd25c689, type: 3}
+  - {fileID: -2588933649015344934, guid: ceae1135730db644696bca44fd25c689, type: 3}
+  - {fileID: 2100000, guid: 02432671521dd004a9e73821add00be6, type: 2}
+  - {fileID: -1242230322862417841, guid: ceae1135730db644696bca44fd25c689, type: 3}
+  - {fileID: 5061544093273009790, guid: ceae1135730db644696bca44fd25c689, type: 3}
+  - {fileID: -2653651044934150266, guid: b5e16e47147b59b449ba4720f1ec6698, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,6 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31992688576df1f4abf3ba82feba3d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialHealth: 500
   hitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
     type: 3}

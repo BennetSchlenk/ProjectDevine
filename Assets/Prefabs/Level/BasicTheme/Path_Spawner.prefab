@@ -65,7 +65,7 @@ MeshRenderer:
   - {fileID: -9117483709511198939, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
   - {fileID: 1099619612952196417, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
   - {fileID: 2045447248349477837, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
-  - {fileID: 6050101084907786239, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
+  - {fileID: -1070587001286095999, guid: 9a57fd5364c7997478970447dc3f0ee2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,8 +99,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f264f7e93431554ea4d6e483d4ea227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1274669514275036209, guid: 247a6efcd78209643a4bec97e093061d,
-    type: 3}
-  timeBetweenSpawns: 1.5
-  maxSpawnCount: 30
   parentObjectForEnemies: {fileID: 4318194143665294682}
