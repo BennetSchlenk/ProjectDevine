@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour, IDamagable
             if (damageData.Damage > 0)
             {
                 float damageTaken = HandleHealthDamage(damageData.Damage);
-                Debug.Log($"<b>Enemy</b><color=#E60000> DirectDamage {damageTaken} {damageData.DamageType.DamageTypeName.ToUpper()} damage</color>");
+                //Debug.Log($"<b>Enemy</b><color=#E60000> DirectDamage {damageTaken} {damageData.DamageType.DamageTypeName.ToUpper()} damage</color>");
                 if (xpGainer != null)
                 {
                     xpGainer.OnXPGain(damageTaken);
@@ -156,7 +156,7 @@ public class Enemy : MonoBehaviour, IDamagable
                 {
                     float damageTaken = HandleHealthDamage(details.Value.Data.DamageOverTime);
 
-                    Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
+                    //Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
 
                     if (damageTaken > 0)
                     {
@@ -295,7 +295,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void CheckForEnemies()
     {
-        Debug.Log($"CheckForEnemies()");
+        //Debug.Log($"CheckForEnemies()");
 
         if (infectiousDamageTypes.Count > 0)
         {
@@ -308,7 +308,7 @@ public class Enemy : MonoBehaviour, IDamagable
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, raycastLength, enemyLayer))
             {
-                Debug.Log($"CheckForEnemies() - Physics.Raycast HIT");
+                //Debug.Log($"CheckForEnemies() - Physics.Raycast HIT");
 
                 if (!hit.collider.gameObject.TryGetComponent(out Enemy enemy))
                 {
@@ -317,14 +317,14 @@ public class Enemy : MonoBehaviour, IDamagable
 
                 if (enemy != null)
                 {
-                    Debug.Log($"CheckForEnemies() - enemy {enemy.gameObject.name}");
+                    //Debug.Log($"CheckForEnemies() - enemy {enemy.gameObject.name}");
 
                     List<DamageData> damageDataList = new();
 
                     foreach (var infectiousDamage in infectiousDamageTypes)
                     {
                         damageDataList.Add(infectiousDamage.Value);
-                        Debug.Log($"Enemy infecting other enemy with Damage: {infectiousDamage.Key.DamageTypeName}");
+                        //Debug.Log($"Enemy infecting other enemy with Damage: {infectiousDamage.Key.DamageTypeName}");
                     }
 
                     // passing in the list of infecting damages and NULL as no points should be given for these damages
@@ -365,7 +365,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void DestroySelf(bool shouldGetEssencePoints)
     {
         #region Enemy Health Bar Integration
-        Debug.Log("Enemy Destroyed");
+        //Debug.Log("Enemy Destroyed");
         OnEnemyDied.Invoke(this);
 
         #endregion
