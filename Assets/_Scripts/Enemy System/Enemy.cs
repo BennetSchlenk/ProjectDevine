@@ -139,6 +139,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void HandleDamageOverTime()
     {
         List<DamageTypeSO> expiredDamageTypes = new();
+        List<DamageTypeSO> dealtDamageList = new();
 
         foreach (var details in activeDamageOverTime)
         {
@@ -153,13 +154,15 @@ public class Enemy : MonoBehaviour, IDamagable
             {
                 if (timeSinceLastTick >= details.Value.Data.DamageOverTimeTickRate)
                 {
-                    
                     float damageTaken = HandleHealthDamage(details.Value.Data.DamageOverTime);
 
                     Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
 
                     if (damageTaken > 0)
                     {
+                        // add to modify this list
+                        dealtDamageList.Add(details.Key);
+
                         // add effect if not yet added
                         if (details.Key.DamageOverTimeEffect != null 
                             && !activeVFXObjects.ContainsKey(details.Key))
@@ -181,6 +184,17 @@ public class Enemy : MonoBehaviour, IDamagable
                 }
             }
         }
+
+        // update last tick for every damagetype what dealt damage
+        foreach (var dealtDamage in dealtDamageList)
+        {
+            activeDamageOverTime[dealtDamage] =
+                        (activeDamageOverTime[dealtDamage].Data,
+                        Time.time,
+                        activeDamageOverTime[dealtDamage].StopTime,
+                        activeDamageOverTime[dealtDamage].XpGainder);
+        }
+
 
         foreach (var item in expiredDamageTypes)
         {
