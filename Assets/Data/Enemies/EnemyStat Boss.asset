@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f78a07ff73b39f4e937aced9d33c8ae, type: 3}
-  m_Name: EnemyStat FastEnemy
+  m_Name: EnemyStat Boss
   m_EditorClassIdentifier: 
-  initialLife: 400
+  initialLife: 3000
   initialArmor: 0
-  movementSpeed: 4
-  pointsForPlayerIfKilled: 5
-  coreDamage: 5
+  movementSpeed: 1.5
+  pointsForPlayerIfKilled: 100
+  coreDamage: 100
