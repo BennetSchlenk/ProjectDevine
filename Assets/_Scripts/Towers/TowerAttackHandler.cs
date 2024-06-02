@@ -10,6 +10,11 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     public event Action<float> OnXPChange = delegate { };
 
     [SerializeField] private AttackTargetType attackTargetType;
+    public AttackTargetType AttackTargetType
+    {
+        get { return attackTargetType; }
+        set { attackTargetType = value; }
+    }
     [SerializeField] private GameObject projectile;
     [SerializeField] private List<ProjectileSpawnPoint> projectileSpawnPoints;
 

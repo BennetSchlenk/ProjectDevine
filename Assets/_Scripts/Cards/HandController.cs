@@ -150,7 +150,6 @@ public class HandController : MonoBehaviour
 
     private void OnCardNotUsed(Card card)
     {
-        audioManager.PlaySFXOneShotAtPosition("cardPlaceWrong", transform.position);
         SelectCard(card, false);
         GlobalData.OnCardDragged?.Invoke(null);
     }

@@ -15,12 +15,20 @@ public class TowerInfoPanel : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI currentLevelText;
     [SerializeField] private TMPro.TextMeshProUGUI nextLevelText;
     [SerializeField] private Image levelProgressBar;
+    [SerializeField] private Button attackTargetClosestButton;
+    [SerializeField] private Button attackTargetFarthestButton;
+    [SerializeField] private Button attackTargetWeakestButton;
+    [SerializeField] private Button attackTargetStrongestButton;
 
+    [SerializeField] private Sprite attackTypeSelectedImage;
+    [SerializeField] private Sprite attackTypeUnselectedImage;
     [SerializeField] private GameObject modifierPrefab;
     [SerializeField] private GameObject statPrefab;
     [SerializeField] private GameObject lockedPlaceholderPrefab;
     [SerializeField] private Sprite lockedIcon;
     [SerializeField] private Sprite unlockedIcon;
+    [SerializeField] private Sprite lockedFrame;
+    [SerializeField] private Sprite unlockedFrame;
     [SerializeField] private Sprite rangeIcon;
     [SerializeField] private Sprite projectileSpeedIcon;
     [SerializeField] private Sprite fireRateIcon;
@@ -28,6 +36,22 @@ public class TowerInfoPanel : MonoBehaviour
     [SerializeField] private Sprite fireCooldownIcon;
 
     private Tower tower;
+
+    private void Start()
+    {
+        attackTargetClosestButton.onClick.AddListener(SetClosest);
+        attackTargetFarthestButton.onClick.AddListener(SetFarthest);
+        attackTargetWeakestButton.onClick.AddListener(SetWeakest);
+        attackTargetStrongestButton.onClick.AddListener(SetStrongest);
+    }
+
+    private void OnDestroy()
+    {
+        attackTargetClosestButton.onClick.RemoveListener(SetClosest);
+        attackTargetFarthestButton.onClick.RemoveListener(SetFarthest);
+        attackTargetWeakestButton.onClick.RemoveListener(SetWeakest);
+        attackTargetStrongestButton.onClick.RemoveListener(SetStrongest);
+    }
 
     public void SetTower(Tower _tower)
     {
@@ -65,7 +89,10 @@ public class TowerInfoPanel : MonoBehaviour
         for (int i = 0; i < _tower.MaxTowerTier; i++)
         {
             GameObject placeholderGO = Instantiate(lockedPlaceholderPrefab, lockedPlaceholdersContainer);
-            placeholderGO.GetComponent<Image>().sprite = i < _tower.MaxTowerModifiers ? unlockedIcon : lockedIcon;
+            LockedStatusPanel lockedStatusPanel = placeholderGO.GetComponent<LockedStatusPanel>();
+            var icon = i < _tower.MaxTowerModifiers ? unlockedIcon : lockedIcon;
+            var frame = i < _tower.MaxTowerModifiers ? unlockedFrame : lockedFrame;
+            lockedStatusPanel.SetStatus(frame, icon);
         }
 
         // Clear the stats container
@@ -73,6 +100,8 @@ public class TowerInfoPanel : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        UpdateButtonImages();
 
         // Show the tower stats in the stats container
         GameObject rangeStatGO = Instantiate(statPrefab, statsContainer);
@@ -105,8 +134,69 @@ public class TowerInfoPanel : MonoBehaviour
 
     }
 
+    private void SetClosest()
+    {
+        ChangeAttackType(0);
+    }
+
+    private void SetFarthest()
+    {
+        ChangeAttackType(1);
+    }
+
+    private void SetWeakest()
+    {
+        ChangeAttackType(3);
+    }
+
+    private void SetStrongest()
+    {
+        ChangeAttackType(2);
+    }
+
+    public void ChangeAttackType(int type)
+    {
+        tower.AttackHandler.AttackTargetType = (AttackTargetType)(TowerAttackType)type;
+
+        Refresh();
+
+        Debug.Log("ssssssssssssssssssssssssssssssss");
+        StartCoroutine(OpenAfterDelay());
+    }
+
+    private IEnumerator OpenAfterDelay()
+    {
+        yield return new WaitForSeconds(0.3f);
+        gameObject.SetActive(true);
+    }
+
     public void Refresh()
     {
         SetTower(tower);
+    }
+
+    private void UpdateButtonImages()
+    {
+        // Reset all buttons to unselected
+        attackTargetClosestButton.image.sprite = attackTypeUnselectedImage;
+        attackTargetFarthestButton.image.sprite = attackTypeUnselectedImage;
+        attackTargetWeakestButton.image.sprite = attackTypeUnselectedImage;
+        attackTargetStrongestButton.image.sprite = attackTypeUnselectedImage;
+        // Set the selected button to selected
+        switch (tower.AttackHandler.AttackTargetType)
+        {
+            case AttackTargetType.Closest:
+                attackTargetClosestButton.image.sprite = attackTypeSelectedImage;
+                break;
+            case AttackTargetType.Farthest:
+                attackTargetFarthestButton.image.sprite = attackTypeSelectedImage;
+                break;
+            case AttackTargetType.Weakest:
+                attackTargetWeakestButton.image.sprite = attackTypeSelectedImage;
+                break;
+            case AttackTargetType.Strongest:
+                attackTargetStrongestButton.image.sprite = attackTypeSelectedImage;
+                break;
+        }
     }
 }
