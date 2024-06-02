@@ -713,6 +713,7 @@ MonoBehaviour:
   cardName: {fileID: 9149766614419614930}
   cardDescription: {fileID: 4419873019751861575}
   cardCost: {fileID: 8840762694441345115}
+  cardFrameImage: {fileID: 6422558567872362941}
   cardImage: {fileID: 8823644240063879300}
 --- !u!114 &5765715733842261421
 MonoBehaviour:
