@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,7 +90,14 @@ public class EnemySpawner : MonoBehaviour
                         _waypointsContainer.transform.rotation, // Spawn the enemy facing the player
                         parentTransform);
 
-            enemyGameObject.GetComponent<Enemy>().Init(waypoints);
+            var enemy = enemyGameObject.GetComponent<Enemy>();
+            enemy.Init(waypoints);
+
+            #region Enemy Health Bar Integration
+
+            GlobalData.OnEnemySpawned?.Invoke(enemy);
+
+            #endregion
         }
     }
 
