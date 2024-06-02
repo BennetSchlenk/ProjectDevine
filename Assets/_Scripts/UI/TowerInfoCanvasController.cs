@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TowerInfoCanvasController : MonoBehaviour
 {
@@ -46,15 +47,24 @@ public class TowerInfoCanvasController : MonoBehaviour
     {
         if (tower == null)
         {
-            //uiFollowGameObject.gameObject.SetActive(false);
-            towerInfoPanel.gameObject.SetActive(false);
-            return;
+           if (Time.time - towerInfoPanel.LastTimeButtonPressed < 0.5f)
+            {
+                towerInfoPanel.gameObject.SetActive(true);
+                towerInfoPanel.Refresh();
+                return;
+            } else
+            {
+                //uiFollowGameObject.gameObject.SetActive(false);
+                towerInfoPanel.gameObject.SetActive(false);
+                return;
+            }
+
         }
 
         //uiFollowGameObject.gameObject.SetActive(true);
         uiFollowGameObject.target = tower.gameObject;
         towerInfoPanel.gameObject.SetActive(true);
-        towerInfoPanel.SetTower(tower);
+        towerInfoPanel.SetTower(tower);        
     }
 
 }
