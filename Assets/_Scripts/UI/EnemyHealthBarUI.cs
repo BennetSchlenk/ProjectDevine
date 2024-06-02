@@ -63,7 +63,6 @@ public class EnemyHealthBarUI : MonoBehaviour
 
     private void OnHealthChange(float newHealth, float maxHealth)
     {
-        Debug.Log("Health changed: " + newHealth + " / " + maxHealth);
         healthBar.localScale = new Vector3(newHealth / maxHealth, 1, 1);
     }
 
