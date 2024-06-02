@@ -28,6 +28,7 @@ public class ObjectPlacer : MonoBehaviour
     private Action onPlacingSuccess;
     private Action onPlacingFail;
     private bool lastIsClick;
+    private AudioManager audioManager;
 
     #region Unity Callbacks
         
@@ -38,6 +39,8 @@ public class ObjectPlacer : MonoBehaviour
 
     private void Start()
     {
+        audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+
         if (testInitialCardData != null)
         {
             SetCardToUse(testInitialCardData);
@@ -102,6 +105,7 @@ public class ObjectPlacer : MonoBehaviour
                                     if (destroyObjectIfNotPlaced)
                                         StopPlacing(true);
                                     onPlacingFail?.Invoke();
+                                    PlayPlaceFailSFX(false);
                                 }
                             }
                             break;
@@ -124,6 +128,7 @@ public class ObjectPlacer : MonoBehaviour
                                     if (destroyObjectIfNotPlaced)
                                         StopPlacing(true);
                                     onPlacingFail?.Invoke();
+                                    PlayPlaceFailSFX(false);
                                 }
                             }
                             else
@@ -132,6 +137,7 @@ public class ObjectPlacer : MonoBehaviour
                                 if (destroyObjectIfNotPlaced)
                                     StopPlacing(true);
                                 onPlacingFail?.Invoke();
+                                PlayPlaceFailSFX(false);
                             }
                             break;
                     }
@@ -143,6 +149,7 @@ public class ObjectPlacer : MonoBehaviour
                 {
                     StopPlacing(true);
                     onPlacingFail?.Invoke();
+                    PlayPlaceFailSFX(true);
                 }
             }
         }
@@ -276,6 +283,7 @@ public class ObjectPlacer : MonoBehaviour
         if (node == null)
         {
             onPlacingFail?.Invoke();
+            PlayPlaceFailSFX(false);
             return false;
         }
 
@@ -301,6 +309,7 @@ public class ObjectPlacer : MonoBehaviour
                 StopPlacing(true);
 
             onPlacingFail?.Invoke();
+            PlayPlaceFailSFX(false);
             return false;
         }
     }
@@ -331,5 +340,12 @@ public class ObjectPlacer : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void PlayPlaceFailSFX(bool isCancelled)
+    {
+        string sfxName = isCancelled ? "cardClick" : "cardPlaceWrong";
+        audioManager.PlaySFXOneShotAtPosition(sfxName, transform.position);
+
     }
 }

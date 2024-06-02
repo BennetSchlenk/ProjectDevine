@@ -18,6 +18,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
     [Tooltip("The container for the tower model. The tower model will be instantiated here.")]
     [SerializeField] private Transform towerModelContainer;
     [SerializeField] private TowerAttackHandler attackHandler;
+    public TowerAttackHandler AttackHandler => attackHandler;
 
     [Header("Debug")]
     [SerializeField] private Color debugColor;
