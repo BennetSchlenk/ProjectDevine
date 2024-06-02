@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 1
   Name: Fire Modifier 2
   Description: 
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: a2e89131503e04c4eb001db17981ee8a, type: 3}
   Type: 1
   Cost: 0
   TowerTier: 1

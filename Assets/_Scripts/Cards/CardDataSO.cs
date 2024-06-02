@@ -27,6 +27,7 @@ public class CardDataSO : ScriptableObject
     public GameObject TowerPrefab => TowerInfo.TowerModels[TowerTier - 1];
 
     [Header("DamageData Settings")]
+    [Tooltip("The damage data for modifier cards. If it is a tower, this will be the default damage.")]
     public DamageData DamageData;
 }
 

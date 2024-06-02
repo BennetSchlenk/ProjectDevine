@@ -39,9 +39,14 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     /// <param name="towerData"></param>
     /// <param name="damageDataList"></param>
     /// <returns>Enemy GameObject</returns>
-    public GameObject Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList, List<GameObject> enemiesToIgnoreIfPossible, float range, CardDataSO cardDataSO)
+    public GameObject Attack(TowerRuntimeStats towerData, List<DamageData> damageDataList, DamageData defaultDamageData, List<GameObject> enemiesToIgnoreIfPossible, float range, CardDataSO cardDataSO)
     {
         currentCardDataSO = cardDataSO;
+
+        List<DamageData> allDamageData = new();
+        allDamageData.Add(defaultDamageData);
+        foreach (DamageData damageData in damageDataList)
+            allDamageData.Add(damageData);
 
         var enemy = GetAttackTargetWithinRange(attackTargetType, towerData.Range, enemiesToIgnoreIfPossible);
         if (enemy == null)
@@ -58,7 +63,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
                 {
                     OnTargetChange.Invoke(enemy.transform);
                     SetAllFaceTargets(enemy);
-                    return SpawnAndConfigureProjectile(towerData, damageDataList, enemy, damagable, cardDataSO);
+                    return SpawnAndConfigureProjectile(towerData, allDamageData, enemy, damagable, cardDataSO);
                 }
             }
             else

@@ -110,7 +110,7 @@ public class TowerInfoPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        UpdateButtonImages();
+        
 
         // Show the tower stats in the stats container
         GameObject rangeStatGO = Instantiate(statPrefab, statsContainer);
@@ -127,6 +127,8 @@ public class TowerInfoPanel : MonoBehaviour
 
         GameObject fireCooldownStatGO = Instantiate(statPrefab, statsContainer);
         fireCooldownStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.FireCooldown, fireCooldownIcon);
+
+        UpdateButtonImages();
 
         // Show level stats
         currentLevelText.text = _tower.TowerRuntimeStats.Level.ToString();
