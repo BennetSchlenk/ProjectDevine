@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private Collider baseCollider;
 
+    [Header("VFX")]
+    [SerializeField] private Transform VFXSpawnPoint;
+
     public float Health { get; set; }
     public float Armor { get; set; }
     public float MovementSpeed { get { return classAndStats.MovementSpeed * speedModifier; } }
@@ -52,6 +55,11 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             baseCollider = GetComponent<Collider>();
             if (baseCollider == null) baseCollider = GetComponentInChildren<Collider>();            
+        }
+
+        if (VFXSpawnPoint == null)
+        {
+            VFXSpawnPoint = transform;
         }
     }
 
