@@ -32,6 +32,14 @@ public class Enemy : MonoBehaviour, IDamagable
     AudioManager audioManager;
     PlayerDataManager playerDataManager;
 
+    #region Enemy Health Bar Integration
+
+    public event Action<float, float> OnHealthChanged = delegate { };
+    public event Action<float, float> OnArmorChanged = delegate { };
+    public event Action<Enemy> OnEnemyDied = delegate { };
+
+    #endregion
+
     #region Unity Callbacks
 
     private void Awake()
@@ -209,9 +217,14 @@ public class Enemy : MonoBehaviour, IDamagable
             if (armorDamageTaken > 0f)
             {
                 // Handle the armor damage taken, animations, effects, etc
-                        
+
+                #region Enemy Health Bar Integration
+
+                OnArmorChanged.Invoke(Armor, classAndStats.InitialArmor);
+
+                #endregion
             }
-            
+
         }
 
         return armorDamageTaken;
@@ -232,6 +245,12 @@ public class Enemy : MonoBehaviour, IDamagable
         if (reducedDamageBasedOnArmor > 0)
         {
             newHealth = Mathf.Clamp(Health - reducedDamageBasedOnArmor, 0f, Health);
+
+            #region Enemy Health Bar Integration
+
+            OnHealthChanged.Invoke(newHealth, classAndStats.InitialLife);
+
+            #endregion
 
             damageTaken = Health - newHealth;
             Health = newHealth;
@@ -318,10 +337,17 @@ public class Enemy : MonoBehaviour, IDamagable
     private void DestroySelf()
     {
         DestroySelf(true);
+
     }
 
     private void DestroySelf(bool shouldGetEssencePoints)
     {
+        #region Enemy Health Bar Integration
+        Debug.Log("Enemy Destroyed");
+        OnEnemyDied.Invoke(this);
+
+        #endregion
+
         if (shouldGetEssencePoints)
         {
             playerDataManager.AddEssence(classAndStats.PointsForPlayerIfKilled);

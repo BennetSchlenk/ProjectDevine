@@ -13,4 +13,7 @@ public static class GlobalData
     public static Action<CardDataSO> OnCardDragged;
     public static Action<Tower> OnTowerSelected;
     public static HandController HandController;
+
+    // Enemy Health Bar Integration
+    public static Action<Enemy> OnEnemySpawned;
 }
