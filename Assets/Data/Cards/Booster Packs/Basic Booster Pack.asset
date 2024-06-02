@@ -16,7 +16,7 @@ MonoBehaviour:
   PackName: Basic
   PackDescription: Basic Booster Pack
   PackCost: 20
-  PackIcon: {fileID: 21300000, guid: 054119273c3a341439522c0c28beb6ec, type: 3}
+  PackIcon: {fileID: 21300000, guid: 7446babf6cfcfc84699f81a7d3d8088e, type: 3}
   cardLists:
   - cardListName: Towers
     cardsProbability:

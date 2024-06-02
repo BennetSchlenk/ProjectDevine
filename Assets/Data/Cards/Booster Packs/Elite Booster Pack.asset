@@ -16,7 +16,7 @@ MonoBehaviour:
   PackName: Elite
   PackDescription: Elite Booster Pack
   PackCost: 60
-  PackIcon: {fileID: 21300000, guid: 9b670827b8f39b943a1136335ce5dfe8, type: 3}
+  PackIcon: {fileID: 21300000, guid: 51529b6342d02a94e8d2bd5079d1f0b0, type: 3}
   cardLists:
   - cardListName: Towers
     cardsProbability:

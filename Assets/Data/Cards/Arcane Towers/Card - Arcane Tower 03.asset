@@ -15,17 +15,18 @@ MonoBehaviour:
   Id: 3
   Name: Arcane Tower 3
   Description: Basic test tower
-  Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: a8cc284bd6c26634fa1c4af8eb56a684, type: 3}
   Type: 0
   Cost: 60
   TowerTier: 3
   TowerInfo: {fileID: 11400000, guid: aff4745fbf0f86c44a534447d9aac7b7, type: 2}
   TowerBaseStats: {fileID: 11400000, guid: 01202612eb282044cbd013deae1f95b8, type: 2}
   TowerAttackType: 0
+  TowerAttackArea: 0
   NextTierData: {fileID: 0}
   DamageData:
-    DamageType: {fileID: 0}
-    damage: 0
+    DamageType: {fileID: 11400000, guid: f41238c04cf512e4fa1e3b8f2853c6e1, type: 2}
+    damage: 1
     damageOverTime: 0
     damageOverTimeDuration: 0
     damageOverTimeTickRate: 0

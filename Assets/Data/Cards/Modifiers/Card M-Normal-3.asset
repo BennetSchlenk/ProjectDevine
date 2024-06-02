@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 1
   Name: Normal Modifier
   Description: 
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: e5a0ffcb0f6c7be4f9120c54fbc1cba6, type: 3}
   Type: 1
   Cost: 0
   TowerTier: 1
