@@ -6,12 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public class EnemySpawner : MonoBehaviour
-{
-    //[Header("For Testing")]
-    //[SerializeField] private GameObject enemyPrefab;
-    //[SerializeField] private float timeBetweenSpawns = 2f;
-    //[SerializeField] private int maxSpawnCount = 20;
-
+{    
     [SerializeField, Space] private Transform parentObjectForEnemies;
     
     private WaypointsContainer _waypointsContainer;
