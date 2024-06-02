@@ -32,6 +32,16 @@ public class DamageData: IDamageData
         DamageType = damageType;
     }
 
+    public DamageData(DamageTypeSO damageType, float _damage, float _damageOverTime, float _damageOverTimeDuration, float _damageOverTimeTickRate, float level, float multiplierPerLevel)
+    {
+        DamageType = damageType;
+        // Calculate the damage based on the level and the multiplier per level
+        damage = _damage + (level - 1) * multiplierPerLevel;
+        damageOverTime = _damageOverTime + (level - 1) * multiplierPerLevel;
+        damageOverTimeDuration = _damageOverTimeDuration;
+        damageOverTimeTickRate = _damageOverTimeTickRate;
+    }
+
     public void ApplyUpgrade(DamageDataUpgrade upgrade)
     {
         if (upgrade.DamageType != DamageType)

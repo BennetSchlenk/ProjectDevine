@@ -22,6 +22,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     private int currentProjectileSpawnPointIndex = 0;
     private List<FaceTarget> faceTargets = new();
     private CardDataSO currentCardDataSO;
+    private float levelMultiplier = 1.05f;
 
     private void Start()
     {
@@ -43,8 +44,11 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     {
         currentCardDataSO = cardDataSO;
 
+        DamageData newDamageData = new DamageData(cardDataSO.DamageData.DamageType, defaultDamageData.Damage, defaultDamageData.DamageOverTime, defaultDamageData.DamageOverTimeDuration, defaultDamageData.DamageOverTimeTickRate, towerData.Level, levelMultiplier);
         List<DamageData> allDamageData = new();
-        allDamageData.Add(defaultDamageData);
+
+
+        allDamageData.Add(newDamageData);
         foreach (DamageData damageData in damageDataList)
             allDamageData.Add(damageData);
 
