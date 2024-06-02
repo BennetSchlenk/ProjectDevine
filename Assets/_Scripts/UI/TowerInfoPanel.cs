@@ -36,6 +36,7 @@ public class TowerInfoPanel : MonoBehaviour
     [SerializeField] private Sprite fireCooldownIcon;
 
     private Tower tower;
+    public float LastTimeButtonPressed;
 
     private void Start()
     {
@@ -55,8 +56,16 @@ public class TowerInfoPanel : MonoBehaviour
 
     public void SetTower(Tower _tower)
     {
+
         if (_tower == null)
         {
+            Debug.Log(Time.time - LastTimeButtonPressed);
+
+            if (Time.time - LastTimeButtonPressed <= 0.5f)
+            {
+                Refresh();
+            }
+
             gameObject.SetActive(false);
             return;
         }
@@ -157,17 +166,9 @@ public class TowerInfoPanel : MonoBehaviour
     public void ChangeAttackType(int type)
     {
         tower.AttackHandler.AttackTargetType = (AttackTargetType)(TowerAttackType)type;
+        LastTimeButtonPressed = Time.time;
 
         Refresh();
-
-        Debug.Log("ssssssssssssssssssssssssssssssss");
-        StartCoroutine(OpenAfterDelay());
-    }
-
-    private IEnumerator OpenAfterDelay()
-    {
-        yield return new WaitForSeconds(0.3f);
-        gameObject.SetActive(true);
     }
 
     public void Refresh()
