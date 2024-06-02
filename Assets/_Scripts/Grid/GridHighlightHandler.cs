@@ -103,7 +103,7 @@ public class GridHighlightHandler : MonoBehaviour
                     else
                     {
                         node.HighlightCell.SetColor(unavailableColor);
-                        node.HighlightCell.gameObject.SetActive(true);
+                        node.HighlightCell.gameObject.SetActive(false);
                     }
                 } else if (node.Walkable)
                 {
@@ -111,7 +111,7 @@ public class GridHighlightHandler : MonoBehaviour
                 } else
                 {
                     node.HighlightCell.SetColor(unavailableColor);
-                    node.HighlightCell.gameObject.SetActive(true);
+                    node.HighlightCell.gameObject.SetActive(false);
                 }
             }
         }
