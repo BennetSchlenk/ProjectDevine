@@ -2099,7 +2099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26634675e6fe3644ac632704466a93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
+  maxHP: 500
   currHP: 0
   startAmountEssence: 100
   currEssence: 0
