@@ -925,6 +925,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[0].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 46286588a70cd294298e0e3bc7f0a1d0, type: 3}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[0].Name
+      value: medieval-tavern-ambience
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[1].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: aed0d0b2b956829448183a3bc500432f, type: 3}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[1].Name
+      value: ding for testing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[2].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 93c4ea50aea8ecf499b1055326655f96, type: 3}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[2].Name
+      value: step for testing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[2].Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[0].Volume
+      value: 0.802
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[1].Volume
+      value: 0.802
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978620010405877874, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: musics.Array.data[2].Volume
+      value: 0.802
+      objectReference: {fileID: 0}
     - target: {fileID: 5448556691543264973, guid: a924ba9c1c93f3e4d960d6c85febf345,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -974,6 +1029,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408671326978215748, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: maxCapacity
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408671326978215748, guid: a924ba9c1c93f3e4d960d6c85febf345,
+        type: 3}
+      propertyPath: defaultCapacity
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8751939604329772144, guid: a924ba9c1c93f3e4d960d6c85febf345,
         type: 3}
