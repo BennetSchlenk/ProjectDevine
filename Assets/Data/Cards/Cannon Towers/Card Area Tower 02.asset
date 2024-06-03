@@ -15,6 +15,7 @@ MonoBehaviour:
   Id: 5
   Name: Area Tower - 2
   Description: Basic test tower
+  CardFrame: {fileID: 21300000, guid: 54cc2a33e6d2b6646bd62436fd43d191, type: 3}
   Icon: {fileID: 21300000, guid: 6464723586e29454cb05b7f42ce7dba0, type: 3}
   Type: 0
   Cost: 15

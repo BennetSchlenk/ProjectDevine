@@ -196,7 +196,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
             default:
                 Debug.LogError("Attack target type not found.");
                 return null;
-                break;
+                break; // TODO: Implement First and Last
         }
 
         // If there are no potential enemies, return null

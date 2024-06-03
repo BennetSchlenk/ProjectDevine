@@ -14,6 +14,9 @@ public class ObjectPlacer : MonoBehaviour
     [Header("Towers Settings")]
     [SerializeField] private GameObject towerRootPrefab;
     [SerializeField] private GameObject modifierPlaceholderPrefab;
+    [SerializeField] private List<TowerIDAndPlaceholder> towerIDAndPlaceholders;
+    [SerializeField] private Transform placeholdersContainer;
+
 
     private CardDataSO cardToUse;
     private GameObject instantiatedObject;
@@ -23,7 +26,10 @@ public class ObjectPlacer : MonoBehaviour
     private Transform towersContainerTransform;
     private ISelectable lastSelected;
     private bool placementCalledFromClick; // Used to differentiate between click and drag placement
-    
+    private GameObject currentPlaceholder;
+    private GameObject lastTowerHovered;
+
+
     // Parameters passed from the card to the object placer
     private Action onPlacingSuccess;
     private Action onPlacingFail;
@@ -59,6 +65,14 @@ public class ObjectPlacer : MonoBehaviour
             towersContainerTransform = new GameObject("Towers").transform;
             towersContainerTransform.SetParent(grid.transform);
         }
+    
+        // Spawn the tower placeholders
+        foreach (var towerIDAndPlaceholder in towerIDAndPlaceholders)
+        {
+            var placeholder = Instantiate(towerIDAndPlaceholder.Placeholder, placeholdersContainer);
+            placeholder.SetActive(false);
+            towerIDAndPlaceholder.InstantiatedPlaceholder = placeholder;
+        }
     }
 
     private void Update()
@@ -73,7 +87,26 @@ public class ObjectPlacer : MonoBehaviour
             {
                 // Snap object to grid
                 if (node != null)
+                {
                     instantiatedObject.transform.position = node.Position;
+                    if (currentPlaceholder != null)
+                    {
+                        currentPlaceholder.transform.position = node.Position;
+
+                        EnableLastHoveredTowerRenderers();
+
+                        if (node.TowerObj != null)
+                        {
+                            
+
+                            // If there is a tower in that node, set it as the last tower hovered and hide its model's MeshRenderer
+                            lastTowerHovered = node.TowerObj;
+                            var renderers = lastTowerHovered.GetComponentsInChildren<MeshRenderer>();
+                            foreach (var renderer in renderers)
+                                renderer.enabled = false;
+                        }
+                    }
+                }
 
                 // Try to place object in node
                 if (GetWasPlaceButtonTriggered() && node != null)
@@ -185,6 +218,18 @@ public class ObjectPlacer : MonoBehaviour
         }
     }
 
+    private void EnableLastHoveredTowerRenderers()
+    {
+        if (lastTowerHovered != null)
+        {
+            var lastRenderers = lastTowerHovered.GetComponentsInChildren<MeshRenderer>();
+            foreach (var renderer in lastRenderers)
+                renderer.enabled = true;
+
+            lastTowerHovered = null;
+        }
+    }
+
     private bool GetWasPlaceButtonTriggered()
     {
         if (placementCalledFromClick)
@@ -255,6 +300,15 @@ public class ObjectPlacer : MonoBehaviour
                 // Call OnPlacing after SetUp so the tower model is already set up and the range is updated
                 instantiatedObjectPlaceable.OnPlacing();
 
+                // Set the placeholder to the instantiated object
+                currentPlaceholder = towerIDAndPlaceholders.Find(x => x.CardDataSO == cardData).InstantiatedPlaceholder;
+                // If the placeholder is not null, deactivate the root tower it and activate placholder
+                if (currentPlaceholder != null)
+                {
+                    currentPlaceholder.SetActive(true);
+                    instantiatedObject.SetActive(false);
+                }
+
                 break;
             case CardType.Modifier:
                 instantiatedObject = Instantiate(modifierPlaceholderPrefab);
@@ -276,6 +330,12 @@ public class ObjectPlacer : MonoBehaviour
 
         if (instantiatedObjectPlaceable != null)
             instantiatedObjectPlaceable = null;
+
+        if (currentPlaceholder != null)
+        {
+            currentPlaceholder.SetActive(false);
+            currentPlaceholder = null;
+        }
     }
 
     private bool TryPlaceTowerInEmptyNode(GridNode node)
@@ -298,6 +358,7 @@ public class ObjectPlacer : MonoBehaviour
             node.Buildable = false;
             node.TowerObj = instantiatedObject;
             instantiatedObject.transform.SetParent(towersContainerTransform);
+            instantiatedObject.SetActive(true);
             StopPlacing();
             onPlacingSuccess?.Invoke();
             return true;
@@ -348,4 +409,12 @@ public class ObjectPlacer : MonoBehaviour
         audioManager.PlaySFXOneShotAtPosition(sfxName, transform.position);
 
     }
+}
+
+[System.Serializable]
+public class TowerIDAndPlaceholder
+{
+    public CardDataSO CardDataSO;
+    public GameObject Placeholder;
+    public GameObject InstantiatedPlaceholder;
 }

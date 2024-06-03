@@ -29,6 +29,7 @@ public class TowerInfoPanel : MonoBehaviour
     [SerializeField] private Sprite unlockedIcon;
     [SerializeField] private Sprite lockedFrame;
     [SerializeField] private Sprite unlockedFrame;
+    [SerializeField] private Sprite baseDamageIcon;
     [SerializeField] private Sprite rangeIcon;
     [SerializeField] private Sprite projectileSpeedIcon;
     [SerializeField] private Sprite fireRateIcon;
@@ -113,6 +114,9 @@ public class TowerInfoPanel : MonoBehaviour
         
 
         // Show the tower stats in the stats container
+        GameObject baseDamageStatGO = Instantiate(statPrefab, statsContainer);
+        baseDamageStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.DefaultDamageData.Damage, baseDamageIcon);
+
         GameObject rangeStatGO = Instantiate(statPrefab, statsContainer);
         rangeStatGO.GetComponent<ModifierAttributeUI>().SetUp(_tower.TowerRuntimeStats.Range, rangeIcon);
         

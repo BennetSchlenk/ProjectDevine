@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public float Health { get; set; }
     public float Armor { get; set; }
-    public float MovementSpeed { get { return classAndStats.MovementSpeed * speedModifier; } }
+    public float MovementSpeed { get { return classAndStats.MovementSpeed * speedModifier * difficultyMultiplier; } }
+    public float RotationSpeed { get { return classAndStats.MovementSpeed * speedModifier * difficultyMultiplier * 100f; } }
     public EnemyClassSO Stats { get {  return classAndStats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private Dictionary<DamageTypeSO, GameObject> activeVFXObjects = new();
 
     private float speedModifier = 1f;
+    private float difficultyMultiplier = 1f;
 
     //cached vars
     AudioManager audioManager;
@@ -47,8 +49,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Awake()
     {
-        Health = classAndStats.InitialLife;
-        Armor = classAndStats.InitialArmor;
+        Health = classAndStats.InitialLife * difficultyMultiplier;
+        Armor = classAndStats.InitialArmor * difficultyMultiplier;
         MovementController = GetComponent<EnemyMovementController>();
 
         if (baseCollider == null)
@@ -61,6 +63,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             VFXSpawnPoint = transform;
         }
+
     }
 
     private void Start()
@@ -82,11 +85,11 @@ public class Enemy : MonoBehaviour, IDamagable
 
     #endregion
 
-    public void Init(List<Vector3> waypoints)
+    public void Init(List<Vector3> waypoints, float difficultyMultiplier)
     {        
+        this.difficultyMultiplier = difficultyMultiplier;
         MovementController.StartMoving(waypoints);
     }
-
 
     public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
     {
@@ -97,7 +100,7 @@ public class Enemy : MonoBehaviour, IDamagable
             if (damageData.Damage > 0)
             {
                 float damageTaken = HandleHealthDamage(damageData.Damage);
-                Debug.Log($"<b>Enemy</b><color=#E60000> DirectDamage {damageTaken} {damageData.DamageType.DamageTypeName.ToUpper()} damage</color>");
+                //Debug.Log($"<b>Enemy</b><color=#E60000> DirectDamage {damageTaken} {damageData.DamageType.DamageTypeName.ToUpper()} damage</color>");
                 if (xpGainer != null)
                 {
                     xpGainer.OnXPGain(damageTaken);
@@ -139,6 +142,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void HandleDamageOverTime()
     {
         List<DamageTypeSO> expiredDamageTypes = new();
+        List<DamageTypeSO> dealtDamageList = new();
 
         foreach (var details in activeDamageOverTime)
         {
@@ -153,13 +157,15 @@ public class Enemy : MonoBehaviour, IDamagable
             {
                 if (timeSinceLastTick >= details.Value.Data.DamageOverTimeTickRate)
                 {
-                    
                     float damageTaken = HandleHealthDamage(details.Value.Data.DamageOverTime);
 
-                    Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
+                    //Debug.Log($"<b>Enemy</b><color=#FFB800> DOT Damage {damageTaken} {details.Key.DamageTypeName.ToUpper()} damage</color>");
 
                     if (damageTaken > 0)
                     {
+                        // add to modify this list
+                        dealtDamageList.Add(details.Key);
+
                         // add effect if not yet added
                         if (details.Key.DamageOverTimeEffect != null 
                             && !activeVFXObjects.ContainsKey(details.Key))
@@ -181,6 +187,17 @@ public class Enemy : MonoBehaviour, IDamagable
                 }
             }
         }
+
+        // update last tick for every damagetype what dealt damage
+        foreach (var dealtDamage in dealtDamageList)
+        {
+            activeDamageOverTime[dealtDamage] =
+                        (activeDamageOverTime[dealtDamage].Data,
+                        Time.time,
+                        activeDamageOverTime[dealtDamage].StopTime,
+                        activeDamageOverTime[dealtDamage].XpGainder);
+        }
+
 
         foreach (var item in expiredDamageTypes)
         {
@@ -228,7 +245,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
                 #region Enemy Health Bar Integration
 
-                OnArmorChanged.Invoke(Armor, classAndStats.InitialArmor);
+                OnArmorChanged.Invoke(Armor, classAndStats.InitialArmor * difficultyMultiplier);
 
                 #endregion
             }
@@ -256,7 +273,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
             #region Enemy Health Bar Integration
 
-            OnHealthChanged.Invoke(newHealth, classAndStats.InitialLife);
+            OnHealthChanged.Invoke(newHealth, classAndStats.InitialLife * difficultyMultiplier);
 
             #endregion
 
@@ -281,7 +298,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void CheckForEnemies()
     {
-        Debug.Log($"CheckForEnemies()");
+        //Debug.Log($"CheckForEnemies()");
 
         if (infectiousDamageTypes.Count > 0)
         {
@@ -294,7 +311,7 @@ public class Enemy : MonoBehaviour, IDamagable
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, raycastLength, enemyLayer))
             {
-                Debug.Log($"CheckForEnemies() - Physics.Raycast HIT");
+                //Debug.Log($"CheckForEnemies() - Physics.Raycast HIT");
 
                 if (!hit.collider.gameObject.TryGetComponent(out Enemy enemy))
                 {
@@ -303,14 +320,14 @@ public class Enemy : MonoBehaviour, IDamagable
 
                 if (enemy != null)
                 {
-                    Debug.Log($"CheckForEnemies() - enemy {enemy.gameObject.name}");
+                    //Debug.Log($"CheckForEnemies() - enemy {enemy.gameObject.name}");
 
                     List<DamageData> damageDataList = new();
 
                     foreach (var infectiousDamage in infectiousDamageTypes)
                     {
                         damageDataList.Add(infectiousDamage.Value);
-                        Debug.Log($"Enemy infecting other enemy with Damage: {infectiousDamage.Key.DamageTypeName}");
+                        //Debug.Log($"Enemy infecting other enemy with Damage: {infectiousDamage.Key.DamageTypeName}");
                     }
 
                     // passing in the list of infecting damages and NULL as no points should be given for these damages
@@ -351,7 +368,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void DestroySelf(bool shouldGetEssencePoints)
     {
         #region Enemy Health Bar Integration
-        Debug.Log("Enemy Destroyed");
+        //Debug.Log("Enemy Destroyed");
         OnEnemyDied.Invoke(this);
 
         #endregion

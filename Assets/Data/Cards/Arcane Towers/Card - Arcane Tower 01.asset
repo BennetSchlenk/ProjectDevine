@@ -15,6 +15,7 @@ MonoBehaviour:
   Id: 1
   Name: Arcane Tower 1
   Description: Basic test tower
+  CardFrame: {fileID: 21300000, guid: 54cc2a33e6d2b6646bd62436fd43d191, type: 3}
   Icon: {fileID: 21300000, guid: 6d1360831e15b8f40a6fbbba605d51f9, type: 3}
   Type: 0
   Cost: 15

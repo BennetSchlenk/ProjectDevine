@@ -56,7 +56,7 @@ public class EnemyMovementController : MonoBehaviour
         if (destinationDistance >= reachWaypointTolerance)
         {
             Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemy.Stats.RotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, enemy.RotationSpeed * Time.deltaTime);
             transform.Translate(Vector3.forward * enemy.MovementSpeed * Time.deltaTime);
         }
         else

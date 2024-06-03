@@ -9,6 +9,7 @@ public class CardDataSO : ScriptableObject
     public int Id;
     public string Name;
     public string Description;
+    public Sprite CardFrame;
     public Sprite Icon;
     public CardType Type;
     public int Cost;
