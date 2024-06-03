@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private float speedModifier = 1f;
     private float difficultyMultiplier = 1f;
+    private Tween hitTween;
 
     //cached vars
     AudioManager audioManager;
@@ -68,6 +70,8 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
+
+        hitTween = transform.DOScale(1.05f, 0.1f).SetEase(Ease.InOutCubic).SetLoops(2, LoopType.Yoyo).SetAutoKill(false);
     }
 
     private void Update()
@@ -281,7 +285,8 @@ public class Enemy : MonoBehaviour, IDamagable
             if (damageTaken > 0f)
             {
                 // Handle the damage taken, animations, effects, etc
-                
+                if (hitTween != null && !hitTween.IsPlaying())
+                    hitTween.Restart();
 
 
                 // trigger death of enemy

@@ -14,6 +14,7 @@ public class GridHighlightHandler : MonoBehaviour
     private int temporalMaxVFXs = 100; // TODO: Replace with pool
 
     private Grid grid;
+    private CardDataSO currentCardDataSO;
 
     #region Replace with pooling
 
@@ -34,6 +35,7 @@ public class GridHighlightHandler : MonoBehaviour
     {
         for(int i = 0; i < instantiatedVFXs.Count; i++)
         {
+            instantiatedVFXs[i].transform.position = new Vector3(0f, 1000f, 0f);
             instantiatedVFXs[i].SetActive(false);
         }
     }
@@ -61,6 +63,8 @@ public class GridHighlightHandler : MonoBehaviour
 
     public void HideCells()
     {
+        currentCardDataSO = null;
+
         // Iterate through all the grid nodes and hide the highlight cell
         for (int x = 0; x < grid.GridSize.x; x++)
         {
@@ -82,6 +86,9 @@ public class GridHighlightHandler : MonoBehaviour
         // - Not occupied by an enemy target point
         // - Not walkable
         // - Occupied by a tower that can be upgraded
+
+        if (currentCardDataSO == cardDataSO) return;
+        currentCardDataSO = cardDataSO;
 
         for (int x = 0; x < grid.GridSize.x; x++)
         {
@@ -121,8 +128,11 @@ public class GridHighlightHandler : MonoBehaviour
     }
 
     [ContextMenu("ShowCellsForModifierCards")]
-    public void ShowCellsForModifierCards()
+    public void ShowCellsForModifierCards(CardDataSO cardDataSO)
     {
+        if (currentCardDataSO == cardDataSO) return;
+        currentCardDataSO = cardDataSO;
+
         // Nodes that should be highlighted in green
         // - Tower has empty modifier slots
 
@@ -170,7 +180,7 @@ public class GridHighlightHandler : MonoBehaviour
                     ShowCellsForTowerPlacing(cardDataSO);
                     break;
                 case CardType.Modifier:
-                    ShowCellsForModifierCards();
+                    ShowCellsForModifierCards(cardDataSO);
                     break;
             }
         }

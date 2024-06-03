@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -8,7 +10,7 @@ public class Core : MonoBehaviour
     [SerializeField] GameObject hitEffect;
     private AudioManager audioManager;
     private PlayerDataManager playerDataManager;
-    
+    private Tween tween;
 
     #region Unity Callbacks
 
@@ -22,6 +24,7 @@ public class Core : MonoBehaviour
         audioManager = ServiceLocator.Instance.GetService<AudioManager>();
         playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
 
+        tween = transform.DOScale(1.1f, 0.05f).SetEase(Ease.InOutCubic).SetLoops(2, LoopType.Yoyo).SetAutoKill(false);
     }
 
     #endregion
@@ -40,7 +43,11 @@ public class Core : MonoBehaviour
 
             if (hitEffect != null )
             {
-                Instantiate(hitEffect, transform.position, Quaternion.identity);
+                Instantiate(hitEffect, transform.position, Quaternion.identity, transform);
+                if (tween != null && !tween.IsPlaying())
+                    tween.Restart();
+                
+                
             }
         }
         return incomingAmount;
