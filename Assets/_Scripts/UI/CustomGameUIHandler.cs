@@ -11,7 +11,7 @@ public class CustomGameUIHandler : MonoBehaviour
 {
     private GameManager gameManger;
     [SerializeField] private GameObject levelLayoutPanel;
-    [SerializeField] private GameObject levelThemePanel;
+    //[SerializeField] private GameObject levelThemePanel;
     [SerializeField] private GameObject levelThemePrefab;
 
     #region Unity Callbacks
@@ -27,7 +27,7 @@ public class CustomGameUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        GenerateLevelThemeUI();
+        //GenerateLevelThemeUI();
         GenerateLevelLayoutUI();
     }
 
@@ -39,34 +39,34 @@ public class CustomGameUIHandler : MonoBehaviour
             Destroy(levelLayoutPanel.transform.GetChild(i).gameObject);
         }
 
-        int numThemes = levelThemePanel.transform.childCount;
-        for (int i = 0; i < numThemes; i++)
-        {
-            Destroy(levelThemePanel.transform.GetChild(i).gameObject);
-        }
+        // int numThemes = levelThemePanel.transform.childCount;
+        // for (int i = 0; i < numThemes; i++)
+        // {
+        //     Destroy(levelThemePanel.transform.GetChild(i).gameObject);
+        // }
     }
 
     #endregion
 
-    private void GenerateLevelThemeUI()
-    {
-        var levelThemes = Resources.LoadAll<LevelThemeSO>("Themes/");
-        ToggleGroup group = levelThemePanel.transform.GetComponent<ToggleGroup>();
-        for (int i = 0; i < levelThemes.Length; i++)
-        {
-            var go = Instantiate(levelThemePrefab, levelThemePanel.transform);
-            RefHolder holder = go.GetComponent<RefHolder>();
-            holder.scriptableData = levelThemes[i];
-            TMP_Text text = go.GetComponentInChildren<TMP_Text>();
-            text.text = levelThemes[i].name;
-            Toggle toggle = go.GetComponent<Toggle>();
-            toggle.group = group;
-            if (i == 0)
-            {
-                toggle.isOn = true;
-            }
-        }
-    }
+    // private void GenerateLevelThemeUI()
+    // {
+    //     var levelThemes = Resources.LoadAll<LevelThemeSO>("Themes/");
+    //     ToggleGroup group = levelThemePanel.transform.GetComponent<ToggleGroup>();
+    //     for (int i = 0; i < levelThemes.Length; i++)
+    //     {
+    //         var go = Instantiate(levelThemePrefab, levelThemePanel.transform);
+    //         RefHolder holder = go.GetComponent<RefHolder>();
+    //         holder.scriptableData = levelThemes[i];
+    //         TMP_Text text = go.GetComponentInChildren<TMP_Text>();
+    //         text.text = levelThemes[i].name;
+    //         Toggle toggle = go.GetComponent<Toggle>();
+    //         toggle.group = group;
+    //         if (i == 0)
+    //         {
+    //             toggle.isOn = true;
+    //         }
+    //     }
+    // }
 
     private void GenerateLevelLayoutUI()
     {
@@ -139,11 +139,12 @@ public class CustomGameUIHandler : MonoBehaviour
             Debug.LogError("Folder path does not exist: " + folderPath);
         }
 
-        group = levelThemePanel.GetComponent<ToggleGroup>();
-
-        x = group.GetComponentsInChildren<Toggle>().Where(t => t.isOn).ToList();
-        var selectedTheme = x[0].GetComponent<RefHolder>().scriptableData as LevelThemeSO;
-        Debug.Log("ACTIVE Theme: " + selectedTheme.name);
+        // group = levelThemePanel.GetComponent<ToggleGroup>();
+        //
+        // x = group.GetComponentsInChildren<Toggle>().Where(t => t.isOn).ToList();
+        // var selectedTheme = x[0].GetComponent<RefHolder>().scriptableData as LevelThemeSO;
+        // Debug.Log("ACTIVE Theme: " + selectedTheme.name);
+        var selectedTheme = Resources.Load("Themes/" + GlobalData.DefaultTheme) as LevelThemeSO;
 
         gameManger.SetLevelThemeAndData(selectedLevel, selectedTheme);
 

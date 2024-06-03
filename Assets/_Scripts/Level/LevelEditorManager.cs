@@ -38,6 +38,7 @@ public class LevelEditorManager : MonoBehaviour
     public Button saveButton;
     public Button backButton;
     public Button backButton2;
+    [HideInInspector]
     public GameObject SelectedObj;
     public int SelectedObjIndex;
     public GridGenerator gridGen;
@@ -47,6 +48,7 @@ public class LevelEditorManager : MonoBehaviour
     public GameObject GenerateGridUIPanel;
     public GameObject MeshSelectionUIPanel;
     public GameObject ValidateSaveUIPanel;
+    public GameObject ControlUIPanel;
     public GameObject BackUIPanel;
     public GameObject ButtonPrefab;
     public LevelThemeSO ThemeMeshes;
@@ -65,6 +67,7 @@ public class LevelEditorManager : MonoBehaviour
         GenerateGridUIPanel.SetActive(true);
         MeshSelectionUIPanel.SetActive(false);
         ValidateSaveUIPanel.SetActive(false);
+        ControlUIPanel.SetActive(false);
         BackUIPanel.SetActive(false);
         backButton.onClick.AddListener(ReturnToMenu);
         backButton2.onClick.AddListener(ReturnToMenu);
@@ -133,6 +136,7 @@ public class LevelEditorManager : MonoBehaviour
              Directory.CreateDirectory(folderPath);
              File.WriteAllText(folderPath + $"/{levelNameInput.text}.json", levelData);
          }
+         AssetDatabase.Refresh();
         #else
         var folderPath =  Path.Combine(Application.persistentDataPath, "LevelSaves");
 
@@ -548,6 +552,7 @@ public class LevelEditorManager : MonoBehaviour
         GenerateGridUIPanel.SetActive(false);
         MeshSelectionUIPanel.SetActive(true);
         ValidateSaveUIPanel.SetActive(true);
+        ControlUIPanel.SetActive(true);
         BackUIPanel.SetActive(true);
         gridGenerated = true;
     }
