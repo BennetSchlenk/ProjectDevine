@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Core : MonoBehaviour
 {
     [SerializeField] GameObject hitEffect;
+    [SerializeField] List<string> hitSounds;
     private AudioManager audioManager;
     private PlayerDataManager playerDataManager;
     private Tween tween;
@@ -39,7 +40,7 @@ public class Core : MonoBehaviour
             // Handle the damage taken, animations, effects, etc
             //Debug.Log($"<color=#E60000>The Core took {incomingAmount} damage</color>");
             //audioManager.PlayerLooseHPSound(this.transform.position);
-            audioManager.PlaySFXOneShotAtPosition("looseHPClip", this.transform.position);
+            audioManager.PlaySFXOneShotAtPosition(GetRandomStringFromList(hitSounds), this.transform.position);
 
             if (hitEffect != null )
             {
@@ -52,6 +53,11 @@ public class Core : MonoBehaviour
         }
         return incomingAmount;
 
+    }
+
+    private string GetRandomStringFromList(List<string> list)
+    {
+        return list[UnityEngine.Random.Range(0, list.Count)];
     }
 
     private void OnTriggerEnter(Collider other)
