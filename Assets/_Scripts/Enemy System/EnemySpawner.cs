@@ -34,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
     {
         // get waypoints from spawner
         _waypointsContainer = GetComponent<WaypointsContainer>();
+
+        GlobalData.EnemiesLeftCount = 0;
         
         spawnLoopCR = StartCoroutine(HandleWaves());
 
@@ -47,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator HandleWaves()
     {
+        
         // wait to start waves
         yield return new WaitForSeconds(wavesSO.InitialWaitTime);    
 
