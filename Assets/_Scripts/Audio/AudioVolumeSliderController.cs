@@ -17,10 +17,10 @@ public class AudioVolumeSliderController : MonoBehaviour
 
     #region Unity Callbacks
 
-    private void OnEnable()
+    private void Start()
     {
         audioManager = ServiceLocator.Instance.GetService<AudioManager>();
-
+        
         Assert.IsNotNull(audioManager, "AudioVolumeSliderController: AudioManager should be available");
 
         audioManager.RegisterSlider(this, type, slider);

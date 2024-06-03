@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d32d2d45531704ea4de64c6990c898, type: 3}
+  m_Name: AudioStore
+  m_EditorClassIdentifier: 
+  effects:
+  - Name: Ding
+    Clip: {fileID: 8300000, guid: aed0d0b2b956829448183a3bc500432f, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: Sheep
+    Clip: {fileID: 8300000, guid: 41ec21abc177df74e916ba3b71b3c89a, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: looseHPClip
+    Clip: {fileID: 8300000, guid: 41ec21abc177df74e916ba3b71b3c89a, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: cardPlace
+    Clip: {fileID: 8300000, guid: 3422ec35969e2a84a9f4f918c15894c1, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: cardHover
+    Clip: {fileID: 8300000, guid: a417ba71a08f0084eab0cef129c60767, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: cardUnavailable
+    Clip: {fileID: 8300000, guid: 033eb26abc23ca748a146be29b595865, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: cardClick
+    Clip: {fileID: 8300000, guid: 3afdac3a6c6881745bb252e882b14f9a, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: cardPlaceWrong
+    Clip: {fileID: 8300000, guid: 328cf6fedc9c84c4e87d818a67841aea, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: cardDeal
+    Clip: {fileID: 8300000, guid: b354e39a19df0b04eb18162d1d0d76f5, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: buy
+    Clip: {fileID: 8300000, guid: 5f731b8cf51f9974790cfb05f6eb5c22, type: 3}
+    Volume: 1
+    Pitch: 1
+  - Name: enemyDied
+    Clip: {fileID: 8300000, guid: 93c4ea50aea8ecf499b1055326655f96, type: 3}
+    Volume: 1
+    Pitch: 0.78
+  musics:
+  - Name: medieval-tavern-ambience
+    Clip: {fileID: 8300000, guid: 46286588a70cd294298e0e3bc7f0a1d0, type: 3}
+    Volume: 0.802
+    Pitch: 1

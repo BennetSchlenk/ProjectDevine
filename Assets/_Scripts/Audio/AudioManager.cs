@@ -23,53 +23,69 @@ public class VolumeTypeItem
 	public Slider slider;
 }
 
-[RequireComponent(typeof(AudioStore),typeof(SoundEmitterPool))]
+[RequireComponent(typeof(SoundEmitterPool), typeof(DontDestroyOnLoad))]
 public class AudioManager : MonoBehaviour
 {
-	[Header("SoundEmitter setup")]
-	[SerializeField] private SoundEmitterPool soundEmitterPool;
+    [SerializeField] private AudioManagerSettingsSO audioSettings;
+    [SerializeField] private AudioStoreSO audioStore;
 
-	[Header("Music player setup")]
-	[SerializeField] private SoundEmitter musicEmitter;
-	[SerializeField] private bool playMusicOnStart;
-
-	[Header("Audio control")]
-	[SerializeField] private float defaultVolumeValue = 0.9f;
-    [SerializeField] private float mixerMultiplier = 20f;
-    [SerializeField] private AudioMixer audioMixer = default;
-    [SerializeField] private List<VolumeTypeItem> volumeExposedParamNames = new List<VolumeTypeItem>();
+	private SoundEmitterPool soundEmitterPool; // needs to be added via awake
+    private SoundEmitter musicEmitter; // add a musicEmitter -> add a music emitter
     
-	public AudioMixer AudioMixer => audioMixer;
-	public AudioStore AudioStore { get; private set; }
-	public float DefaultVolumeValue => defaultVolumeValue;
+	public AudioMixer AudioMixer => audioSettings.AudioMixer;
+    public AudioStoreSO AudioStore => audioStore;
+    public float DefaultVolumeValue => audioSettings.DefaultVolumeValue;
 
     private int currentMusicFileIndex;
 
     private void Awake()
     {
+        Debug.Log("audioManager Awake()");
 	    ServiceLocator.Instance.RegisterService(this);
-        soundEmitterPool = GetComponent<SoundEmitterPool>();
-		        
-		AudioStore = GetComponent<AudioStore>();
+       
     }
 
     private void Start()
     {
-		musicEmitter.Init();
+        Debug.Log("audioManager Start()");
+
+        musicEmitter.Init();
 
         SetupMixerVolumes();
 
-		if (playMusicOnStart)
+		if (audioSettings.PlayMusicOnStart)
 		{
 			StartPlayingMusic();
 		}
     }
 
+    public void Init(AudioManagerSettingsSO audioSettings, AudioStoreSO audioStore)
+    {
+        this.audioSettings = audioSettings;
+        this.audioStore = audioStore;
+
+        soundEmitterPool = gameObject.GetComponent<SoundEmitterPool>();
+        soundEmitterPool.InitPoolWithValues(
+            gameObject.transform,
+            audioSettings.PoolCollectionCheck,
+            audioSettings.PoolSoundEmitterPrefab,
+            audioSettings.PoolDefaultCapacity,
+            audioSettings.PoolMaxCapacity,
+            audioSettings.PoolObjectSetActiveOnGet);
+
+
+        var musicEmitterGO = new GameObject("MusicPlayer");
+        musicEmitterGO.transform.SetParent(transform);
+        musicEmitter = musicEmitterGO.AddComponent<SoundEmitter>();
+
+        musicEmitter.OnSoundFinishedPlaying += HandleIfMusicFinishedPlaying;
+    }
 
 
     private void OnEnable()
     {
-		musicEmitter.OnSoundFinishedPlaying += HandleIfMusicFinishedPlaying;
+        Debug.Log("audioManager OnEnable()");
+        
     }
 
 
@@ -80,7 +96,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnDestroy()
     {
-		foreach (var item in volumeExposedParamNames)
+		foreach (var item in audioSettings.VolumeExposedParamNames)
 		{
 			PlayerPrefs.SetFloat(item.mixerExposedParamName, GetVolume(item.volumeType));
 		}
@@ -172,7 +188,7 @@ public class AudioManager : MonoBehaviour
 
 	public void RegisterSlider(AudioVolumeSliderController volumeController, VolumeType volumeType, Slider slider)
 	{
-		VolumeTypeItem item = volumeExposedParamNames.Find(x => (x.volumeType == volumeType));
+		VolumeTypeItem item = audioSettings.VolumeExposedParamNames.Find(x => (x.volumeType == volumeType));
 		if (item != null)
 		{
 			item.slider = slider;
@@ -181,9 +197,9 @@ public class AudioManager : MonoBehaviour
 
     private void SetupMixerVolumes()
     {
-		foreach (var item in volumeExposedParamNames)
+		foreach (var item in audioSettings.VolumeExposedParamNames)
 		{
-			float initVolumeValue = PlayerPrefs.GetFloat(item.mixerExposedParamName, defaultVolumeValue);
+			float initVolumeValue = PlayerPrefs.GetFloat(item.mixerExposedParamName, audioSettings.DefaultVolumeValue);
 			ChangeVolume(item.volumeType, initVolumeValue);
         }
 
@@ -213,7 +229,7 @@ public class AudioManager : MonoBehaviour
 
     public float GetGroupVolume(string parameterName)
     {
-        if (audioMixer.GetFloat(parameterName, out float rawVolume))
+        if (AudioMixer.GetFloat(parameterName, out float rawVolume))
         {
             return MixerValueToNormalized(rawVolume);
         }
@@ -226,14 +242,14 @@ public class AudioManager : MonoBehaviour
 
     public void SetGroupVolumeFromNormalized(string parameterName, float normalizedVolume)
 	{
-		bool volumeSet = audioMixer.SetFloat(parameterName, NormalizedToMixerValue(normalizedVolume));
+		bool volumeSet = AudioMixer.SetFloat(parameterName, NormalizedToMixerValue(normalizedVolume));
 		if (!volumeSet)
 			Debug.LogError("The AudioMixer parameter was not found");
 	}
 
 	public void SetGroupVolumeFromMixer(string parameterName, float mixerVolume)
 	{
-		bool volumeSet = audioMixer.SetFloat(parameterName, mixerVolume);
+		bool volumeSet = AudioMixer.SetFloat(parameterName, mixerVolume);
 		if (!volumeSet)
 			Debug.LogError("The AudioMixer parameter was not found");
 	}
@@ -248,7 +264,7 @@ public class AudioManager : MonoBehaviour
         mixerValue = Mathf.Clamp(mixerValue, - 80.0f, 0.0f); // Clamp to -80 dB to 0 dB
 
         // Convert from dB to linear scale using anti-logarithm (10 raised to the power of dB/20)
-        float sliderValue = Mathf.Pow(10.0f, mixerValue / mixerMultiplier);
+        float sliderValue = Mathf.Pow(10.0f, mixerValue / audioSettings.MixerMultiplier);
 
         // Clamp slider value to valid range (0.0 to 1.0)
         sliderValue = Mathf.Clamp01(sliderValue);
@@ -265,7 +281,7 @@ public class AudioManager : MonoBehaviour
 
         // Convert to decibel (dB) using log10 with a factor of 20
         // This factor converts linear scale (0-1) to logarithmic dB scale (-80 to 0 dB)
-        float dB = mixerMultiplier * Mathf.Log10(sliderValue);
+        float dB = audioSettings.MixerMultiplier * Mathf.Log10(sliderValue);
 
         // Optional: Limit dB to a specific range (adjust as needed)
         dB = Mathf.Clamp(dB, -80.0f, 0.0f); // Clamp to -80 dB (inaudible) to 0 dB (full volume)
@@ -276,7 +292,7 @@ public class AudioManager : MonoBehaviour
 
     public string GetVolumeTypeMixerName(VolumeType vt)
     {
-        VolumeTypeItem desiredVolumeTypeItem = volumeExposedParamNames.Find(x => x.volumeType == vt);
+        VolumeTypeItem desiredVolumeTypeItem = audioSettings.VolumeExposedParamNames.Find(x => x.volumeType == vt);
         if (desiredVolumeTypeItem != null)
         {
             return desiredVolumeTypeItem.mixerExposedParamName;
