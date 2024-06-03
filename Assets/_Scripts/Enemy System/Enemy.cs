@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public float Health { get; set; }
     public float Armor { get; set; }
-    public float MovementSpeed { get { return classAndStats.MovementSpeed * speedModifier; } }
+    public float MovementSpeed { get { return classAndStats.MovementSpeed * speedModifier * difficultyMultiplier; } }
+    public float RotationSpeed { get { return classAndStats.MovementSpeed * speedModifier * difficultyMultiplier * 100f; } }
     public EnemyClassSO Stats { get {  return classAndStats; } }
     public EnemyMovementController MovementController {  get; private set; }
 
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private Dictionary<DamageTypeSO, GameObject> activeVFXObjects = new();
 
     private float speedModifier = 1f;
+    private float difficultyMultiplier = 1f;
 
     //cached vars
     AudioManager audioManager;
@@ -47,8 +49,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Awake()
     {
-        Health = classAndStats.InitialLife;
-        Armor = classAndStats.InitialArmor;
+        Health = classAndStats.InitialLife * difficultyMultiplier;
+        Armor = classAndStats.InitialArmor * difficultyMultiplier;
         MovementController = GetComponent<EnemyMovementController>();
 
         if (baseCollider == null)
@@ -61,6 +63,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             VFXSpawnPoint = transform;
         }
+
     }
 
     private void Start()
@@ -82,11 +85,11 @@ public class Enemy : MonoBehaviour, IDamagable
 
     #endregion
 
-    public void Init(List<Vector3> waypoints)
+    public void Init(List<Vector3> waypoints, float difficultyMultiplier)
     {        
+        this.difficultyMultiplier = difficultyMultiplier;
         MovementController.StartMoving(waypoints);
     }
-
 
     public void TakeDamage(List<DamageData> damageDataList, IXPGainer xpGainer)
     {
@@ -242,7 +245,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
                 #region Enemy Health Bar Integration
 
-                OnArmorChanged.Invoke(Armor, classAndStats.InitialArmor);
+                OnArmorChanged.Invoke(Armor, classAndStats.InitialArmor * difficultyMultiplier);
 
                 #endregion
             }
@@ -270,7 +273,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
             #region Enemy Health Bar Integration
 
-            OnHealthChanged.Invoke(newHealth, classAndStats.InitialLife);
+            OnHealthChanged.Invoke(newHealth, classAndStats.InitialLife * difficultyMultiplier);
 
             #endregion
 
