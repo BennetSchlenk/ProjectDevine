@@ -15,6 +15,11 @@ public class EnemySpawner : MonoBehaviour
     private Coroutine spawnLoopCR;
     private int loopCount = 0;
 
+    private float difficultyMultiplier = 1f;
+
+    private const float DEFAULT_DIFFICULTY_MULTIPLIER = 1f;
+    private const float DIFFICULTY_MULTIPLIER_INCREASE = 1.05f;
+
     #region Unity Callbacks
 
     private void Awake()
@@ -27,9 +32,10 @@ public class EnemySpawner : MonoBehaviour
     {
         // get waypoints from spawner
         _waypointsContainer = GetComponent<WaypointsContainer>();
-
         
         spawnLoopCR = StartCoroutine(HandleWaves());
+
+        difficultyMultiplier = DEFAULT_DIFFICULTY_MULTIPLIER;
     }
 
     #endregion
@@ -59,6 +65,8 @@ public class EnemySpawner : MonoBehaviour
 
             loopCount++;
 
+            difficultyMultiplier *= DIFFICULTY_MULTIPLIER_INCREASE;
+
             if (loopCount == 10000)
             {
                 Debug.LogError("You are crazy to allow to run 10000 spawn cycles");
@@ -87,7 +95,7 @@ public class EnemySpawner : MonoBehaviour
                         parentTransform);
 
             var enemy = enemyGameObject.GetComponent<Enemy>();
-            enemy.Init(waypoints);
+            enemy.Init(waypoints, difficultyMultiplier);
 
             #region Enemy Health Bar Integration
 
