@@ -15,7 +15,7 @@ public class Grid : MonoBehaviour
     [Tooltip("uniform size of each grid node")]
     private GridNode[,] grid;
 
-    private LevelDataSO LevelData;
+    private LevelSaveData LevelData;
     private LevelThemeSO LevelMeshes;
 
     private GridNode[,] levelDataGrid;
@@ -36,9 +36,9 @@ public class Grid : MonoBehaviour
         GridNodeRadius = GlobalData.GridNodeSize / 2;
     }
 
-    public void SetLevelData(LevelDataSO levelDataSO, LevelThemeSO levelThemesSO)
+    public void SetLevelData(LevelSaveData levelData, LevelThemeSO levelThemesSO)
     {
-        LevelData = levelDataSO;
+        LevelData = levelData;
         LevelMeshes = levelThemesSO;
     }
 
