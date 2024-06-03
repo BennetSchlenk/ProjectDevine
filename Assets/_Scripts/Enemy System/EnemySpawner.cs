@@ -14,11 +14,12 @@ public class EnemySpawner : MonoBehaviour
 
     private Coroutine spawnLoopCR;
     private int loopCount = 0;
+    private BasePool[] pools;
 
     private float difficultyMultiplier = 1f;
 
     private const float DEFAULT_DIFFICULTY_MULTIPLIER = 1f;
-    private const float DIFFICULTY_MULTIPLIER_INCREASE = 1.05f;
+    private const float DIFFICULTY_MULTIPLIER_INCREASE = 1.6f;
 
     #region Unity Callbacks
 
@@ -36,6 +37,8 @@ public class EnemySpawner : MonoBehaviour
         spawnLoopCR = StartCoroutine(HandleWaves());
 
         difficultyMultiplier = DEFAULT_DIFFICULTY_MULTIPLIER;
+
+        pools = GetComponents<BasePool>();
     }
 
     #endregion
@@ -49,11 +52,24 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
         
+            
+
             // loop through enemy waves
             foreach (var wave in wavesSO.Waves)
             {
+                Debug.Log("Waiting before starting wave: " + wave.WaitBeforeStartingThisWave);
                 // wait before this wave
-                yield return new WaitForSeconds(wave.WaitBeforeStartingThisWave);
+                //yield return new WaitForSeconds(wave.WaitBeforeStartingThisWave);
+
+                for (int i = 0; i < wave.WaitBeforeStartingThisWave; i++)
+                {
+                    GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (loopCount + 1) + " starts in " + (wave.WaitBeforeStartingThisWave - i) + " seconds");
+                    yield return new WaitForSeconds(1f);
+                }
+
+
+                int enemiesLeft = wave.HowManyInTheWave;
+                GlobalData.EnemiesLeftCount += enemiesLeft;
 
                 // loop through the current wave
                 for (int i = 0; i < wave.HowManyInTheWave; i++)
@@ -61,7 +77,18 @@ public class EnemySpawner : MonoBehaviour
                     SpawnEnemy(wave.Enemy.gameObject, _waypointsContainer.WaypointsList);
                     yield return new WaitForSeconds(wave.SpawnInterval);
                 }
+
+                while (GlobalData.EnemiesLeftCount > 0)
+                {
+                    Debug.Log("Enemies left: " + GlobalData.EnemiesLeftCount);
+                    yield return new WaitForSeconds(1f);
+                }
+
+                Debug.Log("SUBWAVE FINISHED");
             }
+
+            // TODO: Show wave finished message
+            GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (loopCount + 1) + " finished");
 
             loopCount++;
 
@@ -87,12 +114,17 @@ public class EnemySpawner : MonoBehaviour
 
         if (gameObject != null)
         {
-            GameObject enemyGameObject =
-                    Instantiate(
-                        gameObject,
-                        spawnPosition,
-                        _waypointsContainer.transform.rotation, // Spawn the enemy facing the player
-                        parentTransform);
+            //GameObject enemyGameObject =
+            //        Instantiate(
+            //            gameObject,
+            //            spawnPosition,
+            //            _waypointsContainer.transform.rotation, // Spawn the enemy facing the player
+            //            parentTransform);
+
+            GameObject enemyGameObject = GetPoolByGameObject(gameObject).pool.Get().gameObject;
+            enemyGameObject.transform.position = spawnPosition;
+            enemyGameObject.transform.rotation = _waypointsContainer.transform.rotation;
+            enemyGameObject.transform.SetParent(parentTransform);
 
             var enemy = enemyGameObject.GetComponent<Enemy>();
             enemy.Init(waypoints, difficultyMultiplier);
@@ -103,6 +135,17 @@ public class EnemySpawner : MonoBehaviour
 
             #endregion
         }
+    }
+
+    private BasePool GetPoolByGameObject(GameObject go)
+    {
+        // Return the pool from pools where the objectToPool is the same as the GameObject passed as parameter
+        var pool = Array.Find(pools, x => x.ObjectToPool.gameObject == go);
+
+        if (pool == null)
+            Debug.LogError("Pool not found for GameObject: " + go.name);
+
+        return pool;
     }
 
 }

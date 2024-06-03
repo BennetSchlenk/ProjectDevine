@@ -120,6 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31992688576df1f4abf3ba82feba3d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialHealth: 500
   hitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
     type: 3}
+  hitSounds:
+  - Explosion1
+  - Explosion2
+  - Explosion3

@@ -27,7 +27,7 @@ MonoBehaviour:
   NextTierData: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5, type: 2}
   DamageData:
     DamageType: {fileID: 11400000, guid: f41238c04cf512e4fa1e3b8f2853c6e1, type: 2}
-    damage: 1
+    damage: 5
     damageOverTime: 0
     damageOverTimeDuration: 0
     damageOverTimeTickRate: 0
