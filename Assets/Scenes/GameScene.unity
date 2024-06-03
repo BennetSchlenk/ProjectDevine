@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 119989944}
   - component: {fileID: 119989943}
   - component: {fileID: 119989945}
+  - component: {fileID: 119989946}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -264,9 +265,25 @@ MonoBehaviour:
   availableColor: {r: 0, g: 4, b: 0, a: 1}
   unavailableColor: {r: 1, g: 0, b: 0, a: 1}
   upgradeColor: {r: 7.999999, g: 5.4228163, b: 0, a: 1}
-  upgradeVFX: {fileID: 2566075013577072968, guid: a37e617b8af3f2d4081e8d31697872d1,
+  upgradeVFXPool: {fileID: 119989946}
+--- !u!114 &119989946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119989942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 4625803978144528816, guid: a37e617b8af3f2d4081e8d31697872d1,
     type: 3}
-  instantiatedVFXs: []
+  defaultCapacity: 30
+  maxCapacity: 200
+  setActiveOnGet: 1
 --- !u!1 &199857629
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,11 +3592,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550526813620904621, guid: e302a7894af6afa49b0a98658cf70503,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.08892883
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

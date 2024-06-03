@@ -9,34 +9,28 @@ public class GridHighlightHandler : MonoBehaviour
     [SerializeField][ColorUsage(true, true)] private Color availableColor = Color.green;
     [SerializeField][ColorUsage(true, true)] private Color unavailableColor = Color.red;
     [SerializeField][ColorUsage(true, true)] private Color upgradeColor = Color.magenta;
-    [SerializeField] private GameObject upgradeVFX;
-    [SerializeField] private List<GameObject> instantiatedVFXs;
+    [SerializeField] private BasePool upgradeVFXPool;
     private int temporalMaxVFXs = 100; // TODO: Replace with pool
 
     private Grid grid;
     private CardDataSO currentCardDataSO;
+    private List<Reusable> activeReusables = new();
 
     #region Replace with pooling
 
     public void ShowUpgradeVFX(Vector3 position)
     {
-        for (int i = 0; i < instantiatedVFXs.Count; i++)
-        {
-            if (!instantiatedVFXs[i].activeInHierarchy)
-            {
-                instantiatedVFXs[i].transform.position = position;
-                instantiatedVFXs[i].SetActive(true);
-                return;
-            }
-        }
+        Reusable reusable = upgradeVFXPool.pool.Get();
+        reusable.transform.position = position;
+        reusable.gameObject.SetActive(true);
+        activeReusables.Add(reusable);
     }
 
     public void HideAllUpgradeVFX()
     {
-        for(int i = 0; i < instantiatedVFXs.Count; i++)
+        for(int i = 0; i < activeReusables.Count; i++)
         {
-            instantiatedVFXs[i].transform.position = new Vector3(0f, 1000f, 0f);
-            instantiatedVFXs[i].SetActive(false);
+            activeReusables[i].gameObject.SetActive(false);
         }
     }
 
@@ -46,14 +40,6 @@ public class GridHighlightHandler : MonoBehaviour
     {
         grid = GetComponent<Grid>();
         GlobalData.OnCardDragged += OnCardDragged;
-
-        instantiatedVFXs = new List<GameObject>();
-        for (int i = 0; i < temporalMaxVFXs; i++)
-        {
-            GameObject vfx = Instantiate(upgradeVFX, transform);
-            vfx.SetActive(false);
-            instantiatedVFXs.Add(vfx);
-        }
     }
 
     private void OnDestroy()

@@ -12,8 +12,8 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField] private Grid grid;
 
     [Header("Towers Settings")]
-    [SerializeField] private GameObject towerRootPrefab;
-    [SerializeField] private GameObject modifierPlaceholderPrefab;
+    [SerializeField] private BasePool towerRootPool;
+    [SerializeField] private BasePool modifierPlaceholderPool;
     [SerializeField] private List<TowerIDAndPlaceholder> towerIDAndPlaceholders;
     [SerializeField] private Transform placeholdersContainer;
 
@@ -286,12 +286,13 @@ public class ObjectPlacer : MonoBehaviour
         switch (cardData.Type)
         {
             case CardType.Tower:
-                // Instantiate tower root prefab and call OnPlacing
-                instantiatedObject = Instantiate(towerRootPrefab);
+                // Take the root prefab from the pool and call OnPlacing
+                instantiatedObject = towerRootPool.pool.Get().gameObject;
+                Debug.Log("Instantiated object: " + instantiatedObject.name, instantiatedObject);
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 
 
-                // Instantiate tower model
+                // TODO: Instantiate tower model
                 GameObject model = Instantiate(cardToUse.TowerPrefab);
                 
                 Tower tower = instantiatedObject.GetComponentInChildren<Tower>();
@@ -311,7 +312,7 @@ public class ObjectPlacer : MonoBehaviour
 
                 break;
             case CardType.Modifier:
-                instantiatedObject = Instantiate(modifierPlaceholderPrefab);
+                instantiatedObject = modifierPlaceholderPool.pool.Get().gameObject;
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 instantiatedObjectPlaceable.OnPlacing();
                 break;
@@ -323,7 +324,16 @@ public class ObjectPlacer : MonoBehaviour
         isPlacing = false;
 
         if (destroy)
-            Destroy(instantiatedObject);
+        {
+            if (instantiatedObject != null)
+            {
+                Reusable reusable = instantiatedObject.GetComponent<Reusable>();
+                if (reusable != null)
+                    reusable.Return();
+                else
+                    Destroy(instantiatedObject);
+            }
+        }
 
         if (instantiatedObject != null)
             instantiatedObject = null;
