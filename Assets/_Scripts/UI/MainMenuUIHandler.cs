@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MainMenuUIHandler : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private Transform parent;
-    [SerializeField] private GameObject SettingsPanel;
-    [SerializeField] private GameObject CustomGamePanel;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject customGamePanel;
+    
+    [SerializeField] private List<Sprite> buttonsNormalSprites;
+    [SerializeField] private List<Sprite> buttonsHoverSprites;
 
     private GameManager gameManager;
     private string[] names;
@@ -35,12 +39,16 @@ public class MainMenuUIHandler : MonoBehaviour
 // #endif
             var go = Instantiate(prefab, parent);
             go.name = names[i] + "_Button";
-            TMP_Text textComp = go.GetComponentInChildren<TMP_Text>();
-            textComp.gameObject.name = names[0] + "_Text";
-            textComp.text = names[i];
-            textComp.fontSize = 35;
-            textComp.fontStyle = FontStyles.Bold;
             Button button = go.GetComponent<Button>();
+            var state = button.spriteState;
+            state.highlightedSprite = buttonsHoverSprites[i];
+            state.disabledSprite = buttonsNormalSprites[i];
+            state.pressedSprite = buttonsNormalSprites[i];
+            state.selectedSprite = buttonsNormalSprites[i];
+            button.spriteState = state;
+            Image image = go.GetComponent<Image>();
+            image.sprite = buttonsNormalSprites[i];
+            
             var i1 = i;
             button.onClick.AddListener(() => { PerformAction(names[i1]); });
         }
@@ -60,7 +68,7 @@ public class MainMenuUIHandler : MonoBehaviour
 
         if (button == names[1])
         {
-            CustomGamePanel.SetActive(!CustomGamePanel.activeSelf);
+            customGamePanel.SetActive(!customGamePanel.activeSelf);
         }
 
         if (button == names[2])
@@ -70,7 +78,7 @@ public class MainMenuUIHandler : MonoBehaviour
 
         if (button == names[3])
         {
-            SettingsPanel.SetActive(true);
+            settingsPanel.SetActive(true);
         }
 
         if (button == names[4])
@@ -84,13 +92,13 @@ public class MainMenuUIHandler : MonoBehaviour
 
     public void CloseSettings()
     {
-        if (SettingsPanel.activeSelf)
-            SettingsPanel.SetActive(false);
+        if (settingsPanel.activeSelf)
+            settingsPanel.SetActive(false);
     }
 
     public void CloseCustomGame()
     {
-        if (CustomGamePanel.activeSelf)
-            CustomGamePanel.SetActive(false);
+        if (customGamePanel.activeSelf)
+            customGamePanel.SetActive(false);
     }
 }
