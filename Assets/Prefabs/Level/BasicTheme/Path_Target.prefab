@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31992688576df1f4abf3ba82feba3d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
+  hitEffect: {fileID: 3870881141222998758, guid: 77644c465113d2640ba2733d0a39d812,
     type: 3}
 --- !u!65 &5776887802544243324
 BoxCollider:
