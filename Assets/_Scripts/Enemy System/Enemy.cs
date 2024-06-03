@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(EnemyMovementController))]
 public class Enemy : MonoBehaviour, IDamagable
@@ -170,7 +168,7 @@ public class Enemy : MonoBehaviour, IDamagable
                         if (details.Key.DamageOverTimeEffect != null 
                             && !activeVFXObjects.ContainsKey(details.Key))
                         {
-                            GameObject newHitEffect = Instantiate(details.Key.DamageOverTimeEffect, transform.position, Quaternion.identity);
+                            GameObject newHitEffect = Instantiate(details.Key.DamageOverTimeEffect, VFXSpawnPoint.position, Quaternion.identity);
                             newHitEffect.transform.SetParent(transform);
 
                             activeVFXObjects.Add(details.Key, newHitEffect);
