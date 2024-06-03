@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.XR;
 
 /// <summary>
 /// HandVisualHandler is responsible for the visual management of cards in a player's hand in a card game.
 /// This class handles the animation and positioning of cards in the player's hand, as well as user interaction with the cards.
 /// </summary>
-[RequireComponent(typeof(Hand))]
 public class HandVisualHandler : MonoBehaviour
 {
     // Card Events
