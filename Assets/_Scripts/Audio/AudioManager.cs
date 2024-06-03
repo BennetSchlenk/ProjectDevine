@@ -39,16 +39,13 @@ public class AudioManager : MonoBehaviour
     private int currentMusicFileIndex;
 
     private void Awake()
-    {
-        Debug.Log("audioManager Awake()");
+    {        
 	    ServiceLocator.Instance.RegisterService(this);
        
     }
 
     private void Start()
-    {
-        Debug.Log("audioManager Start()");
-
+    {     
         musicEmitter.Init();
 
         SetupMixerVolumes();
@@ -84,7 +81,7 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("audioManager OnEnable()");
+        
         
     }
 

@@ -106,6 +106,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 3870881141222998758, guid: 77644c465113d2640ba2733d0a39d812,
     type: 3}
+  hitSounds:
+  - Explosion1
+  - Explosion2
+  - Explosion3
 --- !u!65 &5776887802544243324
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -35,7 +35,7 @@ MonoBehaviour:
     Pitch: 1
   - Name: cardUnavailable
     Clip: {fileID: 8300000, guid: 033eb26abc23ca748a146be29b595865, type: 3}
-    Volume: 1
+    Volume: 0.647
     Pitch: 1
   - Name: cardClick
     Clip: {fileID: 8300000, guid: 3afdac3a6c6881745bb252e882b14f9a, type: 3}
@@ -57,6 +57,18 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: 93c4ea50aea8ecf499b1055326655f96, type: 3}
     Volume: 1
     Pitch: 0.78
+  - Name: Explosion1
+    Clip: {fileID: 8300000, guid: 84b2610fe42fbe14795e1f2cdbb5c9ab, type: 3}
+    Volume: 0.8
+    Pitch: 1
+  - Name: Explosion2
+    Clip: {fileID: 8300000, guid: 3323ef12af63b8e4aad760599be44515, type: 3}
+    Volume: 0.8
+    Pitch: 1
+  - Name: Explosion3
+    Clip: {fileID: 8300000, guid: 0ca088877d0e09445be0a166aba2a32a, type: 3}
+    Volume: 0.8
+    Pitch: 1
   musics:
   - Name: medieval-tavern-ambience
     Clip: {fileID: 8300000, guid: 46286588a70cd294298e0e3bc7f0a1d0, type: 3}
