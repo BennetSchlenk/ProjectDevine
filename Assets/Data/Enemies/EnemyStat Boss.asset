@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialLife: 1000
   initialArmor: 0
-  movementSpeed: 1.5
-  pointsForPlayerIfKilled: 100
+  movementSpeed: 1
+  pointsForPlayerIfKilled: 40
   coreDamage: 100

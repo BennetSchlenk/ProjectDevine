@@ -15,5 +15,5 @@ MonoBehaviour:
   initialLife: 250
   initialArmor: 0
   movementSpeed: 1.8
-  pointsForPlayerIfKilled: 10
+  pointsForPlayerIfKilled: 5
   coreDamage: 20
