@@ -46,6 +46,12 @@ GameObject:
   - component: {fileID: 2696647016259591225}
   - component: {fileID: 5583231261650550195}
   - component: {fileID: 4270137102961645268}
+  - component: {fileID: 3842549383226642040}
+  - component: {fileID: 2446475727609531249}
+  - component: {fileID: 8071703325469952954}
+  - component: {fileID: 7860338806711349893}
+  - component: {fileID: 160865826922252574}
+  - component: {fileID: 6831218506244374200}
   m_Layer: 5
   m_Name: Pools
   m_TagString: Untagged
@@ -107,6 +113,114 @@ MonoBehaviour:
     type: 3}
   defaultCapacity: 1
   maxCapacity: 5
+  setActiveOnGet: 1
+--- !u!114 &3842549383226642040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488455905947596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 8581944189438198065, guid: 6211bd27044efc346b885323f841a373,
+    type: 3}
+  defaultCapacity: 20
+  maxCapacity: 200
+  setActiveOnGet: 1
+--- !u!114 &2446475727609531249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488455905947596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 7381149184762781045, guid: 74c21ee21ee24b040a63e3229c452f1f,
+    type: 3}
+  defaultCapacity: 20
+  maxCapacity: 200
+  setActiveOnGet: 1
+--- !u!114 &8071703325469952954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488455905947596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 653034828429572409, guid: 4bd378841ac509d4fb9d02f88f0066bd,
+    type: 3}
+  defaultCapacity: 20
+  maxCapacity: 200
+  setActiveOnGet: 1
+--- !u!114 &7860338806711349893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488455905947596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 872737148106360173, guid: 6032da82254eff24e855dade8c41a5b4,
+    type: 3}
+  defaultCapacity: 20
+  maxCapacity: 200
+  setActiveOnGet: 1
+--- !u!114 &160865826922252574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488455905947596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 6544100449022625685, guid: c819cb22c85365a48867112ae344958c,
+    type: 3}
+  defaultCapacity: 20
+  maxCapacity: 200
+  setActiveOnGet: 1
+--- !u!114 &6831218506244374200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488455905947596162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 0
+  objectToPool: {fileID: 4655372341702927402, guid: a31d558d038ff9b4eac7cf06a814aafc,
+    type: 3}
+  defaultCapacity: 20
+  maxCapacity: 200
   setActiveOnGet: 1
 --- !u!1 &544895023784757509
 GameObject:
@@ -515,6 +629,7 @@ MonoBehaviour:
   testInitialCardData: {fileID: 11400000, guid: 3e3f544ba68cbae4f9d71d4838dbb5bb,
     type: 2}
   grid: {fileID: 0}
+  poolsTransform: {fileID: 2696647016259591225}
   towerRootPool: {fileID: 5583231261650550195}
   modifierPlaceholderPool: {fileID: 4270137102961645268}
   towerIDAndPlaceholders:

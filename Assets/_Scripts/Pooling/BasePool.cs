@@ -12,6 +12,7 @@ public class BasePool : MonoBehaviour
     [Tooltip("If true, the pool will check if the object is already in the pool before instantiating a new one. Set false to save CPU cycles.")]
     [SerializeField] private bool collectionCheck = false;
     [SerializeField] private Reusable objectToPool;
+    public Reusable ObjectToPool => objectToPool;
     [SerializeField] private int defaultCapacity = 10;
     [Tooltip("If the pool is at max capacity, the instantiated objects will be destroyed rather than returned to the pool.")]
     [SerializeField] private int maxCapacity = 20;

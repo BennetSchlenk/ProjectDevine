@@ -12,6 +12,8 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField] private Grid grid;
 
     [Header("Towers Settings")]
+    [Tooltip("Transform where the pools are located")]
+    [SerializeField] private Transform poolsTransform;
     [SerializeField] private BasePool towerRootPool;
     [SerializeField] private BasePool modifierPlaceholderPool;
     [SerializeField] private List<TowerIDAndPlaceholder> towerIDAndPlaceholders;
@@ -28,6 +30,7 @@ public class ObjectPlacer : MonoBehaviour
     private bool placementCalledFromClick; // Used to differentiate between click and drag placement
     private GameObject currentPlaceholder;
     private GameObject lastTowerHovered;
+    private BasePool[] pools;
 
 
     // Parameters passed from the card to the object placer
@@ -46,6 +49,8 @@ public class ObjectPlacer : MonoBehaviour
     private void Start()
     {
         audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        pools = poolsTransform.GetComponentsInChildren<BasePool>();
+
 
         if (testInitialCardData != null)
         {
@@ -242,6 +247,17 @@ public class ObjectPlacer : MonoBehaviour
 
     #endregion
 
+    public BasePool GetPoolByGameObject(GameObject go)
+    {
+        // Return the pool from pools where the objectToPool is the same as the GameObject passed as parameter
+        var pool = Array.Find(pools, x => x.ObjectToPool.gameObject == go);
+
+        if (pool == null)
+            Debug.LogError("Pool not found for GameObject: " + go.name);
+
+        return pool;
+    }
+
     public void StartPlacingTestTower()
     {
        SetCardToUse(testInitialCardData);
@@ -293,7 +309,8 @@ public class ObjectPlacer : MonoBehaviour
                 
 
                 // TODO: Instantiate tower model
-                GameObject model = Instantiate(cardToUse.TowerPrefab);
+                GameObject model = GetPoolByGameObject(cardToUse.TowerPrefab).pool.Get().gameObject;
+                model.SetActive(true);
                 
                 Tower tower = instantiatedObject.GetComponentInChildren<Tower>();
                 tower.SetUp(model, cardData, cardData.TowerTier);
