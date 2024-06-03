@@ -11,6 +11,8 @@ public class GameSettingsUIHandler : MonoBehaviour
     private GameObject settingsPanel;
     [SerializeField]
     private Button menuButton;
+    [SerializeField]
+    private Button settingsButton;
 
     private GameManager gameManager;
     #region Unity Callbacks
@@ -19,7 +21,9 @@ public class GameSettingsUIHandler : MonoBehaviour
     {
         settingsPanel.SetActive(false);
         menuButton.onClick.AddListener(ReturnToMenu);
+        settingsButton.onClick.AddListener(ToggleSettings);
     }
+
 
     private void Start()
     {
@@ -28,11 +32,16 @@ public class GameSettingsUIHandler : MonoBehaviour
 
     #endregion
 
-    private void Update()
+    private void ToggleSettings()
     {
-        if (Keyboard.current[Key.Escape].wasPressedThisFrame)
+        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        if (settingsPanel.activeSelf)
         {
-           settingsPanel.SetActive(!settingsPanel.activeSelf); 
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1f;
         }
     }
 

@@ -9,41 +9,32 @@ public class CameraControls : MonoBehaviour
     private InputAction movement;
     private Camera camera;
     private Transform cameraTransform;
-    
+
     //Horizontal
-    [SerializeField]
-    private float panMaxSpeed = 15f;
+    [SerializeField] private float panMaxSpeed = 15f;
     private float speed;
-    [SerializeField]
-    private float panAcceleration = 10f;
-    [SerializeField]
-    private float panDampening = 15f;
-    
+    [SerializeField] private float panAcceleration = 10f;
+    [SerializeField] private float panDampening = 15f;
+
     //Vertical
-    [SerializeField]
-    private float zoomStepSize = 2f;
-    [SerializeField]
-    private float zoomDampening = 7.5f;
-    [SerializeField]
-    private float zoomMinHeight = 13f;
-    [SerializeField]
-    private float zoomMaxHeight = 40f;
-    [SerializeField]
-    private float ZoomSpeed = 3f;
-    
+    [SerializeField] private float zoomStepSize = 2f;
+    [SerializeField] private float zoomDampening = 7.5f;
+    [SerializeField] private float zoomMinHeight = 13f;
+    [SerializeField] private float zoomMaxHeight = 40f;
+    [SerializeField] private float ZoomSpeed = 3f;
+
     //Rotation
-    [SerializeField]
-    private float rotationMaxSpeed = 5f;
-    
+    [SerializeField] private float rotationMaxSpeed = 5f;
+
     //For updating CameraRig Base object
     private Vector3 targetPosition;
     private float zoomHeight;
 
     private Vector3 horizontalVelocity;
     private Vector3 lastPosition;
-    
+
     private Vector3 startDragMotion;
-    
+
     private void Awake()
     {
         cameraActions = new CameraControlActions();
@@ -81,8 +72,17 @@ public class CameraControls : MonoBehaviour
     private void UpdateCamRigVelocity()
     {
         var position = this.transform.position;
-        horizontalVelocity = (position - lastPosition) / Time.deltaTime;
+        if (Time.deltaTime != 0)
+        {
+            horizontalVelocity = (position - lastPosition) / Time.deltaTime;
+        }
+        else
+        {
+            horizontalVelocity = Vector3.zero; // Set horizontalVelocity to zero when paused
+        }
         horizontalVelocity.y = 0;
+
+
         lastPosition = position;
     }
 
@@ -107,7 +107,6 @@ public class CameraControls : MonoBehaviour
         Vector3 cameraRight = cameraTransform.right;
         cameraRight.y = 0;
         return cameraRight;
-        
     }
 
     private void UpdateCamRigBase()
@@ -122,17 +121,19 @@ public class CameraControls : MonoBehaviour
             horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, Time.deltaTime * panDampening);
             this.transform.position += horizontalVelocity * Time.deltaTime;
         }
+
         targetPosition = Vector3.zero;
     }
-    
+
     private void RotateCamera(InputAction.CallbackContext inputVal)
     {
         if (!Mouse.current.middleButton.isPressed) return;
 
         float val = inputVal.ReadValue<Vector2>().x;
-        transform.rotation = Quaternion.Euler(0f,transform.rotation.eulerAngles.y + (val * rotationMaxSpeed) * Time.deltaTime,0f);
+        transform.rotation = Quaternion.Euler(0f,
+            transform.rotation.eulerAngles.y + (val * rotationMaxSpeed) * Time.deltaTime, 0f);
     }
-    
+
     private void ZoomCamera(InputAction.CallbackContext inputVal)
     {
         float val = -inputVal.ReadValue<Vector2>().y / 100f;
@@ -143,11 +144,11 @@ public class CameraControls : MonoBehaviour
             if (zoomHeight < zoomMinHeight)
             {
                 zoomHeight = zoomMinHeight;
-            }else if(zoomHeight > zoomMaxHeight)
+            }
+            else if (zoomHeight > zoomMaxHeight)
             {
                 zoomHeight = zoomMaxHeight;
             }
-            
         }
     }
 
@@ -159,14 +160,14 @@ public class CameraControls : MonoBehaviour
 
         cameraTransform.localPosition =
             Vector3.Lerp(cameraTransform.localPosition, zoomTarget, zoomDampening * Time.deltaTime);
-        
+
         cameraTransform.LookAt(this.transform);
     }
-    
+
 
     private void DragMoveCamera()
     {
-        if(!Mouse.current.rightButton.isPressed)
+        if (!Mouse.current.rightButton.isPressed)
             return;
 
         Plane plane = new Plane(Vector3.up, Vector3.zero);
