@@ -17,7 +17,7 @@ public enum GameStates
 public class GameManager : MonoBehaviour
 {
     private Grid grid;
-    private LevelDataSO LevelData;
+    private LevelSaveData LevelData;
     private LevelThemeSO LevelTheme;
 
     private GameStates gameState;
@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour
         ServiceLocator.Instance.RegisterService(this);
         if (LevelData == null || LevelTheme == null)
         {
-            LevelData = Resources.Load("Levels/" + GlobalData.DefaultLevel) as LevelDataSO;
+            TextAsset levelJson = Resources.Load<TextAsset>("LevelSaves/" + GlobalData.DefaultLevel);
+            LevelData = JsonUtility.FromJson<LevelSaveData>(levelJson.text);
             LevelTheme = Resources.Load("Themes/" + GlobalData.DefaultTheme) as LevelThemeSO;
         }
     }
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
         grid.CreateGrid();
     }
 
-    public void SetLevelThemeAndData(LevelDataSO levelData, LevelThemeSO levelTheme)
+    public void SetLevelThemeAndData(LevelSaveData levelData, LevelThemeSO levelTheme)
     {
         LevelData = levelData;
         LevelTheme = levelTheme;

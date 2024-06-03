@@ -103,6 +103,9 @@ public class GridGenerator : MonoBehaviour
             Gizmos.DrawLine(bottomLeft, bottomRight);
             Gizmos.DrawLine(topLeft, bottomLeft);
             Gizmos.DrawLine(topRight, bottomRight);
+            
+            Gizmos.color = (n.Buildable) ? Color.white : Color.red;
+            Gizmos.DrawCube(n.Position,Vector3.one);
         }
     }
 }
