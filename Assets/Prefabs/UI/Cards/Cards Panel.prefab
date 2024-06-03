@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 0
-  objectToPool: {fileID: 8581944189438198065, guid: 6211bd27044efc346b885323f841a373,
+  objectToPool: {fileID: -2360675137309660933, guid: 6211bd27044efc346b885323f841a373,
     type: 3}
   defaultCapacity: 20
   maxCapacity: 200
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 0
-  objectToPool: {fileID: 7381149184762781045, guid: 74c21ee21ee24b040a63e3229c452f1f,
+  objectToPool: {fileID: -248226442753205006, guid: 74c21ee21ee24b040a63e3229c452f1f,
     type: 3}
   defaultCapacity: 20
   maxCapacity: 200
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 0
-  objectToPool: {fileID: 653034828429572409, guid: 4bd378841ac509d4fb9d02f88f0066bd,
+  objectToPool: {fileID: 7494610198387449273, guid: 4bd378841ac509d4fb9d02f88f0066bd,
     type: 3}
   defaultCapacity: 20
   maxCapacity: 200
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 0
-  objectToPool: {fileID: 872737148106360173, guid: 6032da82254eff24e855dade8c41a5b4,
+  objectToPool: {fileID: -7690016904267853900, guid: 6032da82254eff24e855dade8c41a5b4,
     type: 3}
   defaultCapacity: 20
   maxCapacity: 200
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 0
-  objectToPool: {fileID: 6544100449022625685, guid: c819cb22c85365a48867112ae344958c,
+  objectToPool: {fileID: 6916373983118046667, guid: c819cb22c85365a48867112ae344958c,
     type: 3}
   defaultCapacity: 20
   maxCapacity: 200
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionCheck: 0
-  objectToPool: {fileID: 4655372341702927402, guid: a31d558d038ff9b4eac7cf06a814aafc,
+  objectToPool: {fileID: -111681069796267076, guid: a31d558d038ff9b4eac7cf06a814aafc,
     type: 3}
   defaultCapacity: 20
   maxCapacity: 200
@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 7712495633374023732}
   - component: {fileID: 1277682260722400042}
   - component: {fileID: 1135858307742548960}
+  - component: {fileID: 3297255745836002419}
   m_Layer: 5
   m_Name: Cards Panel
   m_TagString: Untagged
@@ -558,8 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bezierCurve: {fileID: 7748498039415055938}
-  cardPrefab: {fileID: 8097370327335447753, guid: f59e0d1e857dba54f95193f551b3859e,
-    type: 3}
+  cardPool: {fileID: 3297255745836002419}
   cardsContainer: {fileID: 80955080680307822}
   objectPlacer: {fileID: 1135858307742548960}
   cardSpawnPoint: {fileID: 8609537287187746058}
@@ -658,6 +658,24 @@ MonoBehaviour:
       type: 3}
     InstantiatedPlaceholder: {fileID: 0}
   placeholdersContainer: {fileID: 2889185779822789235}
+--- !u!114 &3297255745836002419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6035640119903843029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617f4f91d22373b499638387ff993a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionCheck: 1
+  objectToPool: {fileID: 8805696517266352396, guid: f59e0d1e857dba54f95193f551b3859e,
+    type: 3}
+  defaultCapacity: 10
+  maxCapacity: 20
+  setActiveOnGet: 1
 --- !u!1 &6747328088628615040
 GameObject:
   m_ObjectHideFlags: 0

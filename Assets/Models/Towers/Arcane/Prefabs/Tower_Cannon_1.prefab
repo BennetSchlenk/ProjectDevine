@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3085091016917479643}
   - component: {fileID: 5194394178140769931}
   - component: {fileID: 5334025588649061936}
+  - component: {fileID: -7690016904267853900}
   m_Layer: 0
   m_Name: Tower_Cannon_1
   m_TagString: Untagged
@@ -84,6 +85,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-7690016904267853900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2867552112866341769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74054707dbef17b4192c49a4cead1efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnGetEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBeforeReturn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4405187262864202937
 PrefabInstance:
   m_ObjectHideFlags: 0

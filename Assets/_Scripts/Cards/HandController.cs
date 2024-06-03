@@ -10,7 +10,7 @@ public class HandController : MonoBehaviour
     public event Action OnHandUpdate = delegate { };
 
     [SerializeField] private BezierCurve bezierCurve;
-    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private BasePool cardPool;
     [SerializeField] private Transform cardsContainer;
     [SerializeField] private ObjectPlacer objectPlacer;
     [SerializeField] private Transform cardSpawnPoint;
@@ -90,7 +90,8 @@ public class HandController : MonoBehaviour
         if (cardData == null || cards.Count >= maxCards) return;
 
         // Instantiate and set up the card
-        GameObject card = Instantiate(cardPrefab, cardsContainer);
+        GameObject card = cardPool.pool.Get().gameObject;
+        card.transform.SetParent(cardsContainer);
         card.transform.localPosition = cardSpawnPoint.localPosition;
         card.GetComponent<Card>().SetUp(cardData);
 
