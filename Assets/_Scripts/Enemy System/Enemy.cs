@@ -51,8 +51,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Awake()
     {
-        Health = classAndStats.InitialLife * difficultyMultiplier;
-        Armor = classAndStats.InitialArmor * difficultyMultiplier;
+        
         MovementController = GetComponent<EnemyMovementController>();
 
         if (baseCollider == null)
@@ -91,7 +90,10 @@ public class Enemy : MonoBehaviour, IDamagable
     #endregion
 
     public void Init(List<Vector3> waypoints, float difficultyMultiplier)
-    {        
+    {
+        Health = classAndStats.InitialLife * difficultyMultiplier;
+        Armor = classAndStats.InitialArmor * difficultyMultiplier;
+
         this.difficultyMultiplier = difficultyMultiplier;
         MovementController.StartMoving(waypoints);
     }

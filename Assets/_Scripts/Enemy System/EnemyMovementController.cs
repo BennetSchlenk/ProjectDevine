@@ -39,6 +39,8 @@ public class EnemyMovementController : MonoBehaviour
 
     public void StartMoving(List<Vector3> waypoints)
     {
+        currentWayPointIndex = 0;
+
         this.waypoints = waypoints;
         Assert.IsTrue(waypoints.Count > 0);
         ChangeToNextWaypoint(); // go directly to next as first item is the spawn point
