@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [Header("VFX")]
     [SerializeField] private Transform VFXSpawnPoint;
+    public Transform VFXSpawnPointProp => VFXSpawnPoint;
 
     public float Health { get; set; }
     public float Armor { get; set; }

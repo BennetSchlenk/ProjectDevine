@@ -123,8 +123,9 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
             bool followTarget = true;
             if (cardDataSO.TowerAttackType == TowerAttackType.Area) followTarget = false;
 
+            Transform enemyVFXSpawnPoint = enemy.GetComponent<Enemy>().VFXSpawnPointProp;
 
-            projectileComponent.MoveTowardsTarget(enemy.transform, followTarget, towerData.ProjectileSpeed, effects, hitEffects, (position) =>
+            projectileComponent.MoveTowardsTarget(enemyVFXSpawnPoint, followTarget, towerData.ProjectileSpeed, effects, hitEffects, (position) =>
             {
                 if (!followTarget && cardDataSO.TowerAttackType == TowerAttackType.Area)
                 {

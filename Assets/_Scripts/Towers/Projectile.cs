@@ -89,6 +89,6 @@ public class Projectile : MonoBehaviour
 
     private void Return()
     {
-        Destroy(gameObject);
+        Destroy(gameObject, .5f);
     }
 }
