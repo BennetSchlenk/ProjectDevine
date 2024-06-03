@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     private Coroutine spawnLoopCR;
     private int loopCount = 0;
     private BasePool[] pools;
+    private int currentWave = 0;
 
     private float difficultyMultiplier = 1f;
 
@@ -57,16 +58,18 @@ public class EnemySpawner : MonoBehaviour
             // loop through enemy waves
             foreach (var wave in wavesSO.Waves)
             {
+                currentWave++;
                 Debug.Log("Waiting before starting wave: " + wave.WaitBeforeStartingThisWave);
                 // wait before this wave
                 //yield return new WaitForSeconds(wave.WaitBeforeStartingThisWave);
 
                 for (int i = 0; i < wave.WaitBeforeStartingThisWave; i++)
                 {
-                    GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (loopCount + 1) + " starts in " + (wave.WaitBeforeStartingThisWave - i) + " seconds");
+                    GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (currentWave) + " starts in " + (wave.WaitBeforeStartingThisWave - i) + " seconds");
                     yield return new WaitForSeconds(1f);
                 }
 
+                GlobalData.OnChangeWaveMessage?.Invoke("Wave " + currentWave);
 
                 int enemiesLeft = wave.HowManyInTheWave;
                 GlobalData.EnemiesLeftCount += enemiesLeft;
@@ -88,7 +91,7 @@ public class EnemySpawner : MonoBehaviour
             }
 
             // TODO: Show wave finished message
-            GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (loopCount + 1) + " finished");
+            GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (currentWave) + " finished");
 
             loopCount++;
 
