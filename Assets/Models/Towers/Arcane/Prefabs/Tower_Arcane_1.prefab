@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 4183161319920259093}
   - component: {fileID: 3178684924242918348}
   - component: {fileID: 3756021251592843012}
+  - component: {fileID: -2360675137309660933}
   m_Layer: 0
   m_Name: Tower_Arcane_1
   m_TagString: Untagged
@@ -245,3 +246,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-2360675137309660933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070019936602964733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74054707dbef17b4192c49a4cead1efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnGetEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBeforeReturn:
+    m_PersistentCalls:
+      m_Calls: []

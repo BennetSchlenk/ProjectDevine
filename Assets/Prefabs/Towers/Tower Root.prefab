@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 1662199122595618415}
   - component: {fileID: 7268910059400356537}
   - component: {fileID: 5620051842255734026}
+  - component: {fileID: 9021607015797103932}
   m_Layer: 0
   m_Name: Tower Root
   m_TagString: Untagged
@@ -198,6 +199,13 @@ MonoBehaviour:
   baseTowerStats: {fileID: 0}
   TowerRuntimeStats:
     BaseStats: {fileID: 0}
+  DefaultDamageData:
+    DamageType: {fileID: 0}
+    damage: 0
+    damageOverTime: 0
+    damageOverTimeDuration: 0
+    damageOverTimeTickRate: 0
+    speedMultiplier: 0
   DamageDataList: []
   rangeGameObject: {fileID: 3001542270543079244}
   towerModelContainer: {fileID: 5725281969552442171}
@@ -222,3 +230,21 @@ MonoBehaviour:
   projectile: {fileID: 5590571820964772190, guid: 69f6173e0d235f94d965acbb71e8874e,
     type: 3}
   projectileSpawnPoints: []
+--- !u!114 &9021607015797103932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4465158043754759250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74054707dbef17b4192c49a4cead1efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnGetEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBeforeReturn:
+    m_PersistentCalls:
+      m_Calls: []

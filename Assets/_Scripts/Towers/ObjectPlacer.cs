@@ -12,8 +12,10 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField] private Grid grid;
 
     [Header("Towers Settings")]
-    [SerializeField] private GameObject towerRootPrefab;
-    [SerializeField] private GameObject modifierPlaceholderPrefab;
+    [Tooltip("Transform where the pools are located")]
+    [SerializeField] private Transform poolsTransform;
+    [SerializeField] private BasePool towerRootPool;
+    [SerializeField] private BasePool modifierPlaceholderPool;
     [SerializeField] private List<TowerIDAndPlaceholder> towerIDAndPlaceholders;
     [SerializeField] private Transform placeholdersContainer;
 
@@ -28,6 +30,7 @@ public class ObjectPlacer : MonoBehaviour
     private bool placementCalledFromClick; // Used to differentiate between click and drag placement
     private GameObject currentPlaceholder;
     private GameObject lastTowerHovered;
+    private BasePool[] pools;
 
 
     // Parameters passed from the card to the object placer
@@ -46,6 +49,8 @@ public class ObjectPlacer : MonoBehaviour
     private void Start()
     {
         audioManager = ServiceLocator.Instance.GetService<AudioManager>();
+        pools = poolsTransform.GetComponentsInChildren<BasePool>();
+
 
         if (testInitialCardData != null)
         {
@@ -242,6 +247,17 @@ public class ObjectPlacer : MonoBehaviour
 
     #endregion
 
+    public BasePool GetPoolByGameObject(GameObject go)
+    {
+        // Return the pool from pools where the objectToPool is the same as the GameObject passed as parameter
+        var pool = Array.Find(pools, x => x.ObjectToPool.gameObject == go);
+
+        if (pool == null)
+            Debug.LogError("Pool not found for GameObject: " + go.name);
+
+        return pool;
+    }
+
     public void StartPlacingTestTower()
     {
        SetCardToUse(testInitialCardData);
@@ -286,13 +302,15 @@ public class ObjectPlacer : MonoBehaviour
         switch (cardData.Type)
         {
             case CardType.Tower:
-                // Instantiate tower root prefab and call OnPlacing
-                instantiatedObject = Instantiate(towerRootPrefab);
+                // Take the root prefab from the pool and call OnPlacing
+                instantiatedObject = towerRootPool.pool.Get().gameObject;
+                Debug.Log("Instantiated object: " + instantiatedObject.name, instantiatedObject);
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 
 
-                // Instantiate tower model
-                GameObject model = Instantiate(cardToUse.TowerPrefab);
+                // TODO: Instantiate tower model
+                GameObject model = GetPoolByGameObject(cardToUse.TowerPrefab).pool.Get().gameObject;
+                model.SetActive(true);
                 
                 Tower tower = instantiatedObject.GetComponentInChildren<Tower>();
                 tower.SetUp(model, cardData, cardData.TowerTier);
@@ -311,7 +329,7 @@ public class ObjectPlacer : MonoBehaviour
 
                 break;
             case CardType.Modifier:
-                instantiatedObject = Instantiate(modifierPlaceholderPrefab);
+                instantiatedObject = modifierPlaceholderPool.pool.Get().gameObject;
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 instantiatedObjectPlaceable.OnPlacing();
                 break;
@@ -323,7 +341,16 @@ public class ObjectPlacer : MonoBehaviour
         isPlacing = false;
 
         if (destroy)
-            Destroy(instantiatedObject);
+        {
+            if (instantiatedObject != null)
+            {
+                Reusable reusable = instantiatedObject.GetComponent<Reusable>();
+                if (reusable != null)
+                    reusable.Return();
+                else
+                    Destroy(instantiatedObject);
+            }
+        }
 
         if (instantiatedObject != null)
             instantiatedObject = null;

@@ -153,6 +153,7 @@ public class CardMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("Pointer Enter");
         audioManager.PlaySFXOneShotAtPosition("cardHover", transform.position);
 
         SetTargetScale(mouseOverLocalScale);
