@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private float speedModifier = 1f;
     private float difficultyMultiplier = 1f;
     private Tween hitTween;
+    private Reusable reusable;
 
     //cached vars
     AudioManager audioManager;
@@ -73,6 +74,7 @@ public class Enemy : MonoBehaviour, IDamagable
         playerDataManager = ServiceLocator.Instance.GetService<PlayerDataManager>();
 
         hitTween = transform.DOScale(1.05f, 0.1f).SetEase(Ease.InOutCubic).SetLoops(2, LoopType.Yoyo).SetAutoKill(false);
+        reusable = GetComponent<Reusable>();
     }
 
     private void Update()
@@ -385,7 +387,14 @@ public class Enemy : MonoBehaviour, IDamagable
         audioManager.PlaySFXOneShotAtPosition("enemyDied", transform.position);
 
         StopAllCoroutines();
-        Destroy(gameObject);
+        
+        if (reusable != null)
+        {
+            reusable.transform.SetParent(null);
+            reusable.Return();
+        }
+        else
+            Destroy(gameObject);
     }
 
     #endregion

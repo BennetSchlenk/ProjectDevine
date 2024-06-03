@@ -14,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     private Coroutine spawnLoopCR;
     private int loopCount = 0;
+    private BasePool[] pools;
 
     private float difficultyMultiplier = 1f;
 
@@ -36,6 +37,8 @@ public class EnemySpawner : MonoBehaviour
         spawnLoopCR = StartCoroutine(HandleWaves());
 
         difficultyMultiplier = DEFAULT_DIFFICULTY_MULTIPLIER;
+
+        pools = GetComponents<BasePool>();
     }
 
     #endregion
@@ -111,12 +114,17 @@ public class EnemySpawner : MonoBehaviour
 
         if (gameObject != null)
         {
-            GameObject enemyGameObject =
-                    Instantiate(
-                        gameObject,
-                        spawnPosition,
-                        _waypointsContainer.transform.rotation, // Spawn the enemy facing the player
-                        parentTransform);
+            //GameObject enemyGameObject =
+            //        Instantiate(
+            //            gameObject,
+            //            spawnPosition,
+            //            _waypointsContainer.transform.rotation, // Spawn the enemy facing the player
+            //            parentTransform);
+
+            GameObject enemyGameObject = GetPoolByGameObject(gameObject).pool.Get().gameObject;
+            enemyGameObject.transform.position = spawnPosition;
+            enemyGameObject.transform.rotation = _waypointsContainer.transform.rotation;
+            enemyGameObject.transform.SetParent(parentTransform);
 
             var enemy = enemyGameObject.GetComponent<Enemy>();
             enemy.Init(waypoints, difficultyMultiplier);
@@ -127,6 +135,17 @@ public class EnemySpawner : MonoBehaviour
 
             #endregion
         }
+    }
+
+    private BasePool GetPoolByGameObject(GameObject go)
+    {
+        // Return the pool from pools where the objectToPool is the same as the GameObject passed as parameter
+        var pool = Array.Find(pools, x => x.ObjectToPool.gameObject == go);
+
+        if (pool == null)
+            Debug.LogError("Pool not found for GameObject: " + go.name);
+
+        return pool;
     }
 
 }
