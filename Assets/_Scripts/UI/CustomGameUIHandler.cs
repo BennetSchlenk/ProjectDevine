@@ -70,7 +70,9 @@ public class CustomGameUIHandler : MonoBehaviour
 
     private void GenerateLevelLayoutUI()
     {
+        
         var folderPath = Path.Combine(Application.persistentDataPath, "LevelSaves");
+        folderPath= folderPath.Replace('/', '\\');
         List<string> paths = GetJsonFilePaths(folderPath).ToList();
         
         var localFolderPath = Path.Combine(Application.dataPath, "Resources/LevelSaves");
@@ -110,8 +112,8 @@ public class CustomGameUIHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Folder path does not exist: " + folderPath);
-            return new string[0];
+            Debug.Log("Folder path does not exist!");
+            return Array.Empty<string>();
         }
     }
 
