@@ -50,6 +50,7 @@ public class GameSettingsUIHandler : MonoBehaviour
 
     private void ReturnToMenu()
     {
+        Time.timeScale = 1f;
         gameManager.SetGameState(GameStates.Menu);
     }
 }
