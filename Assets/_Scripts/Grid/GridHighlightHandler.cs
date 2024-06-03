@@ -9,13 +9,49 @@ public class GridHighlightHandler : MonoBehaviour
     [SerializeField][ColorUsage(true, true)] private Color availableColor = Color.green;
     [SerializeField][ColorUsage(true, true)] private Color unavailableColor = Color.red;
     [SerializeField][ColorUsage(true, true)] private Color upgradeColor = Color.magenta;
+    [SerializeField] private GameObject upgradeVFX;
+    [SerializeField] private List<GameObject> instantiatedVFXs;
+    private int temporalMaxVFXs = 100; // TODO: Replace with pool
 
     private Grid grid;
+
+    #region Replace with pooling
+
+    public void ShowUpgradeVFX(Vector3 position)
+    {
+        for (int i = 0; i < instantiatedVFXs.Count; i++)
+        {
+            if (!instantiatedVFXs[i].activeInHierarchy)
+            {
+                instantiatedVFXs[i].transform.position = position;
+                instantiatedVFXs[i].SetActive(true);
+                return;
+            }
+        }
+    }
+
+    public void HideAllUpgradeVFX()
+    {
+        for(int i = 0; i < instantiatedVFXs.Count; i++)
+        {
+            instantiatedVFXs[i].SetActive(false);
+        }
+    }
+
+    #endregion
 
     private void Start()
     {
         grid = GetComponent<Grid>();
         GlobalData.OnCardDragged += OnCardDragged;
+
+        instantiatedVFXs = new List<GameObject>();
+        for (int i = 0; i < temporalMaxVFXs; i++)
+        {
+            GameObject vfx = Instantiate(upgradeVFX, transform);
+            vfx.SetActive(false);
+            instantiatedVFXs.Add(vfx);
+        }
     }
 
     private void OnDestroy()
@@ -33,6 +69,8 @@ public class GridHighlightHandler : MonoBehaviour
                 grid.GridNodes[x, y].HighlightCell.gameObject.SetActive(false);
             }
         }
+
+        HideAllUpgradeVFX();
     }
 
     public void ShowCellsForTowerPlacing(CardDataSO cardDataSO)
@@ -57,7 +95,7 @@ public class GridHighlightHandler : MonoBehaviour
                     if (node.TowerObj != null && node.TowerObj.GetComponent<Tower>().CanUpgradeTower(cardDataSO))
                     {
                         node.HighlightCell.SetColor(upgradeColor);
-                        
+                        ShowUpgradeVFX(node.Position);
                     }
                 }
                 else if (node.TowerObj != null)
@@ -99,6 +137,7 @@ public class GridHighlightHandler : MonoBehaviour
                     {
                         node.HighlightCell.SetColor(upgradeColor);
                         node.HighlightCell.gameObject.SetActive(true);
+                        ShowUpgradeVFX(node.Position);
                     }
                     else
                     {

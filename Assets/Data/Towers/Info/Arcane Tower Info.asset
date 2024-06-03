@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Arcane Tower Info
   m_EditorClassIdentifier: 
   towerId: 0
-  towerName: T01
+  towerName: Arcane Tower
   towerDescription: T01 description
   towerSprite: {fileID: 0}
   towerModels:
