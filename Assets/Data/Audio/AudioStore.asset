@@ -30,12 +30,12 @@ MonoBehaviour:
     Volume: 1
     Pitch: 1
   - Name: cardHover
-    Clip: {fileID: 8300000, guid: a417ba71a08f0084eab0cef129c60767, type: 3}
-    Volume: 1
+    Clip: {fileID: 8300000, guid: 3422ec35969e2a84a9f4f918c15894c1, type: 3}
+    Volume: 0.786
     Pitch: 1
   - Name: cardUnavailable
     Clip: {fileID: 8300000, guid: 033eb26abc23ca748a146be29b595865, type: 3}
-    Volume: 0.647
+    Volume: 0.3
     Pitch: 1
   - Name: cardClick
     Clip: {fileID: 8300000, guid: 3afdac3a6c6881745bb252e882b14f9a, type: 3}
