@@ -15,7 +15,7 @@ MonoBehaviour:
   ID: 0
   PackName: Advanced
   PackDescription: Advanced Booster Pack
-  PackCost: 40
+  PackCost: 50
   PackIcon: {fileID: 21300000, guid: 9bab16cb9fb14e648a62bf53a02ca298, type: 3}
   cardLists:
   - cardListName: Towers

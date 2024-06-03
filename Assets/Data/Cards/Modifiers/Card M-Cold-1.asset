@@ -18,7 +18,7 @@ MonoBehaviour:
   CardFrame: {fileID: 21300000, guid: 133c37ee6baff314e9e6b549ae122cc6, type: 3}
   Icon: {fileID: 21300000, guid: cf7d6913c3c66ab4f9adf2f24d02033c, type: 3}
   Type: 1
-  Cost: 0
+  Cost: 30
   TowerTier: 1
   TowerInfo: {fileID: 0}
   TowerBaseStats: {fileID: 0}

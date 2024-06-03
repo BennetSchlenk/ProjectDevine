@@ -22,7 +22,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
     private int currentProjectileSpawnPointIndex = 0;
     private List<FaceTarget> faceTargets = new();
     private CardDataSO currentCardDataSO;
-    private float levelMultiplier = 1.05f;
+    private float levelMultiplier = 1f;
 
     private void Start()
     {
@@ -127,8 +127,15 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
 
             projectileComponent.MoveTowardsTarget(enemyVFXSpawnPoint, followTarget, towerData.ProjectileSpeed, effects, hitEffects, (position) =>
             {
+                Debug.LogFormat("Dealing damage? {0} , {1}", followTarget, cardDataSO.TowerAttackType);
                 if (!followTarget && cardDataSO.TowerAttackType == TowerAttackType.Area)
                 {
+
+                    // Instantiate the area effect from Resources: "AreaDamageEffect"
+                    GameObject areaEffect = Instantiate(Resources.Load<GameObject>("AreaDamageEffect"), position, Quaternion.identity);
+                    areaEffect.transform.localScale = new Vector3(cardDataSO.TowerAttackArea, cardDataSO.TowerAttackArea/4, cardDataSO.TowerAttackArea);
+
+                    Debug.Log("Dealing area damage to enemies in range " + cardDataSO.TowerAttackArea);
                     List<GameObject> allEnemies = new List<GameObject>();
                     foreach (Transform enemy in enemiesContainerTransform)
                         allEnemies.Add(enemy.gameObject);
