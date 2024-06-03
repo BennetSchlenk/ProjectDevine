@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 89895635}
   - component: {fileID: 89895637}
   - component: {fileID: 89895636}
+  - component: {fileID: 89895638}
   m_Layer: 5
   m_Name: Wave Panel
   m_TagString: Untagged
@@ -198,6 +199,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89895634}
   m_CullTransparentMesh: 1
+--- !u!114 &89895638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89895634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec712bab5371b994f95cf760a8e4f34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveMessageText: {fileID: 1770657736}
 --- !u!1 &119989942
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,7 +2943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 500
   currHP: 0
-  startAmountEssence: 100
+  startAmountEssence: 80
   currEssence: 0
 --- !u!1 &1281601857
 GameObject:
@@ -3790,11 +3804,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550526813620904621, guid: e302a7894af6afa49b0a98658cf70503,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.08892883
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

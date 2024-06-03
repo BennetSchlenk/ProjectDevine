@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce179743d13e3d342bd189185f6dd2c1, type: 3}
-  m_Name: Card Area Tower 03
+  m_Name: Card Cannon Tower 02
   m_EditorClassIdentifier: 
-  Id: 6
-  Name: Area Tower - 3
+  Id: 5
+  Name: Area Tower - 2
   Description: Basic test tower
   CardFrame: {fileID: 21300000, guid: 54cc2a33e6d2b6646bd62436fd43d191, type: 3}
-  Icon: {fileID: 21300000, guid: ce60d620f80daac418c2c21a234ee217, type: 3}
+  Icon: {fileID: 21300000, guid: 6464723586e29454cb05b7f42ce7dba0, type: 3}
   Type: 0
-  Cost: 15
+  Cost: 40
   TowerTier: 1
   TowerInfo: {fileID: 11400000, guid: 65fe1619e1c836540aaa12b7bc67f909, type: 2}
   TowerBaseStats: {fileID: 11400000, guid: 2979fad0c7cfae344b3b2679fccc6f07, type: 2}
   TowerAttackType: 1
-  TowerAttackArea: 20
-  NextTierData: {fileID: 0}
+  TowerAttackArea: 6
+  NextTierData: {fileID: 11400000, guid: d247954486182bf4b84ce1bdf396f2a5, type: 2}
   DamageData:
     DamageType: {fileID: 11400000, guid: f41238c04cf512e4fa1e3b8f2853c6e1, type: 2}
     damage: 1
