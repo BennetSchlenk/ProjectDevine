@@ -34,9 +34,9 @@ public class MainMenuUIHandler : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-// #if UNITY_WEBGL   
-//             if(i == 1) continue;
-// #endif
+#if UNITY_WEBGL   
+            if(i == 4) continue;
+#endif
             var go = Instantiate(prefab, parent);
             go.name = names[i] + "_Button";
             Button button = go.GetComponent<Button>();
