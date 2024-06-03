@@ -57,12 +57,12 @@ public class AudioManager : MonoBehaviour
     {
 		musicEmitter.Init();
 
+        SetupMixerVolumes();
+
 		if (playMusicOnStart)
 		{
 			StartPlayingMusic();
 		}
-
-        SetupMixerVolumes();
     }
 
 
@@ -94,9 +94,9 @@ public class AudioManager : MonoBehaviour
 		if (AudioStore.Musics.Count > 1)
 		{
             currentMusicFileIndex = GetRandomIndexDifferentFromPrevious(currentMusicFileIndex, AudioStore.Musics.Count);
-
-            PlayMusicTrack(AudioStore.Musics[currentMusicFileIndex]);
         }
+
+        PlayMusicTrack(AudioStore.Musics[currentMusicFileIndex]);
     }
 
 	public void StartPlayingMusic()
