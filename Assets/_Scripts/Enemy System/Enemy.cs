@@ -374,7 +374,7 @@ public class Enemy : MonoBehaviour, IDamagable
         #region Enemy Health Bar Integration
         //Debug.Log("Enemy Destroyed");
         OnEnemyDied.Invoke(this);
-
+        GlobalData.EnemiesLeftCount--;
         #endregion
 
         if (shouldGetEssencePoints)

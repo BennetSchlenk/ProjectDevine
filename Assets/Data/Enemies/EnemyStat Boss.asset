@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f78a07ff73b39f4e937aced9d33c8ae, type: 3}
   m_Name: EnemyStat Boss
   m_EditorClassIdentifier: 
-  initialLife: 1000
+  initialLife: 300
   initialArmor: 0
   movementSpeed: 1
-  pointsForPlayerIfKilled: 40
-  coreDamage: 100
+  pointsForPlayerIfKilled: 15
+  coreDamage: 200

@@ -16,4 +16,6 @@ public static class GlobalData
 
     // Enemy Health Bar Integration
     public static Action<Enemy> OnEnemySpawned;
+    public static int EnemiesLeftCount;
+    public static Action<string> OnChangeWaveMessage;
 }

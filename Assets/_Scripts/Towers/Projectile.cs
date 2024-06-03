@@ -67,6 +67,8 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator MoveTowardsPositionEnumerator(Vector3 targetPosition, float speed, List<GameObject> hitEffects, System.Action<Vector3> onHit)
     {
+        bool reached = false;
+
         Debug.Log("Moving towards position");
         while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
@@ -76,6 +78,7 @@ public class Projectile : MonoBehaviour
             //Debug.Log(direction.magnitude + ", " + distanceThisFrame);
             if (direction.magnitude <= distanceThisFrame)
             {
+                reached = true;
                 HitTarget(null, hitEffects, onHit);
                 yield break;
             }
@@ -83,6 +86,10 @@ public class Projectile : MonoBehaviour
             transform.Translate(direction.normalized * distanceThisFrame, Space.World);
             yield return null;
         }
+
+        if (!reached)
+            HitTarget(null, hitEffects, onHit);
+
 
         Return();
     }

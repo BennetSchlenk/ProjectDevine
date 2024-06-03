@@ -16,6 +16,7 @@ MonoBehaviour:
   Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   HitEffect: {fileID: 3870881141222998758, guid: a3394cd6e1677fc4ca161cb7310ce148,
     type: 3}
-  TrailEffect: {fileID: 3695715348286410753, guid: 476b3d2c5f0ce454aba80b497173b24e,
+  TrailEffect: {fileID: 2001754685086586753, guid: 9c9d69e7d5196ac428b57ac2ed4158ef,
     type: 3}
+  DamageOverTimeEffect: {fileID: 0}
   IsInfection: 0

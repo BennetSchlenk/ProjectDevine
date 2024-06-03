@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542da6e904c65fb459cf8b70cb57f7bb, type: 3}
   m_Name: T01-2 Initial Stats
   m_EditorClassIdentifier: 
-  range: 10
-  fireRate: 2
+  range: 12
+  fireRate: 1.5
   fireDuration: 1
   fireCooldown: 1
-  projectileSpeed: 30
+  projectileSpeed: 20

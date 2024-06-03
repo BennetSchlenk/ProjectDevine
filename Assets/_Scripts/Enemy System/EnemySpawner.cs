@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     private float difficultyMultiplier = 1f;
 
     private const float DEFAULT_DIFFICULTY_MULTIPLIER = 1f;
-    private const float DIFFICULTY_MULTIPLIER_INCREASE = 1.05f;
+    private const float DIFFICULTY_MULTIPLIER_INCREASE = 1.6f;
 
     #region Unity Callbacks
 
@@ -49,11 +49,24 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
         
+            
+
             // loop through enemy waves
             foreach (var wave in wavesSO.Waves)
             {
+                Debug.Log("Waiting before starting wave: " + wave.WaitBeforeStartingThisWave);
                 // wait before this wave
-                yield return new WaitForSeconds(wave.WaitBeforeStartingThisWave);
+                //yield return new WaitForSeconds(wave.WaitBeforeStartingThisWave);
+
+                for (int i = 0; i < wave.WaitBeforeStartingThisWave; i++)
+                {
+                    GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (loopCount + 1) + " starts in " + (wave.WaitBeforeStartingThisWave - i) + " seconds");
+                    yield return new WaitForSeconds(1f);
+                }
+
+
+                int enemiesLeft = wave.HowManyInTheWave;
+                GlobalData.EnemiesLeftCount += enemiesLeft;
 
                 // loop through the current wave
                 for (int i = 0; i < wave.HowManyInTheWave; i++)
@@ -61,7 +74,18 @@ public class EnemySpawner : MonoBehaviour
                     SpawnEnemy(wave.Enemy.gameObject, _waypointsContainer.WaypointsList);
                     yield return new WaitForSeconds(wave.SpawnInterval);
                 }
+
+                while (GlobalData.EnemiesLeftCount > 0)
+                {
+                    Debug.Log("Enemies left: " + GlobalData.EnemiesLeftCount);
+                    yield return new WaitForSeconds(1f);
+                }
+
+                Debug.Log("SUBWAVE FINISHED");
             }
+
+            // TODO: Show wave finished message
+            GlobalData.OnChangeWaveMessage?.Invoke("Wave " + (loopCount + 1) + " finished");
 
             loopCount++;
 
