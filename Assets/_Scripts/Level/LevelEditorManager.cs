@@ -138,16 +138,19 @@ public class LevelEditorManager : MonoBehaviour
          }
          AssetDatabase.Refresh();
         #else
-        var folderPath =  Path.Combine(Application.persistentDataPath, "LevelSaves");
+        var folderPath =  Application.persistentDataPath;
+        var filePath = Path.Combine(folderPath, levelNameInput.text + ".json");
 
+        var sep = Path.DirectorySeparatorChar;
         if (Directory.Exists(folderPath))
         {
-            File.WriteAllText(folderPath + $"/{levelNameInput.text}.json", levelData);
+            File.WriteAllText(filePath, levelData);
         }
         else
         {
             Directory.CreateDirectory(folderPath);
-            File.WriteAllText(folderPath + $"/{levelNameInput.text}.json", levelData);
+            
+            File.WriteAllText(filePath, levelData);
         }
         #endif
         gameManager.SetGameState(GameStates.Menu);

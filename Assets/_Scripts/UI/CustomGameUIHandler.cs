@@ -70,9 +70,7 @@ public class CustomGameUIHandler : MonoBehaviour
 
     private void GenerateLevelLayoutUI()
     {
-        
-        var folderPath = Path.Combine(Application.persistentDataPath, "LevelSaves");
-        folderPath= folderPath.Replace('/', '\\');
+        var folderPath = Application.persistentDataPath;
         List<string> paths = GetJsonFilePaths(folderPath).ToList();
         
         var localFolderPath = Path.Combine(Application.dataPath, "Resources/LevelSaves");
