@@ -146,6 +146,7 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
         isFiring = false;
 
         currentCardDataSO = cardDataSO;
+        TowerInfo = cardDataSO.TowerInfo;
 
         // Set the default damage data
         DefaultDamageData = cardDataSO.DamageData;
@@ -206,11 +207,14 @@ public class Tower : MonoBehaviour, IPlaceable, ISelectable
             return false;
         }
 
+        Debug.LogFormat("Trying to merge tower {0} with card {1}", TowerInfo.TowerName, cardDataSO.Name);
+
         if (TowerRuntimeStats.Tier < MaxTowerTier && TowerRuntimeStats.Tier == cardDataSO.TowerTier)
         {
+            Debug.Log("Tower can be upgraded.");
             return true;
         }
-
+        Debug.Log("Tower cannot be upgraded.");
         return false;
     }
 
