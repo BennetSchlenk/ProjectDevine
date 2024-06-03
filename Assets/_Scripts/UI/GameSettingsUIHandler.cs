@@ -12,6 +12,8 @@ public class GameSettingsUIHandler : MonoBehaviour
     [SerializeField]
     private Button menuButton;
     [SerializeField]
+    private Button backButton;
+    [SerializeField]
     private Button settingsButton;
 
     private GameManager gameManager;
@@ -22,6 +24,7 @@ public class GameSettingsUIHandler : MonoBehaviour
         settingsPanel.SetActive(false);
         menuButton.onClick.AddListener(ReturnToMenu);
         settingsButton.onClick.AddListener(ToggleSettings);
+        backButton.onClick.AddListener(ToggleSettings);
     }
 
 
