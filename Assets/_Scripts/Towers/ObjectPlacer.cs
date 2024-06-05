@@ -76,6 +76,8 @@ public class ObjectPlacer : MonoBehaviour
         {
             var placeholder = Instantiate(towerIDAndPlaceholder.Placeholder, placeholdersContainer);
             placeholder.SetActive(false);
+            placeholder.transform.SetParent(null);
+            placeholder.transform.localScale = Vector3.one;
             towerIDAndPlaceholder.InstantiatedPlaceholder = placeholder;
         }
     }
@@ -304,12 +306,14 @@ public class ObjectPlacer : MonoBehaviour
             case CardType.Tower:
                 // Take the root prefab from the pool and call OnPlacing
                 instantiatedObject = towerRootPool.pool.Get().gameObject;
+                instantiatedObject.transform.SetParent(null);
                 Debug.Log("Instantiated object: " + instantiatedObject.name, instantiatedObject);
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 
 
                 // TODO: Instantiate tower model
                 GameObject model = GetPoolByGameObject(cardToUse.TowerPrefab).pool.Get().gameObject;
+                model.transform.SetParent(null);
                 model.SetActive(true);
                 
                 Tower tower = instantiatedObject.GetComponentInChildren<Tower>();
@@ -330,6 +334,8 @@ public class ObjectPlacer : MonoBehaviour
                 break;
             case CardType.Modifier:
                 instantiatedObject = modifierPlaceholderPool.pool.Get().gameObject;
+                // Modifier placeholders don't need to set the parent as null, the scale is right.
+                //instantiatedObject.transform.SetParent(null);
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 instantiatedObjectPlaceable.OnPlacing();
                 break;
