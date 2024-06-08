@@ -74,6 +74,8 @@ public class HandVisualHandler : MonoBehaviour
         OnCardClickedAction = null;
     }
 
+    private void OnRectTransformDimensionsChange() => OrderCards();
+
     #endregion
 
     /// <summary>
@@ -173,6 +175,8 @@ public class HandVisualHandler : MonoBehaviour
     /// <returns>List of cards Transforms</returns>
     public List<Transform> GetWorldCards()
     {
+        if (cardsContainer == null || cardsContainer.childCount == 0) return new List<Transform>();
+
         List<Transform> children = new List<Transform>();
 
         foreach (Transform t in cardsContainer)
