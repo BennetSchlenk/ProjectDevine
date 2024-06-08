@@ -69,7 +69,6 @@ public class Projectile : MonoBehaviour
     {
         bool reached = false;
 
-        Debug.Log("Moving towards position");
         while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
             Vector3 direction = targetPosition - transform.position;

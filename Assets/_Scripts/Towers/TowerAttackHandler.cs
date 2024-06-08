@@ -127,7 +127,6 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
 
             projectileComponent.MoveTowardsTarget(enemyVFXSpawnPoint, followTarget, towerData.ProjectileSpeed, effects, hitEffects, (position) =>
             {
-                Debug.LogFormat("Dealing damage? {0} , {1}", followTarget, cardDataSO.TowerAttackType);
                 if (!followTarget && cardDataSO.TowerAttackType == TowerAttackType.Area)
                 {
 
@@ -144,7 +143,7 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
                     var enemies = GetClosestEnemiesWithinRange(allEnemies, cardDataSO.TowerAttackArea, position);
                     foreach (GameObject enemyInArea in enemies)
                     {
-                        Debug.Log("Dealing damage to enemy in area to: " + enemyInArea.gameObject.name);
+                        Debug.Log("Dealing damage to enemy in area to: " + enemyInArea.gameObject.name, enemyInArea.gameObject);
                         IDamagable damagableInArea = enemyInArea.GetComponent<IDamagable>();
                         if (damagableInArea != null)
                             DealDamage(damagableInArea, damageDataList);
@@ -233,10 +232,10 @@ public class TowerAttackHandler : MonoBehaviour, IXPGainer
             if (IsEnemyInRange(enemy, range, originPosition))
             {
                 float distance = Vector3.Distance(originPosition, enemy.transform.position);
-                if (distance < closestDistance)
-                {
-                    closestEnemies.Add(enemy);
-                }
+                
+                closestEnemies.Add(enemy);
+                
+                Debug.LogFormat("Enemy in range: {0}, Distance: {2}/{3}, Closest Distance: {3}", enemy, distance, range, closestDistance);
             }
         }
 

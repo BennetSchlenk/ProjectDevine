@@ -307,7 +307,6 @@ public class ObjectPlacer : MonoBehaviour
                 // Take the root prefab from the pool and call OnPlacing
                 instantiatedObject = towerRootPool.pool.Get().gameObject;
                 instantiatedObject.transform.SetParent(null);
-                Debug.Log("Instantiated object: " + instantiatedObject.name, instantiatedObject);
                 instantiatedObjectPlaceable = instantiatedObject.GetComponent<IPlaceable>();
                 
 

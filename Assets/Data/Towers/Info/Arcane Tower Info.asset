@@ -22,6 +22,6 @@ MonoBehaviour:
   - {fileID: 2626901194994093189, guid: 4bd378841ac509d4fb9d02f88f0066bd, type: 3}
   towerStatsPerLevel:
   - XP: 90
-    TowerStats: {fileID: 11400000, guid: 1efa7759c379c2949bb80e0598eb1633, type: 2}
+    TowerStats: {fileID: 11400000, guid: abc5dcd30f33493449053d26189a962e, type: 2}
   - XP: 500
-    TowerStats: {fileID: 11400000, guid: 01202612eb282044cbd013deae1f95b8, type: 2}
+    TowerStats: {fileID: 11400000, guid: 45c98bedfcd9e9945a290a0b05fd9af7, type: 2}
