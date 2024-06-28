@@ -18,18 +18,18 @@ public class HandVisualHandler : MonoBehaviour
 
 
     [Header("Transition Settings (seconds)")]
-
     [Tooltip("Time that it takes to reorder cards in hand once another one is added or removed.")]
-    [SerializeField] private float reorderTime;
+    [SerializeField]
+    private float reorderTime;
 
-    [Tooltip("Time that it takes for a card to be placed correctly once added to the hand.")]
-    [SerializeField] private float initialPlaceTime;
+    [Tooltip("Time that it takes for a card to be placed correctly once added to the hand.")] [SerializeField]
+    private float initialPlaceTime;
 
-    [Tooltip("Time that it takes for a card to move to discarded deck.")]
-    [SerializeField] private float discardTime;
+    [Tooltip("Time that it takes for a card to move to discarded deck.")] [SerializeField]
+    private float discardTime;
 
-    [Tooltip("Transform to take the Y position of cards that are hovered.")]
-    [SerializeField] private Transform hoverPositionTransform;
+    [Tooltip("Transform to take the Y position of cards that are hovered.")] [SerializeField]
+    private Transform hoverPositionTransform;
 
     [SerializeField] private AnimationCurve curve;
 
@@ -85,10 +85,8 @@ public class HandVisualHandler : MonoBehaviour
     [ContextMenu("Order Cards")]
     public void OrderCards()
     {
-
         List<Transform> children = GetWorldCards();
         if (children == null || children.Count == 0) return;
-
 
 
         // If children.Count is 1, set the card in the middle of the curve
@@ -137,7 +135,6 @@ public class HandVisualHandler : MonoBehaviour
             pos1.x = (int)newVal1;
             pos1.y = (int)newValY1;
             _bezierCurve.ControlPoints[0].localPosition = pos1;
-
 
 
             var pos2 = _bezierCurve.ControlPoints[1].localPosition;
@@ -199,7 +196,6 @@ public class HandVisualHandler : MonoBehaviour
         }
     }
 
-    
 
     private void OnHandUpdate() => OrderCards();
     private void OnCardClicked(CardMovement cardMovement) => OnCardClickedAction(cardMovement);
@@ -214,7 +210,8 @@ public class HandVisualHandler : MonoBehaviour
         cardMovement.OnCardDropped -= OnCardDropped;
         cardMovement.OnCardRemove -= OnCardRemove;
         cardMovement.OnCardClicked -= OnCardClicked;
-        OnCardRemoveAction(cardMovement);
+        if (OnCardRemoveAction != null)
+            OnCardRemoveAction(cardMovement);
     }
 
     #region Drag & Drop
@@ -228,5 +225,4 @@ public class HandVisualHandler : MonoBehaviour
     private void OnCardDropped(CardMovement cardMovement) => OnCardDroppedAction(cardMovement);
 
     #endregion
-
 }

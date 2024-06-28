@@ -93,7 +93,7 @@ public class LevelEditorManager : MonoBehaviour
          AssetDatabase.Refresh();
         #else
         var folderPath =  Application.persistentDataPath;
-        var filePath = Path.Combine(folderPath, levelNameInput.text + ".json");
+        var filePath = Path.Combine(folderPath, levelName + ".json");
 
         var sep = Path.DirectorySeparatorChar;
         if (Directory.Exists(folderPath))
