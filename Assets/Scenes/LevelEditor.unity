@@ -3760,6 +3760,7 @@ GameObject:
   - component: {fileID: 1470215357}
   - component: {fileID: 1470215356}
   - component: {fileID: 1470215360}
+  - component: {fileID: 1470215361}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3866,14 +3867,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35fa5d7c1f80424fa1d1ac1438fd424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectedObj: {fileID: 0}
+  SelectedObjIndex: 0
+  gridGen: {fileID: 593958010}
+  ThemeMeshes: {fileID: 11400000, guid: b2bb2f8217ad1224593aa43c8b1f90c1, type: 2}
+  levelEditorUI: {fileID: 1470215361}
+--- !u!114 &1470215361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470215355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 776ec210ea21b0d48ac911f40120155f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   generateButton: {fileID: 500885481}
   validateButton: {fileID: 66846468}
   saveButton: {fileID: 1689823766}
   backButton: {fileID: 499634452}
   backButton2: {fileID: 1860423274}
-  SelectedObj: {fileID: 0}
-  SelectedObjIndex: 0
-  gridGen: {fileID: 593958010}
   xInput: {fileID: 706076734}
   zInput: {fileID: 911347709}
   levelNameInput: {fileID: 1602202344}
@@ -3884,7 +3899,6 @@ MonoBehaviour:
   BackUIPanel: {fileID: 1274745945}
   ButtonPrefab: {fileID: 5314383854378629337, guid: ea7483c4eaa23954ab33c78a7c322d66,
     type: 3}
-  ThemeMeshes: {fileID: 11400000, guid: b2bb2f8217ad1224593aa43c8b1f90c1, type: 2}
   ButtonIcons:
   - {fileID: 21300000, guid: cad0c08cbfaadc14bbbe62ee5b1575a2, type: 3}
   - {fileID: 21300000, guid: 1dd4369140d6b3a41b4bb68ab974f2ae, type: 3}
@@ -3896,6 +3910,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 11bf500f711ed4a49922238f9b56db28, type: 3}
   - {fileID: 21300000, guid: 38291dda5b9df1e47ac2ba02501c9b47, type: 3}
   - {fileID: 21300000, guid: b21bbe39e96dea94c85ea5076aa961ec, type: 3}
+  levelEditorManager: {fileID: 1470215360}
+  gridGen: {fileID: 593958010}
 --- !u!1 &1493266511
 GameObject:
   m_ObjectHideFlags: 0

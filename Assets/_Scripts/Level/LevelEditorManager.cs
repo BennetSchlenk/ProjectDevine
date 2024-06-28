@@ -1,16 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TMPro;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public enum RotationDirections
 {
@@ -30,29 +25,17 @@ public class LevelEditorManager : MonoBehaviour
     private GameObject[,] gridObj;
     private int[,] gridObjIndex;
     private List<WaypointData> levelWaypoints;
-    private GameManager gameManager;
+    private Dictionary<GameObject, int> meshObjectToIndexMap;
+    
 
-
-    public Button generateButton;
-    public Button validateButton;
-    public Button saveButton;
-    public Button backButton;
-    public Button backButton2;
+    
     [HideInInspector]
     public GameObject SelectedObj;
     public int SelectedObjIndex;
     public GridGenerator gridGen;
-    public TMP_InputField xInput;
-    public TMP_InputField zInput;
-    public TMP_InputField levelNameInput;
-    public GameObject GenerateGridUIPanel;
-    public GameObject MeshSelectionUIPanel;
-    public GameObject ValidateSaveUIPanel;
-    public GameObject ControlUIPanel;
-    public GameObject BackUIPanel;
-    public GameObject ButtonPrefab;
     public LevelThemeSO ThemeMeshes;
-    public List<Sprite> ButtonIcons;
+    public LevelEditorUI levelEditorUI;
+   
 
 
     private void Awake()
@@ -62,39 +45,10 @@ public class LevelEditorManager : MonoBehaviour
         SelectedObj = null;
         gridGenerated = false;
         validated = false;
-        validateButton.GetComponent<Image>().color = Color.red;
         camMain = Camera.main;
-        GenerateGridUIPanel.SetActive(true);
-        MeshSelectionUIPanel.SetActive(false);
-        ValidateSaveUIPanel.SetActive(false);
-        ControlUIPanel.SetActive(false);
-        BackUIPanel.SetActive(false);
-        backButton.onClick.AddListener(ReturnToMenu);
-        backButton2.onClick.AddListener(ReturnToMenu);
-        generateButton.onClick.AddListener(GenerateOnClick);
-        validateButton.onClick.AddListener(ValidateOnClick);
-        saveButton.onClick.AddListener(SaveOnClick);
-
-        for (int i = 0; i < ThemeMeshes.Meshes.Count; i++)
-        {
-            if (i == 2 || i == 3) continue;
-
-            var go = Instantiate(ButtonPrefab, MeshSelectionUIPanel.transform);
-            Button button = go.GetComponent<Button>();
-            Image image = go.GetComponent<Image>();
-            image.sprite = ButtonIcons[i];
-
-            var i1 = i;
-            button.onClick.AddListener(() => SetSelectedMesh(ThemeMeshes.Meshes[i1]));
-        }
+        InitializeMeshObjectToIndexMap();
     }
-
-
-
-    private void Start()
-    {
-        gameManager = ServiceLocator.Instance.GetService<GameManager>();
-    }
+    
 
     private void Update()
     {
@@ -105,10 +59,10 @@ public class LevelEditorManager : MonoBehaviour
     }
     
 
-    private void SaveOnClick()
+    public void SaveOnClick(string levelName)
     {
         if (!validated) return;
-        string path = $"Assets/Resources/Levels/{levelNameInput.text}.asset";
+        string path = $"Assets/Resources/Levels/{levelName}.asset";
         
         var obj = new LevelSaveData();
 
@@ -117,7 +71,7 @@ public class LevelEditorManager : MonoBehaviour
         obj.GridX = gridGen.grid.GetLength(0);
         obj.GridY = gridGen.grid.GetLength(1);
         obj.LevelWaypoints = levelWaypoints;
-        obj.LevelName = levelNameInput.text;
+        obj.LevelName = levelName;
 
         var levelData =JsonUtility.ToJson(obj);
 
@@ -129,12 +83,12 @@ public class LevelEditorManager : MonoBehaviour
         
          if (Directory.Exists(folderPath))
          {
-             File.WriteAllText(folderPath + $"/{levelNameInput.text}.json", levelData);
+             File.WriteAllText(folderPath + $"/{levelName}.json", levelData);
          }
          else
          {
              Directory.CreateDirectory(folderPath);
-             File.WriteAllText(folderPath + $"/{levelNameInput.text}.json", levelData);
+             File.WriteAllText(folderPath + $"/{levelName}.json", levelData);
          }
          AssetDatabase.Refresh();
         #else
@@ -153,10 +107,10 @@ public class LevelEditorManager : MonoBehaviour
             File.WriteAllText(filePath, levelData);
         }
         #endif
-        gameManager.SetGameState(GameStates.Menu);
+        levelEditorUI.ReturnToMenu();
     }
 
-    private void ValidateOnClick()
+    public void ValidateOnClick()
     {
         levelWaypoints.Clear();
         int targets = 0;
@@ -242,63 +196,22 @@ public class LevelEditorManager : MonoBehaviour
             }
 
             validated = true;
-            validateButton.GetComponent<Image>().color = Color.green;
+            levelEditorUI.SetValidateButtonSate(validated);
+        }
+    }
+    
+    private void InitializeMeshObjectToIndexMap()
+    {
+        meshObjectToIndexMap = new Dictionary<GameObject, int>();
+        for (int i = 0; i < ThemeMeshes.Meshes.Count; i++)
+        {
+            meshObjectToIndexMap[ThemeMeshes.Meshes[i]] = i;
         }
     }
 
     private int MeshObjToInt(GameObject obj)
     {
-        if (obj == ThemeMeshes.Meshes[0])
-        {
-            return 0;
-        }
-
-        if (obj == ThemeMeshes.Meshes[1])
-        {
-            return 1;
-        }
-
-        if (obj == ThemeMeshes.Meshes[2])
-        {
-            return 2;
-        }
-
-        if (obj == ThemeMeshes.Meshes[3])
-        {
-            return 3;
-        }
-
-        if (obj == ThemeMeshes.Meshes[4])
-        {
-            return 4;
-        }
-
-        if (obj == ThemeMeshes.Meshes[5])
-        {
-            return 5;
-        }
-
-        if (obj == ThemeMeshes.Meshes[6])
-        {
-            return 6;
-        }
-
-        if (obj == ThemeMeshes.Meshes[7])
-        {
-            return 7;
-        }
-
-        if (obj == ThemeMeshes.Meshes[8])
-        {
-            return 8;
-        }
-
-        if (obj == ThemeMeshes.Meshes[9])
-        {
-            return 9;
-        }
-
-        return 2000;
+        return meshObjectToIndexMap.GetValueOrDefault(obj, 2000);
     }
 
     public List<GridNode> GetNonDiagonalNeighbours(GridNode node)
@@ -408,27 +321,6 @@ public class LevelEditorManager : MonoBehaviour
             
             if (node != null && node.MeshObj != SelectedObj && SelectedObj != null)
             {
-                // Debug.Log("Mesh Index: " + SelectedObjIndex);
-                // //Check if allowed to place (nor more then 2 neighbouring path tiles)
-                // if (SelectedObjIndex is >= 1 and <= 5)
-                // {
-                //     var neighbours = GetAllNeighbours(node);
-                //     int pathNeighbours = 0;
-                //
-                //     for (int i = 0; i < neighbours.Count; i++)
-                //     {
-                //         if (neighbours[i].MeshIndex is >= 1 and <= 5)
-                //         {
-                //             Debug.Log("Neighbour: " + neighbours[i].MeshIndex);
-                //             pathNeighbours++;
-                //         }
-                //     }
-                //     Debug.Log("path Neighbours: " + pathNeighbours);
-                //     if(pathNeighbours > 2) return;
-                // }
-                
-                
-                
                 //Reset target 9 tiles area of unbuildable to buildable
                 if (node.MeshIndex is >= 6 and <= 9)
                 {
@@ -439,7 +331,7 @@ public class LevelEditorManager : MonoBehaviour
                 if (validated)
                 {
                     validated = false;
-                    validateButton.GetComponent<Image>().color = Color.red;
+                    levelEditorUI.SetValidateButtonSate(validated);
                 }
                 //Clean slate node
                 node.EnemyTarget = false;
@@ -532,7 +424,7 @@ public class LevelEditorManager : MonoBehaviour
         return false;
     }
 
-    private void SetSelectedMesh(GameObject obj)
+    public void SetSelectedMesh(GameObject obj)
     {
         SelectedObj = obj;
         SelectedObjIndex = MeshObjToInt(obj);
@@ -549,19 +441,8 @@ public class LevelEditorManager : MonoBehaviour
         }
     }
 
-    private void GenerateOnClick()
+    public void SetGridGenerated()
     {
-        gridGen.CreateGrid(int.Parse(xInput.text), int.Parse(zInput.text));
-        GenerateGridUIPanel.SetActive(false);
-        MeshSelectionUIPanel.SetActive(true);
-        ValidateSaveUIPanel.SetActive(true);
-        ControlUIPanel.SetActive(true);
-        BackUIPanel.SetActive(true);
         gridGenerated = true;
-    }
-    
-    private void ReturnToMenu()
-    {
-        gameManager.SetGameState(GameStates.Menu);
     }
 }
