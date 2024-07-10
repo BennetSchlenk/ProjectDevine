@@ -9,6 +9,6 @@ You have a hand of cards and can buy more in the 3 shops top-right in the screen
 Placing a Tower on top another same type and level Tower would upgrade the Tower to accept more Modifier cards (Level 1 - one Modifier slot, Level 2 - two modifier slots, Level 3 - three Modifier slot)
 
 Camera controls
-move camera - WASD and arrow keys or Right mouse drag
-rotate camera - Middle mouse
-zoom camera - Scroll wheel
+- move camera - WASD and arrow keys or Right mouse drag
+- rotate camera - Middle mouse
+- zoom camera - Scroll wheel
