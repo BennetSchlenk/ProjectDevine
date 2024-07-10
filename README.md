@@ -1,6 +1,6 @@
 # Divine Defense
 
-Make your Last Stand, survive the longest you can!
+Make your Last Stand, survive the longest you can! 
 (A GameDev.tv GameJam 2024 Submission)
 
 This is a genre mashup of Tower Defense and a Card Game.
