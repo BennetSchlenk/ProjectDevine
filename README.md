@@ -12,3 +12,10 @@ Camera controls
 - move camera - WASD and arrow keys or Right mouse drag
 - rotate camera - Middle mouse
 - zoom camera - Scroll wheel
+
+## Contributors
+- cut-it-out / Programmer
+- unairf / Programmer
+- GunPowderTea / Programmer
+- LordFren / Consultant
+- Esmaeil / Tech Art
